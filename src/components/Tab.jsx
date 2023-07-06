@@ -9,6 +9,8 @@ function Tab() {
   const [userName, setUserName] = useState("");
   const [selectedOptions, setSelectedOptions] = useState();
   const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([]);
 
   useEffect(() => {
     app.initialize().then(() => {
@@ -32,7 +34,6 @@ function Tab() {
     });
   }, []);
 
-  // Array of all options
   const optionList = [
     { value: "red", label: "Red" },
     { value: "green", label: "Green" },
@@ -41,14 +42,29 @@ function Tab() {
     { value: "white", label: "White" },
   ];
 
-  // Function triggered on selection
   function handleSelect(data) {
     setSelectedOptions(data);
   }
 
-  // Function triggered on subject input change
   function handleSubjectChange(event) {
     setSubject(event.target.value);
+  }
+
+  function handleMessageChange(event) {
+    setMessage(event.target.value);
+  }
+
+  function handleSendMessage() {
+    if (message.trim() !== "") {
+      const newMessage = {
+        sender: userName,
+        subject: subject,
+        content: message,
+      };
+      setChatMessages([...chatMessages, newMessage]);
+      setMessage("");
+      setSubject("");
+    }
   }
 
   return (
@@ -85,15 +101,15 @@ function Tab() {
         <div className="container">
           <h3 className="h3">To:</h3>
           <div className="dropdown-container">
-            <Select
-              options={optionList}
-              placeholder="Select color"
-              value={selectedOptions}
-              onChange={handleSelect}
-              isSearchable={true}
-              isMulti
-              styles={customStyles}
-            />
+          <Select
+  options={optionList}
+  placeholder="Select color"
+  value={selectedOptions}
+  onChange={handleSelect}
+  isSearchable={true}
+  isMulti={true}
+  styles={customStyles}
+/>
           </div>
         </div>
         <div className="container">
@@ -106,22 +122,45 @@ function Tab() {
             className="input-box"
           />
         </div>
+        <div className="container">
+          <h3 className="h3">Message:</h3>
+          <input
+            type="text"
+            value={message}
+            onChange={handleMessageChange}
+            placeholder="Enter message"
+            className="input-box"
+          />
+          <button type="button" onClick={handleSendMessage} className="send-button">
+            Send Message
+          </button>
+        </div>
+        <div className="chatbox">
+          {chatMessages.slice().reverse().map((msg, index) => (
+            <div key={index} className="message-container">
+              <span className="sender">{msg.sender}: </span>
+              <span className="subject">{msg.subject}</span>
+              <br />
+              <span className="message-content">{msg.content}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div >
+    </div>
   );
 }
 
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
-    backgroundColor: "#3f3f3f", // Set the background color
-    borderRadius: "10px", // Set the border radius
-    border: "none", // Remove the border
+    backgroundColor: "#3f3f3f",
+    borderRadius: "10px",
+    border: "none",
     boxShadow: state.isFocused ? "0 0 0 2px #7C7C7C" : "none",
   }),
   input: (provided) => ({
     ...provided,
-    color: "#0a0e17", // Set the text color
+    color: "#0a0e17",
   }),
   option: (provided, state) => ({
     ...provided,
