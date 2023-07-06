@@ -101,19 +101,20 @@ function Tab() {
         <div className="container">
           <h3 className="h3">To:</h3>
           <div className="dropdown-container">
-          <Select
-  options={optionList}
-  placeholder="Select color"
-  value={selectedOptions}
-  onChange={handleSelect}
-  isSearchable={true}
-  isMulti={true}
-  styles={customStyles}
-/>
+            <Select
+              options={optionList}
+              placeholder="Select color"
+              value={selectedOptions}
+              onChange={handleSelect}
+              isSearchable={true}
+              isMulti={true}
+              styles={customStyles}
+            />
           </div>
+          <hr className="line" />
         </div>
         <div className="container">
-          <h3 className="h3">Subject:</h3>
+          <h3 className="h3">Subject</h3>
           <input
             type="text"
             value={subject}
@@ -121,9 +122,10 @@ function Tab() {
             placeholder="Enter subject"
             className="input-box"
           />
+          <hr className="line" />
         </div>
         <div className="container">
-          <h3 className="h3">Message:</h3>
+          <h3 className="h3">Message</h3>
           <input
             type="text"
             value={message}
