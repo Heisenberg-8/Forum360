@@ -1,8 +1,7 @@
 .tab-background {
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
   background-color: #3f3f3f;
+  align-items: center;
 }
 
 .logo {
@@ -15,15 +14,13 @@
 .menu {
   height: 40px;
   width: 40px;
-  /* margin-left: 0; */
   margin-top: 0;
-  /* margin-right: 15; */
-  margin-left: 65;
+  margin-left: 65px;
 }
 
 .h1 {
   color: azure;
-  margin-top: 5;
+  margin-top: 5px;
   font-size: 20px;
   font-weight: bold;
   margin-left: 0;
@@ -31,11 +28,10 @@
 
 .h2 {
   color: azure;
-  margin-top: 5;
+  margin-top: 5px;
   font-size: 20px;
   font-weight: lighter;
-  /* margin-left: 0; */
-  opacity: 0.7
+  opacity: 0.7;
 }
 
 .h3 {
@@ -47,25 +43,21 @@
 }
 
 .message {
-  /* width: 14;
-  height: 10; */
-  margin-right: 10;
+  margin-right: 10px;
 }
 
 .buttons {
   display: flex;
-  margin-top: 18;
-  /* background-color: #0a0e17; */
+  margin-top: 18px;
 }
 
 .buttons1 {
   display: flex;
-  /* background-color: #0a0e17; */
 }
 
 button {
-  width: 150;
-  height: 52;
+  width: 150px;
+  height: 52px;
   display: flex;
   align-items: center;
   color: #9A9C9F;
@@ -74,7 +66,6 @@ button {
   border-radius: 10px;
   padding: 10px;
   align-content: center;
-  /* cursor: pointer */
 }
 
 button:hover {
@@ -91,4 +82,56 @@ button:hover {
 
 .container {
   display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-box {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: none;
+  background-color: #0A0E17;
+  color: white;
+}
+
+.send-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+  color: #9A9C9F;
+  background-color: #0a0e17;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  color: #ffffff;
+  background-color: #232cff;
+}
+
+.chatbox {
+  margin-top: 20px;
+  color: white;
+  /* background: linear-gradient(to top, rgba(10, 14, 23, 1) 0%, rgba(10, 14, 23, 0) 100%); */
+
+}
+
+.message-container {
+  background-color: #0A0E17;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+}
+
+.message-container .subject {
+  font-weight: bold;
 }
