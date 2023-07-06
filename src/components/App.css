@@ -120,6 +120,8 @@ button:hover {
 .chatbox {
   margin-top: 20px;
   color: white;
+  /* background: linear-gradient(to top, rgba(10, 14, 23, 1) 0%, rgba(10, 14, 23, 0) 100%); */
+
 }
 
 .message-container {
@@ -127,6 +129,7 @@ button:hover {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
+
 }
 
 .message-container .subject {
