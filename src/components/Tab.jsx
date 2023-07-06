@@ -1,71 +1,138 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { app, teamsCore } from "@microsoft/teams-js";
 import MediaQuery from "react-responsive";
+import Select from "react-select";
 import "./App.css";
 
-class Tab extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      context: {},
-    };
-  }
+function Tab() {
+  const [meetingId, setMeetingId] = useState("");
+  const [userName, setUserName] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState();
+  const [subject, setSubject] = useState("");
 
-  //React lifecycle method that gets called once a component has finished mounting
-  //Learn more: https://reactjs.org/docs/react-component.html#componentdidmount
-  componentDidMount() {
+  useEffect(() => {
     app.initialize().then(() => {
-      // Notifies that the app initialization is successfully and is ready for user interaction.
       app.notifySuccess();
 
-      // Get the user context from Teams and set it in the state
-      app.getContext().then(async (context) => {
-        this.setState({
-          meetingId: context.meeting.id,
-          userName: context.user.userPrincipalName,
-        });
+      app.getContext().then((context) => {
+        setMeetingId(context.meeting.id);
+        setUserName(context.user.userPrincipalName);
 
-        // Enable app caching.
-        // App Caching was configured in this sample to reduce the reload time of your app in a meeting.
-        // To learn about limitations and available scopes, please check https://learn.microsoft.com/en-us/microsoftteams/platform/apps-in-teams-meetings/app-caching-for-your-tab-app.
         if (context.page.frameContext === "sidePanel") {
           teamsCore.registerOnLoadHandler((context) => {
-            // Use context.contentUrl to route to the correct page.
             app.notifySuccess();
           });
 
           teamsCore.registerBeforeUnloadHandler((readyToUnload) => {
-            // Dispose resources here if necessary.
-            // Notify readiness by invoking readyToUnload.
             readyToUnload();
             return true;
           });
         }
       });
     });
-    // Next steps: Error handling using the error object
+  }, []);
+
+  // Array of all options
+  const optionList = [
+    { value: "red", label: "Red" },
+    { value: "green", label: "Green" },
+    { value: "yellow", label: "Yellow" },
+    { value: "blue", label: "Blue" },
+    { value: "white", label: "White" },
+  ];
+
+  // Function triggered on selection
+  function handleSelect(data) {
+    setSelectedOptions(data);
   }
 
-  render() {
-    let meetingId = this.state.meetingId ?? "";
-    let userPrincipleName = this.state.userName ?? "";
+  // Function triggered on subject input change
+  function handleSubjectChange(event) {
+    setSubject(event.target.value);
+  }
 
-    return (
-      <div>
-        <h1>In-meeting app sample</h1>
-        <h3>Principle Name:</h3>
-        <p>{userPrincipleName}</p>
-        <h3>Meeting ID:</h3>
-        <p>{meetingId}</p>
-        <MediaQuery maxWidth={280}>
-          <h3>This is the side panel</h3>
-          <a href="https://docs.microsoft.com/en-us/microsoftteams/platform/apps-in-teams-meetings/teams-apps-in-meetings">
-            Need more info, open this document in new tab or window.
-          </a>
-        </MediaQuery>
+  return (
+    <div>
+      <div className="tab-background">
+        <img src={require("./assets/logo.png")} alt="logo" className="logo" />
+        <h1 className="h1">
+          Relate <span className="h2">Tools</span>
+        </h1>
+        <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
       </div>
-    );
-  }
+      <div>
+        <div className="buttons">
+          <button type="button" name="messaging">
+            <img src={require("./assets/messaging.png")} alt="logo" className="message" />
+            Messaging
+          </button>
+          <button type="button" name="feedback">
+            <img src={require("./assets/feedback.png")} alt="logo" className="message" />
+            Feedback
+          </button>
+        </div>
+        <div className="buttons1">
+          <button type="button" name="analytics">
+            <img src={require("./assets/chart.png")} alt="logo" className="message" />
+            Analytics
+          </button>
+          <button type="button" name="resources">
+            <img src={require("./assets/file.png")} alt="logo" className="file" />
+            <span style={{ marginLeft: "10px" }}>Resources</span>
+          </button>
+        </div>
+        <h3 className="h3">Event Messaging</h3>
+        <div className="container">
+          <h3 className="h3">To:</h3>
+          <div className="dropdown-container">
+            <Select
+              options={optionList}
+              placeholder="Select color"
+              value={selectedOptions}
+              onChange={handleSelect}
+              isSearchable={true}
+              isMulti
+              styles={customStyles}
+            />
+          </div>
+        </div>
+        <div className="container">
+          <h3 className="h3">Subject:</h3>
+          <input
+            type="text"
+            value={subject}
+            onChange={handleSubjectChange}
+            placeholder="Enter subject"
+            className="input-box"
+          />
+        </div>
+      </div>
+    </div >
+  );
 }
+
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: "#3f3f3f", // Set the background color
+    borderRadius: "10px", // Set the border radius
+    border: "none", // Remove the border
+    boxShadow: state.isFocused ? "0 0 0 2px #7C7C7C" : "none",
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "#0a0e17", // Set the text color
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? "#000000" : "#3f3f3f",
+    color: state.isSelected ? "#FFFFFF" : "white",
+    fontSize: "16px",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#3f3f3f",
+  }),
+};
 
 export default Tab;
