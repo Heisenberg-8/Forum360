@@ -114,14 +114,14 @@ function Tab() {
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
-    backgroundColor: "#3f3f3f", // Set the background color
-    borderRadius: "10px", // Set the border radius
-    border: "none", // Remove the border
+    backgroundColor: "#3f3f3f",
+    borderRadius: "10px",
+    border: "none",
     boxShadow: state.isFocused ? "0 0 0 2px #7C7C7C" : "none",
   }),
   input: (provided) => ({
     ...provided,
-    color: "#0a0e17", // Set the text color
+    color: "#0a0e17",
   }),
   option: (provided, state) => ({
     ...provided,
