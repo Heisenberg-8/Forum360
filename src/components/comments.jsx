@@ -45,7 +45,7 @@ function Comments() {
             />
             <span className="button-text">Messaging</span>
           </button>
-          <button type="button" name="feedback" className="button">
+          <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}>
             <img
               src={require("./assets/feedback.png")}
               alt="logo"
