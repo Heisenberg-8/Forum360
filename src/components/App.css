@@ -1,6 +1,6 @@
 .tab-background {
   display: flex;
-  background-color: #3f3f3f;
+  background-color: #1F1F1F;
   align-items: center;
 }
 
@@ -65,7 +65,9 @@ button {
   font-size: 17px;
   border-radius: 10px;
   padding: 10px;
+  border: none;
   align-content: center;
+  box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.25);
 }
 
 button:hover {
@@ -92,25 +94,28 @@ button:hover {
   margin-top: 5px;
   /* border-radius: 5px; */
   border: none;
-  background-color: #3f3f3f;
+  background-color: #1F1F1F;
   color: white;
 }
 
 .input-box::placeholder {
   color: #808080;
   font-size: 16px;
+  min-width: 200px;
 }
 
 
 .send-button {
   width: 100%;
-  padding: 10px;
   margin-top: 10px;
-  border-radius: 5px;
-  border: none;
-  color: #9A9C9F;
+  height: 52px;
+  align-items: center;
   background-color: #0a0e17;
-  font-size: 16px;
+  font-size: 17px;
+  border-radius: 10px;
+  padding: 10px;
+  align-content: center;
+  border: none;
   text-align: center;
   cursor: pointer;
   display: flex;
