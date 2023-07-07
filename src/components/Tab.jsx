@@ -3,7 +3,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 import { app, teamsCore } from "@microsoft/teams-js";
 import MediaQuery from "react-responsive";
 import Select from "react-select";
-import Feedback from "./feedback.jsx"; // Import the Feedback component
+import Feedback from "./feedback.jsx";
 import "./App.css";
 
 function Tab() {
@@ -13,7 +13,7 @@ function Tab() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
-  const [currentScreen, setCurrentScreen] = useState("tab"); // State variable for screen navigation
+  const [currentScreen, setCurrentScreen] = useState("tab");
 
   useEffect(() => {
     app.initialize().then(() => {
@@ -71,10 +71,9 @@ function Tab() {
   }
 
   function handleFeedbackClick() {
-    setCurrentScreen("feedback"); // Update the current screen state to navigate to feedback
+    setCurrentScreen("feedback");
   }
 
-  // Render different screens based on the currentScreen state
   if (currentScreen === "feedback") {
     return <Feedback />;
   }
@@ -169,7 +168,7 @@ function Tab() {
             Send Message
           </button>
         </div>
-        <div className="chatbox">
+        {/* <div className="chatbox">
           {chatMessages.slice().reverse().map((msg, index) => (
             <div key={index} className="message-container">
               <span className="sender">{msg.sender}: </span>
@@ -178,7 +177,7 @@ function Tab() {
               <span className="message-content">{msg.content}</span>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
