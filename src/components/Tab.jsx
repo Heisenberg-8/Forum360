@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import * as microsoftTeams from "@microsoft/teams-js";
 import { app, teamsCore } from "@microsoft/teams-js";
 import MediaQuery from "react-responsive";
 import Select from "react-select";
+import Feedback from "./feedback.jsx"; // Import the Feedback component
 import "./App.css";
 
 function Tab() {
@@ -11,6 +13,7 @@ function Tab() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
+  const [currentScreen, setCurrentScreen] = useState("tab"); // State variable for screen navigation
 
   useEffect(() => {
     app.initialize().then(() => {
@@ -67,6 +70,15 @@ function Tab() {
     }
   }
 
+  function handleFeedbackClick() {
+    setCurrentScreen("feedback"); // Update the current screen state to navigate to feedback
+  }
+
+  // Render different screens based on the currentScreen state
+  if (currentScreen === "feedback") {
+    return <Feedback />;
+  }
+
   return (
     <div>
       <div className="tab-background">
@@ -74,26 +86,46 @@ function Tab() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
+        <img
+          src={require("./assets/menu (2).png")}
+          alt="logo"
+          className="menu"
+        />
       </div>
       <div>
         <div className="buttons">
           <button type="button" name="messaging">
-            <img src={require("./assets/messaging.png")} alt="logo" className="message" />
+            <img
+              src={require("./assets/messaging.png")}
+              alt="logo"
+              className="message"
+            />
             Messaging
           </button>
-          <button type="button" name="feedback">
-            <img src={require("./assets/feedback.png")} alt="logo" className="message" />
+          <button type="button" name="feedback" onClick={handleFeedbackClick}>
+            <img
+              src={require("./assets/feedback.png")}
+              alt="logo"
+              className="message"
+            />
             Feedback
           </button>
         </div>
         <div className="buttons1">
           <button type="button" name="analytics">
-            <img src={require("./assets/chart.png")} alt="logo" className="message" />
+            <img
+              src={require("./assets/chart.png")}
+              alt="logo"
+              className="message"
+            />
             Analytics
           </button>
           <button type="button" name="resources">
-            <img src={require("./assets/file.png")} alt="logo" className="file" />
+            <img
+              src={require("./assets/file.png")}
+              alt="logo"
+              className="file"
+            />
             <span style={{ marginLeft: "10px" }}>Resources</span>
           </button>
         </div>
@@ -101,19 +133,20 @@ function Tab() {
         <div className="container">
           <h3 className="h3">To:</h3>
           <div className="dropdown-container">
-          <Select
-  options={optionList}
-  placeholder="Select color"
-  value={selectedOptions}
-  onChange={handleSelect}
-  isSearchable={true}
-  isMulti={true}
-  styles={customStyles}
-/>
+            <Select
+              options={optionList}
+              placeholder="Select paticipant"
+              value={selectedOptions}
+              onChange={handleSelect}
+              isSearchable={true}
+              isMulti={true}
+              styles={customStyles}
+            />
           </div>
+          <hr className="line" />
         </div>
         <div className="container">
-          <h3 className="h3">Subject:</h3>
+          <h3 className="h3">Subject</h3>
           <input
             type="text"
             value={subject}
@@ -121,17 +154,18 @@ function Tab() {
             placeholder="Enter subject"
             className="input-box"
           />
+          <hr className="line" />
         </div>
         <div className="container">
-          <h3 className="h3">Message:</h3>
-          <input
-            type="text"
+          <h3 className="h3">Message</h3>
+          <textarea
+            type="textarea"
             value={message}
             onChange={handleMessageChange}
             placeholder="Enter message"
             className="input-box"
           />
-          <button type="button" onClick={handleSendMessage} className="send-button">
+          <button onClick={handleSendMessage} className="send-button">
             Send Message
           </button>
         </div>
@@ -153,24 +187,24 @@ function Tab() {
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
-    backgroundColor: "#3f3f3f",
+    backgroundColor: "#1F1F1F",
     borderRadius: "10px",
     border: "none",
     boxShadow: state.isFocused ? "0 0 0 2px #7C7C7C" : "none",
   }),
   input: (provided) => ({
     ...provided,
-    color: "#0a0e17",
+    color: "#ffffff",
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? "#000000" : "#3f3f3f",
-    color: state.isSelected ? "#FFFFFF" : "white",
+    backgroundColor: state.isSelected ? "#white" : "#1F1F1F",
+    color: state.isSelected ? "#white" : "white",
     fontSize: "16px",
   }),
   menu: (provided) => ({
     ...provided,
-    backgroundColor: "#3f3f3f",
+    backgroundColor: "#1F1F1F",
   }),
 };
 

@@ -1,6 +1,6 @@
 .tab-background {
   display: flex;
-  background-color: #3f3f3f;
+  background-color: #1F1F1F;
   align-items: center;
 }
 
@@ -20,7 +20,7 @@
 
 .h1 {
   color: azure;
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 20px;
   font-weight: bold;
   margin-left: 0;
@@ -28,7 +28,7 @@
 
 .h2 {
   color: azure;
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 20px;
   font-weight: lighter;
   opacity: 0.7;
@@ -37,7 +37,7 @@
 .h3 {
   color: azure;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 20px;
   margin-left: 5px;
 }
@@ -65,7 +65,9 @@ button {
   font-size: 17px;
   border-radius: 10px;
   padding: 10px;
+  border: none;
   align-content: center;
+  box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.25);
 }
 
 button:hover {
@@ -90,28 +92,38 @@ button:hover {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   border: none;
-  background-color: #0A0E17;
+  background-color: #1F1F1F;
   color: white;
   min-width: 200px; /* Set a minimum width for the input field */
 }
 
+.input-box::placeholder {
+  color: #808080;
+  font-size: 16px;
+  min-width: 200px;
+}
+
+
 .send-button {
   width: 100%;
-  padding: 10px;
   margin-top: 10px;
-  border-radius: 5px;
-  border: none;
-  color: #9A9C9F;
+  height: 52px;
+  align-items: center;
   background-color: #0a0e17;
-  font-size: 16px;
+  font-size: 17px;
+  border-radius: 10px;
+  padding: 10px;
+  align-content: center;
+  border: none;
   text-align: center;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 
 button:hover {
   color: #ffffff;
@@ -135,4 +147,11 @@ button:hover {
 
 .message-container .subject {
   font-weight: bold;
+}
+
+.line {
+  width: 260;
+  align-self: center;
+  border-top: 2px solid #0A0E17 !important;
+  border: 0px;
 }
