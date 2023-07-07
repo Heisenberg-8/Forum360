@@ -94,6 +94,7 @@ button:hover {
   border: none;
   background-color: #0A0E17;
   color: white;
+  min-width: 200px; /* Set a minimum width for the input field */
 }
 
 .send-button {
