@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Tab from "./Tab"; // Import the Tab component
+import Tab from "./Tab";
+import Comments from "./comments";
 
 function Feedback() {
   const [currentScreen, setCurrentScreen] = useState("");
@@ -8,11 +9,19 @@ function Feedback() {
     setCurrentScreen("messaging");
   }
 
+  function handleCommentsClick() {
+    setCurrentScreen("comments");
+  }
+
   // Render different screens based on the currentScreen state
   if (currentScreen === "messaging") {
     return <Tab />;
   }
 
+  if (currentScreen === "comments") {
+    return <Comments />;
+  }
+  
   return (
     <div>
     <div className="tab-background">
@@ -73,7 +82,7 @@ function Feedback() {
       <button name="questions" className="feedback-button">
         <span className="h3">Questions</span>
       </button>
-      <button name="comments" className="feedback-button" style={{ border: "none" }}>
+      <button name="comments" className="feedback-button" style={{ border: "none" }} onClick={handleCommentsClick}>
         <span className="h4">Comments</span>
       </button>
     </div>
