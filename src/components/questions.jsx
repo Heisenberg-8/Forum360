@@ -13,7 +13,6 @@ function Feedback() {
     setCurrentScreen("comments");
   }
 
-  // Render different screens based on the currentScreen state
   if (currentScreen === "messaging") {
     return <Message />;
   }
@@ -85,6 +84,56 @@ function Feedback() {
         <button name="comments" className="feedback-button" style={{ border: "none" }} onClick={handleCommentsClick}>
           <span className="h4">Comments</span>
         </button>
+      </div>
+      <div className="questions-container">
+
+        <div className="question">
+          <text className="question-username">Roger Vaccaro<span className="time">20:19:20</span></text>
+          <div className="question-text">
+            <text>Do fixed income investments on a 30 year period have higher returns?</text>
+          </div>
+          <div className="question-footer">
+            <btn className="text-btn" span>Move to agenda</btn>
+            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
+          </div>
+        </div>
+
+        <div className="question">
+          <text className="question-username">Roger Vaccaro<span className="time">20:19:20</span></text>
+          <div className="question-text">
+            <text>Do fixed income investments on a 30 year period have higher returns? Do fixed income investments on a 30 year period have higher returns?</text>
+          </div>
+          <div className="question-footer">
+            <btn className="text-btn" span>Move to agenda</btn>
+            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
+          </div>
+        </div>
+
+        <div className="question">
+          <text className="question-username">Sidak Taneja<span className="time">20:19:20</span></text>
+          <div className="question-text">
+            <text>Do fixed income investments on a 30 year period have higher returns?</text>
+          </div>
+          <div className="question-footer">
+            <btn className="text-btn" span>Move to agenda</btn>
+            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
+          </div>
+        </div>
+
+        <div className="question">
+          <text className="question-username">Sidak Taneja<span className="time">20:19:20</span></text>
+          <div className="question-text">
+            <text>Do fixed income investments on a 30 year period have higher returns?</text>
+          </div>
+          <div className="question-footer">
+            <btn className="text-btn" span>Move to agenda</btn>
+            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <btn className="text-btn" span>Agenda</btn>
+        <btn className="text-btn" style={{ marginLeft: 30 }}>Answers</btn>
       </div>
     </div>
   )

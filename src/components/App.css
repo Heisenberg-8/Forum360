@@ -97,7 +97,8 @@
   border: none;
   background-color: #1F1F1F;
   color: white;
-  min-width: 200px; /* Set a minimum width for the input field */
+  min-width: 200px;
+  /* Set a minimum width for the input field */
 }
 
 .input-box::placeholder {
@@ -114,7 +115,7 @@
   align-items: center;
   background-color: #0a0e17;
   color: white;
-    font-size: 17px;
+  font-size: 17px;
   border-radius: 10px;
   padding: 10px;
   align-content: center;
@@ -158,7 +159,7 @@ button:hover {
   border: 0px;
 }
 
-.feedback-container{
+.feedback-container {
   margin-top: 5px;
   display: flex;
   text-align: center;
@@ -186,7 +187,7 @@ button:hover {
   border-bottom-width: 2px;
 }
 
-.h4{
+.h4 {
   color: rgba(240, 255, 255, 0.568);
   font-size: 16px;
   font-weight: 650;
@@ -202,6 +203,73 @@ button:hover {
   color: white;
 }
 
-.button-text{
+.button-text {
   font-weight: 650;
+}
+
+.questions-container {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: var(--size-3);
+  overflow-y: scroll;
+  height: 430px;
+  overscroll-behavior: contain;
+  grid-auto-flow: row;
+  margin-top: 15px;
+  opacity: 1;
+}
+
+.questions-container::-webkit-scrollbar {
+  width: 0px;
+}
+
+.question {
+  background-color: #2C2F38;
+  width: "100%";
+  border-radius: 5px;
+  padding: 15px;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.question-username {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.time {
+  margin-left: 12px;
+  font-weight: 10;
+  opacity: 0.7;
+  font-size: 16px;
+}
+
+.question-text {
+  margin-top: 10px;
+  color: #ffffff;
+  font-size: 15px;
+  opacity: 0.7;
+  font-weight: 100;
+}
+
+.question-footer {
+  display: flex;
+  font-weight: 500;
+  font-size: 16px;
+  color: #ffffff9d;
+  /* opacity: 0.8; */
+  margin-top: 10px;
+}
+
+.text-btn:hover {
+  color: #ffffff;
+}
+
+.footer {
+  margin-top: 20px;
+  display: flex;
+  font-weight: 500;
+  font-size: 17px;
+  color: #ffffff9d;
 }
