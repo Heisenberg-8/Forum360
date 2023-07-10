@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tab from "./Tab";
+import Message from "./Message.jsx";
 import Comments from "./comments";
 
 function Feedback() {
@@ -15,7 +15,7 @@ function Feedback() {
 
   // Render different screens based on the currentScreen state
   if (currentScreen === "messaging") {
-    return <Tab />;
+    return <Message />;
   }
 
   if (currentScreen === "comments") {

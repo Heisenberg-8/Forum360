@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tab from "./Tab";
+import Message from "./Message.jsx";
 import Questions from "./questions";
 
 function Comments() {
@@ -14,7 +14,7 @@ function Comments() {
   }
 
   if (currentScreen === "messaging") {
-    return <Tab />;
+    return <Message />;
   }
 
   if (currentScreen === "questions") {
