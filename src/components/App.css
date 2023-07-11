@@ -90,14 +90,15 @@
 }
 
 .input-box {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-top: 5px;
+  align-self: center;
   /* border-radius: 5px; */
   border: none;
   background-color: #1F1F1F;
   color: white;
-  min-width: 200px;
+  /* min-width: 200px; */
   /* Set a minimum width for the input field */
 }
 
