@@ -102,7 +102,7 @@ function Feedback() {
             style={{ backgroundColor: "#232cff", color: "#ffffff" }}
           >
             <img
-              src={require("./assets/feedback.png")}
+              src={require("./assets/whitefeedback.png")}
               alt="logo"
               className="message"
             />
@@ -164,7 +164,7 @@ function Feedback() {
       </div>
       <div className="footer">
         <button className="text-btn" onClick={handleAgendaClick}>Agenda</button>
-        <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 30 }}>
+        <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 10 }}>
           Answers
         </button>
       </div>

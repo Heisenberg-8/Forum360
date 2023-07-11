@@ -65,7 +65,7 @@ function Answered() {
                     </button>
                     <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}>
                         <img
-                            src={require("./assets/feedback.png")}
+                            src={require("./assets/whitefeedback.png")}
                             alt="logo"
                             className="message"
                         />
@@ -126,6 +126,8 @@ function Answered() {
                 >
                     <span className="h3">Answered</span>
                 </button>
+            </div>
+            <div className="agenda-container">
             </div>
         </div>
     );
