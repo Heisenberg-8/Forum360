@@ -212,12 +212,28 @@ button:hover {
   font-weight: 650;
 }
 
+.main {
+  display: grid;
+  /* grid-auto-rows: min-content; */
+  /* gap: var(--size-3); */
+  overflow-y: scroll;
+  height: 100%;
+  /* overscroll-behavior: contain; */
+  grid-auto-flow: row;
+  width: 100%;
+  /* margin-top: 15px; */
+}
+
+.main::-webkit-scrollbar {
+  width: 0px;
+}
+
 .questions-container {
   display: grid;
   grid-auto-rows: min-content;
   gap: var(--size-3);
   overflow-y: scroll;
-  height: 430px;
+  height: 60%;
   overscroll-behavior: contain;
   grid-auto-flow: row;
   margin-top: 15px;
@@ -332,9 +348,10 @@ button:hover {
 }
 
 .agenda-questions {
+  display: flex;
   background-color: #2C2F38;
   width: "100%";
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 15px;
   padding-top: 10px;
   margin-top: 15px;
@@ -343,5 +360,10 @@ button:hover {
 .dragicon {
   width: 25px;
   height: 14px;
-  margin-top: ;
+  margin-top: 40px;
+  align-items: center;
+}
+
+.agenda-text {
+  margin-left: 15px;
 }

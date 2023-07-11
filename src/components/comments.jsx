@@ -60,7 +60,7 @@ function Comments() {
   }
 
   return (
-    <div>
+    <div className="main">
       <div className="tab-background">
         <img src={require("./assets/logo.png")} alt="logo" className="logo" />
         <h1 className="h1">

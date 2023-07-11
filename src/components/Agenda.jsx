@@ -4,8 +4,14 @@ import Comments from "./comments";
 import Questions from "./questions"
 import Answered from "./Answered.jsx"
 
+
 function Agenda() {
     const [currentScreen, setCurrentScreen] = useState("");
+    const [checked, setChecked] = React.useState(false);
+
+    const handleChange = () => {
+        setChecked(!checked);
+    };
 
     function handleMessagingClick() {
         setCurrentScreen("messaging");
@@ -40,7 +46,7 @@ function Agenda() {
     }
 
     return (
-        <div>
+        <div className="main">
             <div className="tab-background">
                 <img src={require("./assets/logo.png")} alt="logo" className="logo" />
                 <h1 className="h1">
@@ -131,10 +137,17 @@ function Agenda() {
             <div className="agenda-container">
                 <div className="agenda-questions">
                     <img src={require("./assets/drag.png")} alt="drag" className="dragicon" />
-                    <text className="question-username">Roger Vaccaro</text>
-                    <div className="question-text">
-                        <text>Do fixed income investments on a 30 year period have higher returns?</text>
+                    <div className="agenda-text">
+                        <text className="question-username">Roger Vaccaro</text>
+                        <div className="question-text">
+                            <text>Do fixed income investments on a 30 year period have higher returns?</text>
+                        </div>
                     </div>
+                    <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={handleChange}
+                    />
                 </div>
             </div>
         </div>
