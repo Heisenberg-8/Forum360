@@ -96,7 +96,7 @@ function Message() {
                     <button type="button" name="messaging" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}
                     >
                         <img
-                            src={require("./assets/messaging.png")}
+                            src={require("./assets/whitemessage.png")}
                             alt="logo"
                             className="message"
                         />

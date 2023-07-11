@@ -65,7 +65,7 @@ function Answered() {
                     </button>
                     <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}>
                         <img
-                            src={require("./assets/feedback.png")}
+                            src={require("./assets/whitefeedback.png")}
                             alt="logo"
                             className="message"
                         />

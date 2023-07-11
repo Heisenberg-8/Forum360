@@ -402,7 +402,7 @@ button:hover {
 }
 
 .control input:checked~.control_indicator {
-  background: #2aa1c0;
+  background: #232cff;
 }
 
 .control:hover input:not([disabled]):checked~.control_indicator,
@@ -451,7 +451,7 @@ button:hover {
   height: 4.5rem;
   margin-left: -1.3rem;
   margin-top: -1.3rem;
-  background: #2aa1c0;
+  background: #232cff;
   border-radius: 3rem;
   opacity: 0.6;
   z-index: 99999;

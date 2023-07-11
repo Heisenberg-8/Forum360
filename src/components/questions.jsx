@@ -102,7 +102,7 @@ function Feedback() {
             style={{ backgroundColor: "#232cff", color: "#ffffff" }}
           >
             <img
-              src={require("./assets/feedback.png")}
+              src={require("./assets/whitefeedback.png")}
               alt="logo"
               className="message"
             />
