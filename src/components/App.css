@@ -315,3 +315,33 @@ button:hover {
   font-size: 15px;
   color: #ffffff9d;
 }
+
+.agenda-container {
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: var(--size-3);
+  overflow-y: scroll;
+  height: 430px;
+  overscroll-behavior: contain;
+  grid-auto-flow: row;
+  margin-top: 15px;
+}
+
+.agenda-container::-webkit-scrollbar {
+  width: 0px;
+}
+
+.agenda-questions {
+  background-color: #2C2F38;
+  width: "100%";
+  border-radius: 5px;
+  padding: 15px;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.dragicon {
+  width: 25px;
+  height: 14px;
+  margin-top: ;
+}

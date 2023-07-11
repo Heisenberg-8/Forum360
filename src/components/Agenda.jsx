@@ -127,6 +127,16 @@ function Agenda() {
                     <span className="h4">Answered</span>
                 </button>
             </div>
+
+            <div className="agenda-container">
+                <div className="agenda-questions">
+                    <img src={require("./assets/drag.png")} alt="drag" className="dragicon" />
+                    <text className="question-username">Roger Vaccaro</text>
+                    <div className="question-text">
+                        <text>Do fixed income investments on a 30 year period have higher returns?</text>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
