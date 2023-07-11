@@ -164,7 +164,7 @@ function Feedback() {
       </div>
       <div className="footer">
         <button className="text-btn" onClick={handleAgendaClick}>Agenda</button>
-        <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 30 }}>
+        <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 10 }}>
           Answers
         </button>
       </div>

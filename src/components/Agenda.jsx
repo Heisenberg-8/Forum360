@@ -1,17 +1,39 @@
 import React, { useState } from "react";
 import Message from "./Message.jsx";
 import Comments from "./comments";
-import Questions from "./questions"
-import Answered from "./Answered.jsx"
-
+import Questions from "./questions";
+import Answered from "./Answered.jsx";
 
 function Agenda() {
     const [currentScreen, setCurrentScreen] = useState("");
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = useState(false);
+    const [dataList, setDataList] = useState([
+        { username: "Roger Vaccaro", question: "Do fixed income investments on a 30-year period have higher returns?" },
+        { username: "Aarin Kachroo", question: "Do fixed income investments on a 30-year period have higher returns?" },
+        { username: "Alice Smith", question: "What is the impact of climate change on agriculture?" }
+    ]);
 
-    const handleChange = () => {
-        setChecked(!checked);
-    };
+
+    function handleDragStart(event, index) {
+        event.dataTransfer.setData("text/plain", index.toString());
+    }
+
+    function handleDragOver(event) {
+        event.preventDefault();
+    }
+
+    function handleDrop(event, dropIndex) {
+        const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
+        if (dragIndex !== dropIndex) {
+            const updatedQuestions = [...dataList];
+            [updatedQuestions[dragIndex], updatedQuestions[dropIndex]] = [
+                updatedQuestions[dropIndex],
+                updatedQuestions[dragIndex]
+            ];
+            setDataList(updatedQuestions);
+        }
+    }
+
 
     function handleMessagingClick() {
         setCurrentScreen("messaging");
@@ -135,20 +157,25 @@ function Agenda() {
             </div>
 
             <div className="agenda-container">
-                <div className="agenda-questions">
-                    <img src={require("./assets/drag.png")} alt="drag" className="dragicon" />
-                    <div className="agenda-text">
-                        <text className="question-username">Roger Vaccaro</text>
-                        <div className="question-text">
-                            <text>Do fixed income investments on a 30 year period have higher returns?</text>
+                {dataList.map((data, index) => (
+                    <div className="agenda-questions" key={index}
+                        draggable="true"
+                        onDragStart={(event) => handleDragStart(event, index)}
+                        onDragOver={handleDragOver}
+                        onDrop={(event) => handleDrop(event, index)}>
+                        <img src={require("./assets/drag.png")} alt="drag" className="dragicon" />
+                        <div className="agenda-text">
+                            <text className="question-username">{data.username}</text>
+                            <div className="question-text">
+                                <text>{data.question}</text>
+                            </div>
+                        </div>
+                        <div className="control control-checkbox">
+                            <input type="checkbox" id={`myCheckbox${index}`} />
+                            <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
                         </div>
                     </div>
-                    <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={handleChange}
-                    />
-                </div>
+                ))}
             </div>
         </div>
     );
