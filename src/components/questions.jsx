@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Message from "./Message.jsx";
 import Comments from "./comments";
-import Agenda from "./Agenda.jsx"
+import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
 
 function Feedback() {
@@ -31,9 +31,9 @@ function Feedback() {
       username: "Roger Vaccaro",
       time: "20:19:20",
       text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-
+    }
   ]);
+  const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -49,6 +49,10 @@ function Feedback() {
 
   function handleAnsweredClick() {
     setCurrentScreen("answered");
+  }
+
+  function handleViewAllClick() {
+    setFadeContainerVisible(false);
   }
 
   if (currentScreen === "messaging") {
@@ -162,8 +166,17 @@ function Feedback() {
           </div>
         ))}
       </div>
+      {fadeContainerVisible && (
+        <div className="fade">
+          <button className="viewAll-button" onClick={handleViewAllClick}>
+            View All
+          </button>
+        </div>
+      )}
       <div className="footer">
-        <button className="text-btn" onClick={handleAgendaClick}>Agenda</button>
+        <button className="text-btn" onClick={handleAgendaClick}>
+          Agenda
+        </button>
         <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 10 }}>
           Answers
         </button>
