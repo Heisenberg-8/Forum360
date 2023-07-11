@@ -1,9 +1,39 @@
 import React, { useState } from "react";
 import Message from "./Message.jsx";
 import Comments from "./comments";
+import Agenda from "./Agenda.jsx"
+import Answered from "./Answered.jsx";
 
 function Feedback() {
   const [currentScreen, setCurrentScreen] = useState("");
+  const [questions, setQuestions] = useState([
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+
+  ]);
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -13,12 +43,28 @@ function Feedback() {
     setCurrentScreen("comments");
   }
 
+  function handleAgendaClick() {
+    setCurrentScreen("agenda");
+  }
+
+  function handleAnsweredClick() {
+    setCurrentScreen("answered");
+  }
+
   if (currentScreen === "messaging") {
     return <Message />;
   }
 
+  if (currentScreen === "agenda") {
+    return <Agenda />;
+  }
+
   if (currentScreen === "comments") {
     return <Comments />;
+  }
+
+  if (currentScreen === "answered") {
+    return <Answered />;
   }
 
   return (
@@ -49,7 +95,12 @@ function Feedback() {
             />
             <span className="button-text">Messaging</span>
           </button>
-          <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}>
+          <button
+            type="button"
+            name="feedback"
+            className="button"
+            style={{ backgroundColor: "#232cff", color: "#ffffff" }}
+          >
             <img
               src={require("./assets/feedback.png")}
               alt="logo"
@@ -73,7 +124,9 @@ function Feedback() {
               alt="logo"
               className="file"
             />
-            <span className="button-text" style={{ marginLeft: "10px" }}>Resources</span>
+            <span className="button-text" style={{ marginLeft: "10px" }}>
+              Resources
+            </span>
           </button>
         </div>
       </div>
@@ -81,62 +134,42 @@ function Feedback() {
         <button name="questions" className="feedback-button">
           <span className="h3">Questions</span>
         </button>
-        <button name="comments" className="feedback-button" style={{ border: "none" }} onClick={handleCommentsClick}>
+        <button
+          name="comments"
+          className="feedback-button"
+          style={{ border: "none" }}
+          onClick={handleCommentsClick}
+        >
           <span className="h4">Comments</span>
         </button>
       </div>
       <div className="questions-container">
-
-        <div className="question">
-          <text className="question-username">Roger Vaccaro<span className="time">20:19:20</span></text>
-          <div className="question-text">
-            <text>Do fixed income investments on a 30 year period have higher returns?</text>
+        {questions.map((question, index) => (
+          <div className="question" key={index}>
+            <text className="question-username">
+              {question.username}
+              <span className="time">{question.time}</span>
+            </text>
+            <div className="question-text">
+              <text>{question.text}</text>
+            </div>
+            <div className="question-footer">
+              <btn className="text-btn1">Move to agenda</btn>
+              <btn className="text-btn1" style={{ marginLeft: 30 }}>
+                Send to IRP
+              </btn>
+            </div>
           </div>
-          <div className="question-footer">
-            <btn className="text-btn" span>Move to agenda</btn>
-            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
-          </div>
-        </div>
-
-        <div className="question">
-          <text className="question-username">Roger Vaccaro<span className="time">20:19:20</span></text>
-          <div className="question-text">
-            <text>Do fixed income investments on a 30 year period have higher returns? Do fixed income investments on a 30 year period have higher returns?</text>
-          </div>
-          <div className="question-footer">
-            <btn className="text-btn" span>Move to agenda</btn>
-            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
-          </div>
-        </div>
-
-        <div className="question">
-          <text className="question-username">Sidak Taneja<span className="time">20:19:20</span></text>
-          <div className="question-text">
-            <text>Do fixed income investments on a 30 year period have higher returns?</text>
-          </div>
-          <div className="question-footer">
-            <btn className="text-btn" span>Move to agenda</btn>
-            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
-          </div>
-        </div>
-
-        <div className="question">
-          <text className="question-username">Sidak Taneja<span className="time">20:19:20</span></text>
-          <div className="question-text">
-            <text>Do fixed income investments on a 30 year period have higher returns?</text>
-          </div>
-          <div className="question-footer">
-            <btn className="text-btn" span>Move to agenda</btn>
-            <btn className="text-btn" style={{ marginLeft: 30 }}>Send to IRP</btn>
-          </div>
-        </div>
+        ))}
       </div>
       <div className="footer">
-        <btn className="text-btn" span>Agenda</btn>
-        <btn className="text-btn" style={{ marginLeft: 30 }}>Answers</btn>
+        <button className="text-btn" onClick={handleAgendaClick}>Agenda</button>
+        <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 30 }}>
+          Answers
+        </button>
       </div>
     </div>
-  )
+  );
 }
 
 export default Feedback;

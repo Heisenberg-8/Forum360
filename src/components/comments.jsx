@@ -4,6 +4,44 @@ import Questions from "./questions";
 
 function Comments() {
   const [currentScreen, setCurrentScreen] = useState("");
+  const [questions, setQuestions] = useState([
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+    {
+      username: "Roger Vaccaro",
+      time: "20:19:20",
+      text: "Do fixed income investments on a 30 year period have higher returns?"
+    },
+
+  ]);
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -87,6 +125,19 @@ function Comments() {
         <button name="comments" className="feedback-button">
           <span className="h3">Comments</span>
         </button>
+      </div>
+      <div className="comments-container">
+        {questions.map((question, index) => (
+          <div className="question" key={index}>
+            <text className="question-username">
+              {question.username}
+              <span className="time">{question.time}</span>
+            </text>
+            <div className="question-text">
+              <text>{question.text}</text>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
