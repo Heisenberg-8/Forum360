@@ -36,7 +36,7 @@
 
 .h3 {
   color: azure;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 650;
   margin-top: 20px;
   margin-left: 5px;
@@ -57,7 +57,7 @@
 }
 
 .button {
-  width: 50%;
+  width: 48%;
   height: 52px;
   display: flex;
   align-items: center;
@@ -172,7 +172,7 @@ button:hover {
 }
 
 .feedback-button {
-  width: 100%;
+  width: 50%;
   margin-left: 5px;
   margin-right: 5px;
   height: 52px;
@@ -195,7 +195,7 @@ button:hover {
 
 .h4 {
   color: rgba(240, 255, 255, 0.568);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 650;
   margin-top: 20px;
   margin-left: 5px;
@@ -240,6 +240,7 @@ button:hover {
   grid-auto-flow: row;
   margin-top: 15px;
   opacity: 1;
+  width: 100%;
 }
 
 .questions-container::-webkit-scrollbar {
@@ -252,27 +253,55 @@ button:hover {
   left: 0;
   width: 100%;
   height: 30%;
-  background: linear-gradient(transparent,rgba(31, 31, 31, 0.8), #1F1F1F, #1F1F1F);
+  background: linear-gradient(transparent, rgba(31, 31, 31, 0.8), #1F1F1F, #1F1F1F);
 }
 
-.viewAll-button{
+.fade-comments {
+  position: absolute;
+  top: 63%;
+  left: 0;
+  width: 100%;
+  height: 36%;
+  background: linear-gradient(transparent, rgba(31, 31, 31, 0.8), #1F1F1F, #1F1F1F);
+}
+
+.viewAll-button {
   background: transparent;
   color: #ffffff9d;
   font-weight: bold;
   border: transparent;
-  position: relative; 
-  top: 80%; 
+  position: relative;
+  top: 80%;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   font-size: 15px;
 }
 
-.viewAll-button:hover{
+.loadmore-button {
+  width: 100%;
+  margin-top: 80%;
+  height: 52px;
+  align-items: center;
+  background-color: #0a0e17;
+  color: white;
+  font-size: 17px;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 550;
+  align-content: center;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewAll-button:hover {
   background: transparent;
   color: white;
 
 }
-
 
 .comments-container {
   display: grid;
@@ -291,8 +320,8 @@ button:hover {
 
 .question {
   background-color: #2C2F38;
-  width: "100%";
-  border-radius: 5px;
+  width: 85%;
+  border-radius: 10px;
   padding: 15px;
   padding-top: 10px;
   margin-top: 15px;
@@ -396,4 +425,19 @@ button:hover {
 
 .agenda-text {
   margin-left: 15px;
+}
+
+.message-count {
+  background-color: #D50D55;
+  padding: 2px;
+  border-radius: 9px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 15%;
+}
+
+.count {
+  color: #ffffff;
+  font-weight: 550;
+  font-size: 16px;
 }

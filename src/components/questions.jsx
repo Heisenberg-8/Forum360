@@ -3,37 +3,16 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
+import Data from "./data.jsx";
+
 
 function Feedback() {
+  const { comments, questions } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
-  const [questions, setQuestions] = useState([
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    }
-  ]);
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
+
+  const messageCount = questions.length;
+  const commentCount = comments.length;
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -136,15 +115,17 @@ function Feedback() {
       </div>
       <div className="feedback-container">
         <button name="questions" className="feedback-button">
-          <span className="h3">Questions</span>
+          <span className="h3" style={{ marginLeft: "-5px" }}>Questions</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
         </button>
         <button
           name="comments"
           className="feedback-button"
-          style={{ border: "none" }}
+          style={{ border: "none", marginLeft: "-5px" }}
           onClick={handleCommentsClick}
         >
           <span className="h4">Comments</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{commentCount}</span></div>
         </button>
       </div>
       <div className="questions-container">

@@ -1,47 +1,16 @@
 import React, { useState } from "react";
 import Message from "./Message.jsx";
 import Questions from "./questions";
+import Data from "./data.jsx";
+
 
 function Comments() {
+  const { comments, questions } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
-  const [questions, setQuestions] = useState([
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
-    {
-      username: "Roger Vaccaro",
-      time: "20:19:20",
-      text: "Do fixed income investments on a 30 year period have higher returns?"
-    },
+  const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
 
-  ]);
+  const messageCount = questions.length;
+  const commentCount = comments.length;
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -49,6 +18,10 @@ function Comments() {
 
   function handleQuestionsClick() {
     setCurrentScreen("questions");
+  }
+
+  function handleViewAllClick() {
+    setFadeContainerVisible(false);
   }
 
   if (currentScreen === "messaging") {
@@ -66,7 +39,11 @@ function Comments() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
+        <img
+          src={require("./assets/menu (2).png")}
+          alt="logo"
+          className="menu"
+        />
       </div>
       <div>
         <div className="buttons">
@@ -83,9 +60,14 @@ function Comments() {
             />
             <span className="button-text">Messaging</span>
           </button>
-          <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}>
+          <button
+            type="button"
+            name="feedback"
+            className="button"
+            style={{ backgroundColor: "#232cff", color: "#ffffff" }}
+          >
             <img
-              src={require("./assets/feedback.png")}
+              src={require("./assets/whitefeedback.png")}
               alt="logo"
               className="message"
             />
@@ -114,30 +96,41 @@ function Comments() {
         </div>
       </div>
       <div className="feedback-container">
-        <button
-          name="questions"
+        <button name="questions"
           className="feedback-button"
           style={{ border: "none" }}
-          onClick={handleQuestionsClick}
-        >
-          <span className="h4">Questions</span>
+          onClick={handleQuestionsClick}>
+          <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
         </button>
-        <button name="comments" className="feedback-button">
-          <span className="h3">Comments</span>
+        <button
+          name="comments"
+          className="feedback-button"
+        >
+          <span className="h3" style={{ marginLeft: "-5px" }}>Comments</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{commentCount}</span></div>
+
         </button>
       </div>
       <div className="comments-container">
-        {questions.map((question, index) => (
+        {comments.map((comments, index) => (
           <div className="question" key={index}>
             <text className="question-username">
-              {question.username}
-              <span className="time">{question.time}</span>
+              {comments.username}
+              <span className="time">{comments.time}</span>
             </text>
             <div className="question-text">
-              <text>{question.text}</text>
+              <text>{comments.text}</text>
             </div>
           </div>
         ))}
+        {fadeContainerVisible && (
+          <div className="fade-comments">
+            <button className="loadmore-button" onClick={handleViewAllClick}>
+              Load More
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
