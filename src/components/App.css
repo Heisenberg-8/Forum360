@@ -141,6 +141,11 @@ button:hover {
 
 }
 
+.input-box {
+  font-family: Arial, sans-serif; 
+  font-size: 14px;
+}
+
 .message-container {
   background-color: #0A0E17;
   padding: 10px;
