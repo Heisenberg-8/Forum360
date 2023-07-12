@@ -5,11 +5,10 @@ import Data from "./data.jsx";
 
 
 function Comments() {
-  const { comments, questions } = Data();
+  const { comments } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
 
-  const messageCount = questions.length;
   const commentCount = comments.length;
 
   function handleMessagingClick() {
@@ -101,7 +100,7 @@ function Comments() {
           style={{ border: "none" }}
           onClick={handleQuestionsClick}>
           <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
-          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
+          {/* <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div> */}
         </button>
         <button
           name="comments"
