@@ -15,34 +15,12 @@ function Message() {
     const [chatMessages, setChatMessages] = useState([]);
     const [currentScreen, setCurrentScreen] = useState("tab");
 
-    // useEffect(() => {
-    //   app.initialize().then(() => {
-    //     app.notifySuccess();
-
-    //     app.getContext().then((context) => {
-    //       setMeetingId(context.meeting.id);
-    //       setUserName(context.user.userPrincipalName);
-
-    //       if (context.page.frameContext === "sidePanel") {
-    //         teamsCore.registerOnLoadHandler((context) => {
-    //           app.notifySuccess();
-    //         });
-
-    //         teamsCore.registerBeforeUnloadHandler((readyToUnload) => {
-    //           readyToUnload();
-    //           return true;
-    //         });
-    //       }
-    //     });
-    //   });
-    // }, []);
-
     const optionList = [
         { value: "red", label: "Red" },
         { value: "green", label: "Green" },
         { value: "yellow", label: "Yellow" },
         { value: "blue", label: "Blue" },
-        { value: "white", label: "White" },
+        { value: "To all", label: "To all" },
     ];
 
     function handleSelect(data) {

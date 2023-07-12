@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Data = () => {
     const [comments, setComments] = useState([
@@ -67,9 +67,16 @@ const Data = () => {
         }
     ]);
 
+    const [dataList, setDataList] = useState([
+        { username: "Roger Vaccaro", question: "Do fixed income investments on a 30-year period have higher returns?" },
+        { username: "Aarin Kachroo", question: "Do fixed income investments on a 30-year period have higher returns?" },
+        { username: "Alice Smith", question: "What is the impact of climate change on agriculture?" }
+    ]);
+
     return {
         comments,
-        questions
+        questions,
+        dataList
     };
 };
 
