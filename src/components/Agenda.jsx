@@ -34,7 +34,6 @@ function Agenda() {
         }
     }
 
-
     function handleMessagingClick() {
         setCurrentScreen("messaging");
     }
@@ -174,6 +173,7 @@ function Agenda() {
                             <input type="checkbox" id={`myCheckbox${index}`} />
                             <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
                         </div>
+
                     </div>
                 ))}
             </div>
