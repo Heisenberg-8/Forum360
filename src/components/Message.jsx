@@ -14,6 +14,10 @@ function Message() {
     const [message, setMessage] = useState("");
     const [chatMessages, setChatMessages] = useState([]);
     const [currentScreen, setCurrentScreen] = useState("tab");
+    const [quickMessage, setQuickMessage] = useState("");
+    const [selectedParticipants, setSelectedParticipants] = useState();
+    const [selectedQuickMessage, setSelectedQuickMessage] = useState("");
+
 
     const optionList = [
         { value: "red", label: "Red" },
@@ -23,8 +27,26 @@ function Message() {
         { value: "To all", label: "To all" },
     ];
 
+    const quickMessageOptions = [
+        { value: "Hello", label: "Hello" },
+        { value: "Goodbye", label: "Goodbye" },
+        { value: "Thank you", label: "Thank you" },
+        { value: "Please", label: "Please" },]
+
     function handleSelect(data) {
         setSelectedOptions(data);
+        if (data && data.length > 0) {
+            const selectedMessage = data[data.length - 1].value;
+            setMessage(selectedMessage);
+        }
+    }
+    
+    function handleParticipantSelect(data) {
+        setSelectedParticipants(data);
+    }
+
+    function handleQuickMessageSelect(data) {
+        setSelectedQuickMessage(data);
         if (data && data.length > 0) {
             const selectedMessage = data[data.length - 1].value;
             setMessage(selectedMessage);
@@ -115,15 +137,15 @@ function Message() {
                 <div className="container">
                     <h3 className="h3">To:</h3>
                     <div className="dropdown-container">
-                        <Select
-                            options={optionList}
-                            placeholder="Select paticipant"
-                            value={selectedOptions}
-                            onChange={handleSelect}
-                            isSearchable={true}
-                            isMulti={true}
-                            styles={customStyles}
-                        />
+                    <Select
+                        options={optionList}
+                        placeholder="Select participant"
+                        value={selectedParticipants}
+                        onChange={handleParticipantSelect}
+                        isSearchable={true}
+                        isMulti={true}
+                        styles={customStyles}
+                    />
                     </div>
                     <hr className="line" />
                 </div>
@@ -138,40 +160,32 @@ function Message() {
                     />
                     <hr className="line" />
                 </div>
-                    <div className="container">
-                        <h3 className="h3">Message</h3>
-                        <div className="dropdown-container-QM">
-                        <Select
-                            options={optionList}
-                            placeholder="Quick Message"
-                            value={selectedOptions}
-                            onChange={handleSelect}
-                            isSearchable={true}
-                            isMulti={true}
-                            styles={customStyles}
-                        />
+                <div className="container">
+                    <h3 className="h3">Message</h3>
+                    <div className="dropdown-container-QM">
+                    <Select
+                        options={quickMessageOptions}
+                        placeholder="Quick Message"
+                        value={selectedQuickMessage}
+                        onChange={handleQuickMessageSelect}
+                        isSearchable={true}
+                        isMulti={true}
+                        styles={customStyles}
+                    />
+                
+                
                     </div>
-                        <textarea
-                            type="textarea"
-                            value={message}
-                            onChange={handleMessageChange}
-                            placeholder="Enter message"
-                            className="input-box"
-                        />
-                        <button onClick={handleSendMessage} className="send-button">
-                            Send Message
-                        </button>
-                    </div>
-                {/* <div className="chatbox">
-          {chatMessages.slice().reverse().map((msg, index) => (
-            <div key={index} className="message-container">
-              <span className="sender">{msg.sender}: </span>
-              <span className="subject">{msg.subject}</span>
-              <br />
-              <span className="message-content">{msg.content}</span>
-            </div>
-          ))}
-        </div> */}
+                    <textarea
+                        type="textarea"
+                        value={message}
+                        onChange={handleMessageChange}
+                        placeholder="Enter message"
+                        className="input-box"
+                    />
+                    <button onClick={handleSendMessage} className="send-button">
+                        Send Message
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Questions from "./questions";
 import Data from "./data.jsx";
+import { fetchQuestions } from "./data.jsx";
 
 
 function Comments() {
   const { comments } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
-
+  const [questions, setQuestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const commentCount = comments.length;
+
+  useEffect(() => {
+    fetchQuestions()
+      .then(questionsData => {
+        setQuestions(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const messageCount = questions.length;
+
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -21,6 +34,12 @@ function Comments() {
 
   function handleViewAllClick() {
     setFadeContainerVisible(false);
+  }
+
+  if (isLoading) {
+    return (
+      <div className="loading-spinner"></div>
+    );
   }
 
   if (currentScreen === "messaging") {
@@ -100,7 +119,7 @@ function Comments() {
           style={{ border: "none" }}
           onClick={handleQuestionsClick}>
           <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
-          {/* <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div> */}
+          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
         </button>
         <button
           name="comments"
