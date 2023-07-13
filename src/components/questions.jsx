@@ -12,10 +12,11 @@ function Feedback() {
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+
   const commentCount = comments.length;
 
   useEffect(() => {
-    //return
     fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/84573623-aa87-402c-b28d-24d1e181ecbe/2560', {
       headers: {
         Authorization: 'Bearer COJWkKhYanoNYTcF6c13SGcMtd-5gJy8wwvghVENkBHoYgjCUZcYgY3lIgJkWY_eAV4BDOOE9LphtW4iAfa3c_E40UJUBtpZ8ZXxiZiddgIxCI4uOgafJ-Mohnjv3WB90R_AL31lLxA45KXhyXhnfdvG0vd5rxEaGseASXORQw51cxi1sy6WffTzbMJSSOKI363IckErkuL7yTQnu2unQY6wlce5BuKJq5jmuBdNGMLgeQO5ixmjOVSIiRt-mEabQFqXh5n-hrVu1qB1_QwCdzsgBPLWFl3fBO90BZ7pQFsVpl2B0w2xuj-mCMWHXOX-9r9PZ7G8eQwhWi0eTFcUC_qkKCy8DLkf16X-IYM3vT1tjmwWAvZ4pt3lu-PVe0-NNmrd7cDKSTOIjEiPgZpXLP2lzQqEvz3iQp28571vIeGH_nssfdre_U5MT8nIbv3ao5HgnoGONG069aJCbt8V2yLpbKgNFxVIrz42rCXxk3U',
@@ -24,9 +25,12 @@ function Feedback() {
       .then(response => response.json())
       .then(json => {
         setQuestions(json.Payload.Audiences);
-        //stop loader
+        setIsLoading(false); // Set loading state to false
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        setIsLoading(false); // Set loading state to false in case of error
+      });
   }, []);
 
   const messageCount = questions.length;
@@ -49,6 +53,10 @@ function Feedback() {
 
   function handleViewAllClick() {
     setFadeContainerVisible(false);
+  }
+
+  if (isLoading) {
+    return <div className="loading-spinner"></div>;
   }
 
   if (currentScreen === "messaging") {

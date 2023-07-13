@@ -544,3 +544,30 @@ button:hover {
 .control-checkbox input:checked+.control_indicator::before {
   animation-name: s-ripple-dup;
 }
+
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: calc(50% - 30px); 
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 10px solid #2C2F38;
+  border-top: 10px solid #232cff;
+  animation: spin 1s linear infinite;
+}
+
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
