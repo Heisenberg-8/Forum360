@@ -33,13 +33,13 @@ function Message() {
         { value: "Thank you", label: "Thank you" },
         { value: "Please", label: "Please" },]
 
-    function handleSelect(data) {
-        setSelectedOptions(data);
-        if (data && data.length > 0) {
-            const selectedMessage = data[data.length - 1].value;
-            setMessage(selectedMessage);
-        }
-    }
+    // function handleSelect(data) {
+    //     setSelectedOptions(data);
+    //     if (data && data.length > 0) {
+    //         const selectedMessage = data[data.length - 1].value;
+    //         setMessage(selectedMessage);
+    //     }
+    // }
     
     function handleParticipantSelect(data) {
         setSelectedParticipants(data);
@@ -47,9 +47,10 @@ function Message() {
 
     function handleQuickMessageSelect(data) {
         setSelectedQuickMessage(data);
-        if (data && data.length > 0) {
-            const selectedMessage = data[data.length - 1].value;
-            setMessage(selectedMessage);
+        if (data) {
+            const selectedMessage = data.value;
+            setSelectedQuickMessage(data);
+            setMessage(selectedMessage); // Set the selected quick message to the message state
         }
     }
 
@@ -169,11 +170,9 @@ function Message() {
                         value={selectedQuickMessage}
                         onChange={handleQuickMessageSelect}
                         isSearchable={true}
-                        isMulti={true}
+                        isMulti={false}
                         styles={customStyles}
                     />
-                
-                
                     </div>
                     <textarea
                         type="textarea"
