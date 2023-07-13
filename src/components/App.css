@@ -1,6 +1,10 @@
+@font-face {
+  font-family: albert;
+  src: url(./assets/Albert_Sans/AlbertSans-VariableFont_wght.ttf);
+}
+
 .tab-background {
   display: flex;
-  background-color: #1F1F1F;
   align-items: center;
 }
 
@@ -20,7 +24,7 @@
 
 .h1 {
   color: azure;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   font-size: 20px;
   font-weight: bold;
   margin-left: 0;
@@ -28,7 +32,7 @@
 
 .h2 {
   color: azure;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   font-size: 20px;
   font-weight: lighter;
   opacity: 0.7;
@@ -37,9 +41,28 @@
 .h3 {
   color: azure;
   font-size: 14px;
-  font-weight: 650;
-  margin-top: 20px;
+  font-weight: 700;
   margin-left: 5px;
+}
+
+.mh3 {
+  color: azure;
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+
+.h4 {
+  color: rgba(240, 255, 255, 0.568);
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.body {
+  /* background-color: white; */
+  height: fit-content;
 }
 
 .message {
@@ -48,28 +71,37 @@
 
 .buttons {
   display: flex;
-  margin-top: 18px;
+  margin-top: 10%;
 }
 
+.buttonsquestions {
+  display: flex;
+}
 
 .buttons1 {
   display: flex;
 }
 
+.mainbuttons {
+  background-color: #0a0e17;
+  border-radius: 10px;
+  margin-top: 3%;
+}
+
 .button {
-  width: 48%;
+  width: 50%;
   height: 52px;
   display: flex;
-  align-items: center;
   color: #9A9C9F;
   background-color: #0a0e17;
   font-size: 17px;
   border-radius: 10px;
   padding: 10px;
   border: none;
-  align-content: center;
-  box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.25);
+  align-items: center;
+  justify-content: center;
 }
+
 
 .button:hover {
   color: #ffffff;
@@ -78,6 +110,7 @@
 
 .dropdown-container {
   width: 250px;
+  margin-top: -3%;
   align-items: center;
   align-content: center;
   align-self: center;
@@ -86,28 +119,89 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  /* margin-bottom: 2%; */
+}
+
+.email-container {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 
 .input-box {
-  width: 90%;
+  width: 98%;
   padding: 10px;
   margin-top: 5px;
   align-self: center;
-  /* border-radius: 5px; */
   border: none;
   background-color: #1F1F1F;
-  color: white;
+  color: rgba(255, 255, 255, 0.61);
+  margin-top: -3%;
+
   /* min-width: 200px; */
-  /* Set a minimum width for the input field */
+}
+
+.message-dropdown-container {
+  margin-left: 16%;
+  margin-top: 2.4%;
+}
+
+.quick-message-dropdown {
+  background-color: transparent;
+  color: #ffffff85;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  font-family: Albert;
+}
+
+.quickmessages {
+  background-color: #3D4553;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 30px;
+}
+
+.dropdown-icon {
+  vertical-align: middle;
+  width: 20px;
+  margin-right: 8px;
+}
+
+.dropdown-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+
+.email-box {
+  width: 98%;
+  padding: 10px;
+  margin-top: 5px;
+  align-self: center;
+  border: none;
+  background-color: #13161b;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.61);
 }
 
 .input-box::placeholder {
   color: #808080;
-  font-size: 16px;
+  font-size: 14px;
   min-width: 200px;
+  font-family: Albert;
 }
 
+.email-box::placeholder {
+  color: #808080;
+  font-size: 14px;
+  min-width: 200px;
+  font-family: Albert;
+}
 
 .send-button {
   width: 100%;
@@ -116,7 +210,8 @@
   align-items: center;
   background-color: #0a0e17;
   color: white;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 700;
   border-radius: 10px;
   padding: 10px;
   align-content: center;
@@ -126,36 +221,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bolder;
 }
-
 
 button:hover {
   color: #ffffff;
   background-color: #232cff;
 }
 
-.chatbox {
-  margin-top: 20px;
-  color: white;
-  /* background: linear-gradient(to top, rgba(10, 14, 23, 1) 0%, rgba(10, 14, 23, 0) 100%); */
-
-}
-
 .input-box {
   font-family: Arial, sans-serif;
   font-size: 14px;
-}
-
-.message-container {
-  background-color: #0A0E17;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-
-}
-
-.message-container .subject {
-  font-weight: bold;
 }
 
 .line {
@@ -183,27 +259,22 @@ button:hover {
   height: 52px;
   align-items: center;
   background-color: transparent;
-  font-size: 17px;
   border-radius: 0px;
   padding: 10px;
-  align-content: center;
   border: none;
-  text-align: center;
   cursor: pointer;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: none;
   border-bottom: solid #ffffff;
   border-bottom-width: 2px;
+  text-align: center;
+  justify-content: center;
+  box-shadow: none;
 }
 
-.h4 {
-  color: rgba(240, 255, 255, 0.568);
-  font-size: 14px;
-  font-weight: 650;
-  margin-top: 20px;
-  margin-left: 5px;
+.feedback-button>* {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .feedback-button:hover {
@@ -216,18 +287,41 @@ button:hover {
 
 .button-text {
   font-weight: 650;
+  font-size: 12px;
 }
 
 .main {
   display: grid;
+  width: fit-content;
   /* grid-auto-rows: min-content; */
   /* gap: var(--size-3); */
   overflow-y: scroll;
   height: 100%;
+  font-family: Albert;
   /* overscroll-behavior: contain; */
-  grid-auto-flow: row;
+  /* grid-auto-flow: row; */
   /* width: 100%; */
   /* margin-top: 15px; */
+  /* background-color: whitesmoke; */
+}
+
+.main-message {
+  /* display: grid; */
+  /* grid-auto-rows: min-content; */
+  /* gap: var(--size-3); */
+  overflow-y: scroll;
+  height: 100%;
+  font-family: Albert;
+  /* background-color: #7b7b7b; */
+  /* overscroll-behavior: contain; */
+  /* grid-auto-flow: row; */
+  /* width: 100%; */
+  /* margin-top: 15px; */
+  /* background-color: whitesmoke; */
+}
+
+.main-message::-webkit-scrollbar {
+  width: 0px;
 }
 
 .main::-webkit-scrollbar {
@@ -330,27 +424,28 @@ button:hover {
   padding: 15px;
   padding-top: 10px;
   margin-top: 15px;
+  padding-bottom: 9px;
 }
 
 .question-username {
   color: #ffffff;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .time {
   margin-left: 12px;
-  font-weight: 10;
+  font-weight: 400;
   opacity: 0.7;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .question-text {
   margin-top: 10px;
   color: #ffffff;
-  font-size: 15px;
+  font-size: 14px;
   opacity: 0.7;
-  font-weight: 100;
+  font-weight: 500;
 }
 
 .question-footer {
@@ -359,7 +454,7 @@ button:hover {
   font-size: 16px;
   color: #ffffff9d;
   /* opacity: 0.8; */
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .text-btn:hover {
@@ -392,7 +487,7 @@ button:hover {
   background-color: transparent;
   border: none;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   color: #ffffff9d;
 }
 
@@ -438,13 +533,13 @@ button:hover {
   border-radius: 9px;
   padding-left: 8px;
   padding-right: 8px;
-  margin-top: 15%;
+  /* margin-top: 15%; */
 }
 
 .count {
   color: #ffffff;
-  font-weight: 550;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .control {
@@ -569,14 +664,4 @@ button:hover {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.dropdown-container-QM {
-  display: flex;
-  position: fixed;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 7%; 
-  left: 36.5%;
 }

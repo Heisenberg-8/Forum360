@@ -81,7 +81,7 @@ function Feedback() {
           className="menu"
         />
       </div>
-      <div>
+      <div className="">
         <div className="buttons">
           <button
             type="button"
@@ -100,7 +100,7 @@ function Feedback() {
             type="button"
             name="feedback"
             className="button"
-            style={{ backgroundColor: "#232cff", color: "#ffffff" }}
+            style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
           >
             <img
               src={require("./assets/whitefeedback.png")}
