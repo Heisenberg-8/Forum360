@@ -574,11 +574,10 @@ button:hover {
 
 .dropdown-container-QM {
   display: flex;
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  height: 4.5%; /* Adjusted height */
+  height: 7%; 
   left: 36.5%;
 }
