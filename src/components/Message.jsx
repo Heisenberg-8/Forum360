@@ -25,6 +25,10 @@ function Message() {
 
     function handleSelect(data) {
         setSelectedOptions(data);
+        if (data && data.length > 0) {
+            const selectedMessage = data[data.length - 1].value;
+            setMessage(selectedMessage);
+        }
     }
 
     function handleSubjectChange(event) {
@@ -134,19 +138,30 @@ function Message() {
                     />
                     <hr className="line" />
                 </div>
-                <div className="container">
-                    <h3 className="h3">Message</h3>
-                    <textarea
-                        type="textarea"
-                        value={message}
-                        onChange={handleMessageChange}
-                        placeholder="Enter message"
-                        className="input-box"
-                    />
-                    <button onClick={handleSendMessage} className="send-button">
-                        Send Message
-                    </button>
-                </div>
+                    <div className="container">
+                        <h3 className="h3">Message</h3>
+                        <div className="dropdown-container-QM">
+                        <Select
+                            options={optionList}
+                            placeholder="Quick Message"
+                            value={selectedOptions}
+                            onChange={handleSelect}
+                            isSearchable={true}
+                            isMulti={true}
+                            styles={customStyles}
+                        />
+                    </div>
+                        <textarea
+                            type="textarea"
+                            value={message}
+                            onChange={handleMessageChange}
+                            placeholder="Enter message"
+                            className="input-box"
+                        />
+                        <button onClick={handleSendMessage} className="send-button">
+                            Send Message
+                        </button>
+                    </div>
                 {/* <div className="chatbox">
           {chatMessages.slice().reverse().map((msg, index) => (
             <div key={index} className="message-container">
