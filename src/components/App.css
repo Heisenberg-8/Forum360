@@ -142,7 +142,7 @@ button:hover {
 }
 
 .input-box {
-  font-family: Arial, sans-serif; 
+  font-family: Arial, sans-serif;
   font-size: 14px;
 }
 
@@ -548,7 +548,7 @@ button:hover {
 .loading-spinner {
   position: fixed;
   top: 50%;
-  left: calc(50% - 30px); 
+  left: calc(50% - 30px);
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
@@ -561,13 +561,22 @@ button:hover {
   animation: spin 1s linear infinite;
 }
 
-
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
+}
+
+.dropdown-container-QM {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 7%;
+  left: 36.5%;
 }

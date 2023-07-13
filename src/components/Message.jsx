@@ -25,6 +25,10 @@ function Message() {
 
     function handleSelect(data) {
         setSelectedOptions(data);
+        if (data && data.length > 0) {
+            const selectedMessage = data[data.length - 1].value;
+            setMessage(selectedMessage);
+        }
     }
 
     function handleSubjectChange(event) {
@@ -136,7 +140,17 @@ function Message() {
                 </div>
                 <div className="container">
                     <h3 className="h3">Message</h3>
-
+                    <div className="dropdown-container-QM">
+                        <Select
+                            options={optionList}
+                            placeholder="Quick Message"
+                            value={selectedOptions}
+                            onChange={handleSelect}
+                            isSearchable={true}
+                            isMulti={true}
+                            styles={customStyles}
+                        />
+                    </div>
                     <textarea
                         type="textarea"
                         value={message}
