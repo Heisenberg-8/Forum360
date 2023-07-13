@@ -3,6 +3,7 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
+import { fetchQuestions } from "./data.jsx";
 import Data from "./data.jsx";
 
 
@@ -11,25 +12,15 @@ function Feedback() {
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   const commentCount = comments.length;
 
   useEffect(() => {
-    fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/84573623-aa87-402c-b28d-24d1e181ecbe/2560', {
-      headers: {
-        Authorization: 'Bearer COJWkKhYanoNYTcF6c13SGcMtd-5gJy8wwvghVENkBHoYgjCUZcYgY3lIgJkWY_eAV4BDOOE9LphtW4iAfa3c_E40UJUBtpZ8ZXxiZiddgIxCI4uOgafJ-Mohnjv3WB90R_AL31lLxA45KXhyXhnfdvG0vd5rxEaGseASXORQw51cxi1sy6WffTzbMJSSOKI363IckErkuL7yTQnu2unQY6wlce5BuKJq5jmuBdNGMLgeQO5ixmjOVSIiRt-mEabQFqXh5n-hrVu1qB1_QwCdzsgBPLWFl3fBO90BZ7pQFsVpl2B0w2xuj-mCMWHXOX-9r9PZ7G8eQwhWi0eTFcUC_qkKCy8DLkf16X-IYM3vT1tjmwWAvZ4pt3lu-PVe0-NNmrd7cDKSTOIjEiPgZpXLP2lzQqEvz3iQp28571vIeGH_nssfdre_U5MT8nIbv3ao5HgnoGONG069aJCbt8V2yLpbKgNFxVIrz42rCXxk3U',
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        setQuestions(json.Payload.Audiences);
-        setIsLoading(false); // Set loading state to false
-      })
-      .catch(error => {
-        console.error(error);
-        setIsLoading(false); // Set loading state to false in case of error
+    fetchQuestions()
+      .then(questionsData => {
+        setQuestions(questionsData);
+        setIsLoading(false);
       });
   }, []);
 
@@ -56,7 +47,9 @@ function Feedback() {
   }
 
   if (isLoading) {
-    return <div className="loading-spinner"></div>;
+    return (
+        <div className="loading-spinner"></div>
+    );
   }
 
   if (currentScreen === "messaging") {
@@ -154,14 +147,14 @@ function Feedback() {
         </button>
       </div>
       <div className="questions-container">
-        {questions.map((questions, index) => (
+        {questions.map((question, index) => (
           <div className="question" key={index}>
             <text className="question-username">
-              {questions.FullChannel}
-              <span className="time">{questions.QuestionTime}</span>
+              {question.FullChannel}
+              <span className="time">{question.QuestionTime}</span>
             </text>
             <div className="question-text">
-              <text>{questions.Question}</text>
+              <text>{question.Question}</text>
             </div>
             <div className="question-footer">
               <btn className="text-btn1">Move to agenda</btn>
