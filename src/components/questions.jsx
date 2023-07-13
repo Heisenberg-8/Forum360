@@ -48,7 +48,7 @@ function Feedback() {
 
   if (isLoading) {
     return (
-        <div className="loading-spinner"></div>
+      <div className="loading-spinner"></div>
     );
   }
 

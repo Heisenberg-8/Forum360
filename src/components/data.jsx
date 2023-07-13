@@ -56,17 +56,17 @@ const Data = () => {
 
 export function fetchQuestions() {
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/84573623-aa87-402c-b28d-24d1e181ecbe/2560', {
-      headers: {
-        Authorization: 'Bearer COJWkKhYanoNYTcF6c13SGcMtd-5gJy8wwvghVENkBHoYgjCUZcYgY3lIgJkWY_eAV4BDOOE9LphtW4iAfa3c_E40UJUBtpZ8ZXxiZiddgIxCI4uOgafJ-Mohnjv3WB90R_AL31lLxA45KXhyXhnfdvG0vd5rxEaGseASXORQw51cxi1sy6WffTzbMJSSOKI363IckErkuL7yTQnu2unQY6wlce5BuKJq5jmuBdNGMLgeQO5ixmjOVSIiRt-mEabQFqXh5n-hrVu1qB1_QwCdzsgBPLWFl3fBO90BZ7pQFsVpl2B0w2xuj-mCMWHXOX-9r9PZ7G8eQwhWi0eTFcUC_qkKCy8DLkf16X-IYM3vT1tjmwWAvZ4pt3lu-PVe0-NNmrd7cDKSTOIjEiPgZpXLP2lzQqEvz3iQp28571vIeGH_nssfdre_U5MT8nIbv3ao5HgnoGONG069aJCbt8V2yLpbKgNFxVIrz42rCXxk3U',
-      },
+        headers: {
+            Authorization: 'Bearer jA2uXibyaXYKJnEH0YHN_xC7T2uqKG-UpubJSe8KAWmrJEtBIlhIHmpWSVhI-lFQLg-DcsHq9u9T0vUE_m3qgZ1Z_KOPdw_EFkUuL7tK6itim8jaChdyt408Q75JGWgVso6nt-1WiXbD3t22TIYqCWIBxIrUXihXSwTEGdFrQfAHQ2N3yn6G30Cx9kXKU9j389_LZWkpqwn9yo_fY6-dUNNXRDPKBkUKX8RDCT4RxG1WeobLu5gXM-UEEbEnkZosJXYlwPuLzAoNzbp0gPhSziwJXNXK1c9aQ7DimfQouJu17ezNNYtHAbWo_c-TqZoat4zY9bzefAeR_wMSu2HUWAjBGxWKmdAZJtnPY0krx8lWZShNx-IGDW-NuDIRGgVJNm0PN00IzibLBztlOjSJY1iVRwgbuB5pDEw30wRwcLlQ7pPqpnfAuZeU1Ijb0z0yJ2zdj3vk8M0x2EKljeu0mLQdEGCWrQKJ2pCRk_hUuUg',
+        },
     })
-    .then(response => response.json())
-    .then(json => json.Payload.Audiences)
-    .catch(error => {
-      console.error(error);
-      return [];
-    });
-  }
-  
+        .then(response => response.json())
+        .then(json => json.Payload.Audiences)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 
 export default Data;

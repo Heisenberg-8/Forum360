@@ -136,6 +136,7 @@ function Message() {
                 </div>
                 <div className="container">
                     <h3 className="h3">Message</h3>
+
                     <textarea
                         type="textarea"
                         value={message}
@@ -147,16 +148,6 @@ function Message() {
                         Send Message
                     </button>
                 </div>
-                {/* <div className="chatbox">
-          {chatMessages.slice().reverse().map((msg, index) => (
-            <div key={index} className="message-container">
-              <span className="sender">{msg.sender}: </span>
-              <span className="subject">{msg.subject}</span>
-              <br />
-              <span className="message-content">{msg.content}</span>
-            </div>
-          ))}
-        </div> */}
             </div>
         </div>
     );
