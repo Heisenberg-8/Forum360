@@ -40,7 +40,7 @@ function Message() {
             setMessage(selectedMessage);
         }
     }
-    
+
     function handleParticipantSelect(data) {
         setSelectedParticipants(data);
     }
@@ -137,15 +137,15 @@ function Message() {
                 <div className="container">
                     <h3 className="h3">To:</h3>
                     <div className="dropdown-container">
-                    <Select
-                        options={optionList}
-                        placeholder="Select participant"
-                        value={selectedParticipants}
-                        onChange={handleParticipantSelect}
-                        isSearchable={true}
-                        isMulti={true}
-                        styles={customStyles}
-                    />
+                        <Select
+                            options={optionList}
+                            placeholder="Select participant"
+                            value={selectedParticipants}
+                            onChange={handleParticipantSelect}
+                            isSearchable={true}
+                            isMulti={true}
+                            styles={customStyles}
+                        />
                     </div>
                     <hr className="line" />
                 </div>
@@ -163,17 +163,17 @@ function Message() {
                 <div className="container">
                     <h3 className="h3">Message</h3>
                     <div className="dropdown-container-QM">
-                    <Select
-                        options={quickMessageOptions}
-                        placeholder="Quick Message"
-                        value={selectedQuickMessage}
-                        onChange={handleQuickMessageSelect}
-                        isSearchable={true}
-                        isMulti={true}
-                        styles={customStyles}
-                    />
-                
-                
+                        <Select
+                            options={quickMessageOptions}
+                            placeholder="Quick Message"
+                            value={selectedQuickMessage}
+                            onChange={handleQuickMessageSelect}
+                            isSearchable={true}
+                            isMulti={true}
+                            styles={customStyles}
+                        />
+
+
                     </div>
                     <textarea
                         type="textarea"
