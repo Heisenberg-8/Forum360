@@ -137,8 +137,6 @@
   background-color: #1F1F1F;
   color: rgba(255, 255, 255, 0.61);
   margin-top: -3%;
-
-  /* min-width: 200px; */
 }
 
 .message-dropdown-container {
@@ -162,7 +160,10 @@
   background-color: #3D4553;
   font-size: 14px;
   font-weight: 400;
-  padding: 30px;
+  font-family: Albert;
+  color: white;
+  /* padding: 30px;
+  margin-left: 10px; */
 }
 
 .dropdown-icon {
@@ -186,7 +187,8 @@
   border: none;
   background-color: #13161b;
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.61);
+  color: rgb(255, 255, 255);
+  font-family: Albert;
 }
 
 .input-box::placeholder {

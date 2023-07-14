@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import Feedback from "./questions.jsx";
 import "./App.css";
@@ -10,10 +10,8 @@ function Message() {
     const [message, setMessage] = useState("");
     const [chatMessages, setChatMessages] = useState([]);
     const [currentScreen, setCurrentScreen] = useState("tab");
-    const [quickMessage, setQuickMessage] = useState("");
     const [selectedParticipants, setSelectedParticipants] = useState();
-    const [selectedQuickMessage, setSelectedQuickMessage] = useState("");
-
+    const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
 
     const optionList = [
         { value: "red", label: "Send to all" },
@@ -23,24 +21,116 @@ function Message() {
         { value: "To all", label: "Dwight Shrute" },
     ];
 
-    // function handleSelect(data) {
-    //     setSelectedOptions(data);
-    //     if (data && data.length > 0) {
-    //         const selectedMessage = data[data.length - 1].value;
-    //         setMessage(selectedMessage);
-    //     }
-    // }
+    const quickMessageOptions = [
+        { value: "welcome", label: "Welcome" },
+        { value: "rate", label: "Rate & Review" },
+        { value: "tech", label: "Technical Issues" },
+        { value: "delay", label: "Meeting Delay" },
+        { value: "custom", label: "Custom Message" },
+    ];
 
     function handleParticipantSelect(data) {
         setSelectedParticipants(data);
     }
 
-    function handleQuickMessageSelect(data) {
-        setSelectedQuickMessage(data);
-        if (data) {
-            const selectedMessage = data.value;
-            setSelectedQuickMessage(data);
-            setMessage(selectedMessage);
+    function sendwelcome() {
+        return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendWelcome', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+            },
+            body: JSON.stringify({
+                SessionId: '2560'
+            })
+        })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => {
+                console.error(error);
+                return [];
+            });
+    }
+
+    function sendrate() {
+        return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendReviewRate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+            },
+            body: JSON.stringify({
+                SessionId: '2560'
+            })
+        })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => {
+                console.error(error);
+                return [];
+            });
+    }
+
+    function sendtech() {
+        return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendTechnicalMessage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+            },
+            body: JSON.stringify({
+                SessionId: '2560'
+            })
+        })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => {
+                console.error(error);
+                return [];
+            });
+    }
+
+    function senddelay() {
+        return fetch('https://mgmt-test.forum360.co/api/PA_Event/MeetingDelayNotify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+            },
+            body: JSON.stringify({
+                SessionId: '2560'
+            })
+        })
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => {
+                console.error(error);
+                return [];
+            });
+    }
+
+    function handleQuickMessageSelect(event) {
+        const selectedMessage = event.target.value;
+        setSelectedQuickMessage(selectedMessage);
+        if (selectedMessage === "welcome") {
+            setSubject("Welcome to our event");
+            setMessage("Thank you for joining us!");
+            sendwelcome()
+        } else if (selectedMessage === "rate") {
+            setSubject("Rate & Review Request");
+            setMessage("We would appreciate your feedback. Please rate and review our event.");
+            sendrate()
+        } else if (selectedMessage === "tech") {
+            setSubject("Technical Issues");
+            setMessage("We apologize for the technical difficulties you experienced. Our team is working on resolving them.");
+            sendtech()
+        } else if (selectedMessage === "delay") {
+            setSubject("Meeting Delay Notification");
+            setMessage("Due to unforeseen circumstances, the meeting has been delayed. We apologize for any inconvenience caused.");
+            senddelay()
+        } else {
+            setSubject("");
+            setMessage("");
         }
     }
 
@@ -62,19 +152,6 @@ function Message() {
             setChatMessages([...chatMessages, newMessage]);
             setMessage("");
             setSubject("");
-
-            if (selectedQuickMessage) {
-                const selectedMessage = selectedQuickMessage.value;
-                if (selectedMessage === "welcome") {
-                    console.log("Welcome message");
-                } else if (selectedMessage === "rate") {
-                    console.log("Rate & Review message");
-                } else if (selectedMessage === "tech") {
-                    console.log("Technical Issues message");
-                } else if (selectedMessage === "delay") {
-                    console.log("Meeting Delay message");
-                }
-            }
         }
     }
 
@@ -119,7 +196,12 @@ function Message() {
                             />
                             <span className="button-text">Messaging</span>
                         </button>
-                        <button type="button" name="feedback" onClick={handleFeedbackClick} className="button">
+                        <button
+                            type="button"
+                            name="feedback"
+                            onClick={handleFeedbackClick}
+                            className="button"
+                        >
                             <img
                                 src={require("./assets/feedback.png")}
                                 alt="logo"
@@ -143,13 +225,15 @@ function Message() {
                                 alt="logo"
                                 className="file"
                             />
-                            <span className="button-text" style={{ marginLeft: "10px" }}>Resources</span>
+                            <span className="button-text" style={{ marginLeft: "10px" }}>
+                                Resources
+                            </span>
                         </button>
                     </div>
                 </div>
                 <div className="body">
                     <h3 className="mh3">Event Messaging</h3>
-                    <div className="container" style={{ marginTop: "-10px" }}>
+                    {/* <div className="container" style={{ marginTop: "-10px" }}>
                         <h3 className="mh3">To:</h3>
                         <div className="dropdown-container">
                             <Select
@@ -163,7 +247,7 @@ function Message() {
                             />
                         </div>
                         <hr className="line" />
-                    </div>
+                    </div> */}
                     <div className="container" style={{ marginTop: "-5px" }}>
                         <h3 className="mh3">Subject</h3>
                         <input
@@ -179,32 +263,17 @@ function Message() {
                         <div className="email-container">
                             <h3 className="mh3">Message</h3>
                             <div className="message-dropdown-container">
-                                <select className="quick-message-dropdown">
-                                    <option value="" selected disabled hidden>Quick Message</option>
-                                    <option value="welcome" className="quickmessages">
-                                        <span>
-                                            <img src={require("./assets/Happy.png")} alt="Happy" className="dropdown-icon" />
-                                            Welcome
-                                        </span>
-                                    </option>
-                                    <option value="rate" className="quickmessages">
-                                        <span>
-                                            <img src={require("./assets/Happy.png")} alt="Rate" className="dropdown-icon" />
-                                            Rate & Review
-                                        </span>
-                                    </option>
-                                    <option value="tech" className="quickmessages">
-                                        <span>
-                                            <img src={require("./assets/Happy.png")} alt="Technical" className="dropdown-icon" />
-                                            Technical Issues
-                                        </span>
-                                    </option>
-                                    <option value="delay" className="quickmessages">
-                                        <span>
-                                            <img src={require("./assets/Happy.png")} alt="Delay" className="dropdown-icon" />
-                                            Meeting Delay
-                                        </span>
-                                    </option>
+                                <select
+                                    value={selectedQuickMessage}
+                                    onChange={handleQuickMessageSelect}
+                                    className="quick-message-dropdown"
+                                >
+                                    <option value="" hidden className="quickmessages">Quick Message</option>
+                                    {quickMessageOptions.map((option) => (
+                                        <option key={option.value} className="quickmessages" value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
