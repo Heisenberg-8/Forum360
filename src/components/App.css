@@ -293,7 +293,7 @@ button:hover {
 }
 
 .main {
-  display: grid;
+  /* display: grid; */
   width: fit-content;
   /* grid-auto-rows: min-content; */
   /* gap: var(--size-3); */
@@ -331,16 +331,15 @@ button:hover {
 }
 
 .questions-container {
-  display: grid;
-  position: relative;
-  grid-auto-rows: min-content;
-  gap: var(--size-3);
+  /* display: grid; */
+  /* position: relative; */
+  /* grid-auto-rows: min-content; */
+  /* gap: var(--size-3); */
   overflow-y: scroll;
-  height: 95%;
-  overscroll-behavior: contain;
-  grid-auto-flow: row;
+  height: 60%;
+  /* overscroll-behavior: contain; */
+  /* grid-auto-flow: row; */
   margin-top: 15px;
-  opacity: 1;
   width: 100%;
 }
 
