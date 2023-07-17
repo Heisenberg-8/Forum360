@@ -3,7 +3,6 @@ import Select from "react-select";
 import Feedback from "./questions.jsx";
 import "./App.css";
 
-
 function Message() {
   const [userName, setUserName] = useState("");
   const [selectedOptions, setSelectedOptions] = useState();
@@ -27,7 +26,7 @@ function Message() {
     { value: "rate", label: "Rate & Review" , icon: require("./assets/info.png")},
     { value: "tech", label: "Technical Issues" , icon: require("./assets/sad.png")},
     { value: "delay", label: "Meeting Delay" , icon: require("./assets/forward.png")},
-    { value: "custom", label: "Custom", icon: require("./assets/sad.png") },
+    { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
   ];
 
 //   function handleParticipantSelect(data) {
@@ -39,7 +38,7 @@ function Message() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+                Authorization: 'Bearer dunQJwwXpAAxPOU_LH2v7_M-aqXuKWtzFS_NU0jjp6wKuiYx6tNXfZBaMbBQLocM09sAdVJa0ApNOCUeu6YydzMyvnUprgIALlFugy5NJ2Bcgq5PhXKqdWcda2vfOEhpqrrpxBYzA3nB2Nuc9OvKIlVbGLiirVvXomMDbFdkVumZBOzBmHimsMIMAcmsXTz7L4tFr8mMWkaHLvFZYQrmeDWIj4pIEkeVlzB_CShiZmpEqgcR4CvntFxnTacMECe7Uta-s11fqIoZs9hTjVBDJgU9zkaXrgmkE_bycZW_msEDqDJDbWH9tcETIDQ6iyeckGIczi-tjBg86HIKUERZ--aLRDJ_c3WsYj6bQXAZF2GOCh10mhFbCAUn3tDe8qkz7HSAApujmGdiaSd20OedYzTBB7BJ6xsiEILvwO2htPwXzU69PB9o7joEwyoc7x_aqo9G39-INGBvhGAk-GOwmw3sA6ajzMKkPQWWBYjG1-k',
             },
             body: JSON.stringify({
                 SessionId: '2560'
@@ -58,7 +57,7 @@ function Message() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+                Authorization: 'Bearer dunQJwwXpAAxPOU_LH2v7_M-aqXuKWtzFS_NU0jjp6wKuiYx6tNXfZBaMbBQLocM09sAdVJa0ApNOCUeu6YydzMyvnUprgIALlFugy5NJ2Bcgq5PhXKqdWcda2vfOEhpqrrpxBYzA3nB2Nuc9OvKIlVbGLiirVvXomMDbFdkVumZBOzBmHimsMIMAcmsXTz7L4tFr8mMWkaHLvFZYQrmeDWIj4pIEkeVlzB_CShiZmpEqgcR4CvntFxnTacMECe7Uta-s11fqIoZs9hTjVBDJgU9zkaXrgmkE_bycZW_msEDqDJDbWH9tcETIDQ6iyeckGIczi-tjBg86HIKUERZ--aLRDJ_c3WsYj6bQXAZF2GOCh10mhFbCAUn3tDe8qkz7HSAApujmGdiaSd20OedYzTBB7BJ6xsiEILvwO2htPwXzU69PB9o7joEwyoc7x_aqo9G39-INGBvhGAk-GOwmw3sA6ajzMKkPQWWBYjG1-k',
             },
             body: JSON.stringify({
                 SessionId: '2560'
@@ -163,6 +162,8 @@ function Message() {
       if (currentScreen === "feedback") {
         return <Feedback />;
       }
+
+     
     
       const customStyles = {
         control: (provided, state) => ({
@@ -170,45 +171,55 @@ function Message() {
           backgroundColor: "#1F1F1F",
           borderRadius: "10px",
           border: "none",
-          boxShadow: state.isFocused ? "0 0 0 2px #7C7C7C" : "none",
-        }),
+          boxShadow: state.isFocused ? "none" : "none",
+                }),
         input: (provided) => ({
           ...provided,
           color: "white",
+          readOnly: true,
         }),
         option: (provided, state) => ({
-            ...provided,
-            backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
-            color: state.isSelected ? "white" : "white",
-            fontSize: "12px", // Adjust the font size as needed
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-          }),
+          ...provided,
+          backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
+          color: state.isSelected ? "white" : "white",
+          fontSize: "12px",
+          display: "flex",
+          alignItems: "center",
+          cursor: "default",
+                }),
         menu: (provided) => ({
           ...provided,
           backgroundColor: "#3D4553",
           maxWidth: "200px",
           borderTop: "none",
+          cursor: "default",
 
         }),
         placeholder: (provided) => ({
           ...provided,
           fontSize: "13.948px",
-          
         }),
         singleValue: (provided) => ({
-            ...provided,
-            color: "#white",
-          }),
-         
-          
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none', 
-  }),
-         
+          ...provided,
+          color: "#white",
+        }),
+        dropdownIndicator: (provided, state) => ({
+          ...provided,
+          transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+          transition: "transform 0.3s ease",
+          color: "#7f807f",
+          "&:hover": {
+            color: "#7f807f",
+          },
+        }),
+        indicatorSeparator: (provided) => ({
+          ...provided,
+          display: 'none', 
+        }),
+       
       };
+      
+      
 
       const OptionWithImage = ({ innerProps, label, data }) => (
         <div className="ddHover" {...innerProps} style={{ display: 'flex', alignItems: 'center' }}>
@@ -321,9 +332,11 @@ function Message() {
                     <Select
                       options={quickMessageOptions}
                       placeholder="Quick Message"
+                      isSearchable={false}
                       value={selectedQuickMessage}
                       onChange={handleQuickMessageSelect}
                       styles={customStyles}
+                      classNamePrefix="custom-select" 
                      components={{ Option: OptionWithImage }}
 
                     />
