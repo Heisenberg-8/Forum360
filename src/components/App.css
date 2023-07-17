@@ -670,6 +670,7 @@ button:hover {
   }
 }
 
-.ddHover:hover{
+.ddHover:hover {
   background-color: #232cff;
+  color: white;
 }

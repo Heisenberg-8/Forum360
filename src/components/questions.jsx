@@ -7,7 +7,7 @@ import { fetchQuestions } from "./data.jsx";
 import Data from "./data.jsx";
 
 
-function Feedback() {
+function Feedback({ token }) {
   const { comments } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
@@ -17,7 +17,7 @@ function Feedback() {
   const commentCount = comments.length;
 
   useEffect(() => {
-    fetchQuestions()
+    fetchQuestions(token)
       .then(questionsData => {
         setQuestions(questionsData);
         setIsLoading(false);
@@ -147,7 +147,7 @@ function Feedback() {
         </button>
       </div>
       <div className="questions-container">
-        {questions.map((question, index) => (
+        {questions?.map((question, index) => (
           <div className="question" key={index}>
             <text className="question-username">
               {question.FullChannel}
