@@ -2,12 +2,20 @@ import React, { useState, useEffect } from "react";
 import "./Login.css";
 import Message from "./Message.jsx";
 import { generatetoken } from "./data";
+import { setToken, getToken } from "./token";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [currentScreen, setCurrentScreen] = useState("login");
-  const [token, setToken] = useState(null);
+  const [token, updateToken] = useState(getToken());
+
+  useEffect(() => {
+    generatetoken().then((tokendata) => {
+      setToken(tokendata);
+      updateToken(tokendata);
+    });
+  }, []);
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -19,14 +27,14 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    generatetoken(token).then(tokendata => {
+    generatetoken().then((tokendata) => {
       setToken(tokendata);
       setCurrentScreen("messaging");
     });
   }
 
   if (currentScreen === "messaging") {
-    return <Message token={token} />;
+    return <Message />;
   }
 
   return (
