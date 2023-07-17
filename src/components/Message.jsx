@@ -21,9 +21,9 @@ function Message({ token }) {
 
   const quickMessageOptions = [
     { value: "welcome", label: "Welcome", icon: require("./assets/welcome.png") },
-    { value: "rate", label: "Rate & Review" , icon: require("./assets/info.png")},
-    { value: "tech", label: "Technical Issues" , icon: require("./assets/sad.png")},
-    { value: "delay", label: "Meeting Delay" , icon: require("./assets/forward.png")},
+    { value: "rate", label: "Rate & Review", icon: require("./assets/info.png") },
+    { value: "tech", label: "Technical Issues", icon: require("./assets/sad.png") },
+    { value: "delay", label: "Meeting Delay", icon: require("./assets/forward.png") },
     { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
   ];
 
@@ -45,28 +45,6 @@ function Message({ token }) {
         return [];
       });
   }
-//   function handleParticipantSelect(data) {
-//     setSelectedParticipants(data);
-//   }
-
-    function sendWelcome() {
-        return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendWelcome', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer dunQJwwXpAAxPOU_LH2v7_M-aqXuKWtzFS_NU0jjp6wKuiYx6tNXfZBaMbBQLocM09sAdVJa0ApNOCUeu6YydzMyvnUprgIALlFugy5NJ2Bcgq5PhXKqdWcda2vfOEhpqrrpxBYzA3nB2Nuc9OvKIlVbGLiirVvXomMDbFdkVumZBOzBmHimsMIMAcmsXTz7L4tFr8mMWkaHLvFZYQrmeDWIj4pIEkeVlzB_CShiZmpEqgcR4CvntFxnTacMECe7Uta-s11fqIoZs9hTjVBDJgU9zkaXrgmkE_bycZW_msEDqDJDbWH9tcETIDQ6iyeckGIczi-tjBg86HIKUERZ--aLRDJ_c3WsYj6bQXAZF2GOCh10mhFbCAUn3tDe8qkz7HSAApujmGdiaSd20OedYzTBB7BJ6xsiEILvwO2htPwXzU69PB9o7joEwyoc7x_aqo9G39-INGBvhGAk-GOwmw3sA6ajzMKkPQWWBYjG1-k',
-            },
-            body: JSON.stringify({
-                SessionId: '2560'
-            })
-        })
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => {
-                console.error(error);
-                return [];
-            });
-    }
 
   function sendRate(token) {
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendReviewRate', {
@@ -86,24 +64,6 @@ function Message({ token }) {
         return [];
       });
   }
-    function sendRate() {
-        return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendReviewRate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer dunQJwwXpAAxPOU_LH2v7_M-aqXuKWtzFS_NU0jjp6wKuiYx6tNXfZBaMbBQLocM09sAdVJa0ApNOCUeu6YydzMyvnUprgIALlFugy5NJ2Bcgq5PhXKqdWcda2vfOEhpqrrpxBYzA3nB2Nuc9OvKIlVbGLiirVvXomMDbFdkVumZBOzBmHimsMIMAcmsXTz7L4tFr8mMWkaHLvFZYQrmeDWIj4pIEkeVlzB_CShiZmpEqgcR4CvntFxnTacMECe7Uta-s11fqIoZs9hTjVBDJgU9zkaXrgmkE_bycZW_msEDqDJDbWH9tcETIDQ6iyeckGIczi-tjBg86HIKUERZ--aLRDJ_c3WsYj6bQXAZF2GOCh10mhFbCAUn3tDe8qkz7HSAApujmGdiaSd20OedYzTBB7BJ6xsiEILvwO2htPwXzU69PB9o7joEwyoc7x_aqo9G39-INGBvhGAk-GOwmw3sA6ajzMKkPQWWBYjG1-k',
-            },
-            body: JSON.stringify({
-                SessionId: '2560'
-            })
-        })
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch(error => {
-                console.error(error);
-                return [];
-            });
-    }
 
   function sendTech(token) {
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/SendTechnicalMessage', {
