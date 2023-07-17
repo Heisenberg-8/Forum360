@@ -6,22 +6,35 @@ import Questions from "./questions";
 import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import { fetchAgenda } from "./data.jsx";
+import { updateAgenda } from "./agendaReducer";
 
 function Agenda() {
   const [currentScreen, setCurrentScreen] = useState("");
   const dataList = useSelector((state) => state.dataList);
+  const agenda = useSelector((state) => state.agenda);
   const dispatch = useDispatch();
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [agenda, setAgenda] = useState([])
+
+  
 
   useEffect(() => {
     fetchAgenda(token)
-      .then(agendaData => {
-        setAgenda(agendaData);
+      .then((agendaData) => {
+        dispatch(updateAgenda(agendaData));
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    const storedAgendaList = localStorage.getItem("agendaList");
+    if (storedAgendaList) {
+      dispatch(updateAgenda(JSON.parse(storedAgendaList)));
+    }
+  
+    setIsLoading(false);
+  }, []);
+  
 
   function handleDragStart(event, index) {
     event.dataTransfer.setData("text/plain", index.toString());
@@ -34,12 +47,15 @@ function Agenda() {
   function handleDrop(event, dropIndex) {
     const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
     if (dragIndex !== dropIndex) {
-      const updatedQuestions = [...dataList];
-      [updatedQuestions[dragIndex], updatedQuestions[dropIndex]] = [
-        updatedQuestions[dropIndex],
-        updatedQuestions[dragIndex],
+      const updatedAgendaList = [...agenda];
+      [updatedAgendaList[dragIndex], updatedAgendaList[dropIndex]] = [
+        updatedAgendaList[dropIndex],
+        updatedAgendaList[dragIndex],
       ];
-      dispatch({ type: "UPDATE_DATA_LIST", payload: updatedQuestions });
+      dispatch(updateAgenda(updatedAgendaList));
+  
+      // Store the updated agenda list in local storage
+      localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
   }
 
@@ -60,9 +76,7 @@ function Agenda() {
   }
 
   if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
+    return <div className="loading-spinner"></div>;
   }
 
   if (currentScreen === "messaging") {
@@ -80,6 +94,7 @@ function Agenda() {
   if (currentScreen === "answered") {
     return <Answered />;
   }
+
 
   return (
     <div className="main">
@@ -113,7 +128,11 @@ function Agenda() {
             type="button"
             name="feedback"
             className="button"
-            style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
+            style={{
+              backgroundColor: "#232cff",
+              color: "#ffffff",
+              border: "1px solid white",
+            }}
           >
             <img
               src={require("./assets/whitefeedback.png")}
@@ -177,7 +196,7 @@ function Agenda() {
       </div>
 
       <div className="agenda-container">
-        {agenda.map((agenda, index) => (
+        {agenda.map((agendaItem, index) => (
           <div
             className="agenda-questions"
             key={index}
@@ -192,9 +211,9 @@ function Agenda() {
               className="dragicon"
             />
             <div className="agenda-text">
-              <text className="question-username">{agenda.FullChannel}</text>
+              <text className="question-username">{agendaItem.FullChannel}</text>
               <div className="question-text">
-                <text>{agenda.Question}</text>
+                <text>{agendaItem.Question}</text>
               </div>
             </div>
             <div className="control control-checkbox">

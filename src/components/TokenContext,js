@@ -1,0 +1,13 @@
+import React from 'react';
+
+// Create the context
+const TokenContext = React.createContext('');
+
+export default TokenContext;
+
+import { useContext } from 'react';
+import TokenContext from './TokenContext';
+
+export function useToken() {
+  return useContext(TokenContext);
+}
