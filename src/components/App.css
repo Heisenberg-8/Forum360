@@ -547,14 +547,9 @@ button:hover {
 }
 
 .control {
-  /* font-family: arial; */
-  /* display: block; */
   position: fixed;
-  /* padding-left: 1%; */
   margin-bottom: 5px;
-  /* padding-top: 3px; */
   cursor: pointer;
-  /* font-size: 16px; */
   margin-left: 14%;
 }
 
@@ -667,6 +662,5 @@ button:hover {
 
 .ddHover:hover {
   background-color: #232cff;
-color: white;
+  color: white;
 }
-
