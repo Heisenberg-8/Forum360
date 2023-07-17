@@ -670,7 +670,12 @@ button:hover {
   }
 }
 
-.ddHover:hover{
+.ddHover:hover {
   background-color: #232cff;
+<<<<<<< HEAD
 }
 
+=======
+  color: white;
+}
+>>>>>>> a4b57709f15fce63a20c1b0a2b450e329b839f14

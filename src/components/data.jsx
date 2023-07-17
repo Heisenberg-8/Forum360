@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import qs from 'qs';
 
 const Data = () => {
     const [data, setData] = useState(null);
+    const [token, setToken] = useState(null);
 
     const [comments, setComments] = useState([
         {
@@ -50,14 +52,15 @@ const Data = () => {
     return {
         comments,
         dataList,
-        data
+        data,
+        token,
     };
 };
 
-export function fetchQuestions() {
+export function fetchQuestions(token) {
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/84573623-aa87-402c-b28d-24d1e181ecbe/2560', {
         headers: {
-            Authorization: 'Bearer -1leljERr74J_xVJlYOBVgnlwBcsXpfobmY8VW6Pvp-gFpzsDFsXQpJ3fSBX3k_tVZVLvwkE--Bd9wi9gLzI2tRsPxSqrM5zSP8IdN01j8m4-QSmhJG_CGV93z34ATgHQemf4FiiVh2LsAs6VdxOqVJKbb6t0MIyXRdd8js-WPEemNftAtXGLS22KmawdbvT6P3GBCrFwoghEnWmto7Tuaoj2hF6v4G9QjgmPavEYLvQzMvCQdTv0YRGtuUzmWlbv1TMsKOPGlVgKspIKwbSiz_DcatM7ph-6YNjSfAGlR-rIIrfc73j8y5wnkJQ0koBR1ZLhl5D6kqzcVrMxUUVhXfKXIfm6MxHYaKW4HQk6Kumhry5Ijrdoab05yXo5qufAi8gews5UBrrGkYMhaZYt9cUWdGO7YOgwvmFA38-iUXJXCqgzJUdPLSHZgxyO8g19yhFdHvVi07dTRwyyuY1_Jy9vNjhA5tP0pWSO1lKVbQ',
+            Authorization: `Bearer ${token}`,
         },
     })
         .then(response => response.json())
@@ -67,6 +70,28 @@ export function fetchQuestions() {
             return [];
         });
 }
+
+export function generatetoken() {
+    return fetch('https://mgmt-test.forum360.co/api/Token', {
+        method: 'POST',
+        headers: {
+            'OrgId': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'Appid': '4'
+        },
+        body: qs.stringify({
+            username: 'gaurav.goyal@veersatech.com',
+            password: 'Gauravgoyal$2',
+            grant_type: 'password'
+        })
+    })
+        .then(response => response.json())
+        .then(json => json.access_token)
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
 
 
 export default Data;

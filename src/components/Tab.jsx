@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import Message from "./Message.jsx";
+import { generatetoken } from "./data";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [currentScreen, setCurrentScreen] = useState("login");
+  const [token, setToken] = useState(null);
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -17,14 +19,14 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // Add your login logic here
-
-    // Assuming the login is successful, navigate to the messaging screen
-    setCurrentScreen("messaging");
+    generatetoken(token).then(tokendata => {
+      setToken(tokendata);
+      setCurrentScreen("messaging");
+    });
   }
 
   if (currentScreen === "messaging") {
-    return <Message />;
+    return <Message token={token} />;
   }
 
   return (

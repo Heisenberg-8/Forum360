@@ -7,6 +7,7 @@ import { fetchQuestions } from "./data.jsx";
 
 function Comments() {
   const { comments } = Data();
+  const { token } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
@@ -14,7 +15,7 @@ function Comments() {
   const commentCount = comments.length;
 
   useEffect(() => {
-    fetchQuestions()
+    fetchQuestions(token)
       .then(questionsData => {
         setQuestions(questionsData);
         setIsLoading(false);
