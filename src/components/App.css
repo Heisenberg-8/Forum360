@@ -521,10 +521,10 @@ button:hover {
 }
 
 .dragicon {
-  width: 25px;
-  height: 14px;
-  margin-top: 40px;
+  width: 12px;
+  height: 20px;
   align-items: center;
+  margin-top: 5%;
 }
 
 .agenda-text {
@@ -547,20 +547,15 @@ button:hover {
 }
 
 .control {
-  font-family: arial;
-  display: block;
-  position: relative;
-  padding-left: 30px;
+  /* font-family: arial; */
+  /* display: block; */
+  position: fixed;
+  /* padding-left: 1%; */
   margin-bottom: 5px;
-  padding-top: 3px;
+  /* padding-top: 3px; */
   cursor: pointer;
-  font-size: 16px;
-}
-
-.control input {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
+  /* font-size: 16px; */
+  margin-left: 14%;
 }
 
 .control_indicator {
