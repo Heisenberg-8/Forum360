@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions";
 import Answered from "./Answered.jsx";
+import { getToken } from "./token";
+import { fetchAgenda } from "./data.jsx";
 
 function Agenda() {
   const [currentScreen, setCurrentScreen] = useState("");
   const dataList = useSelector((state) => state.dataList);
   const dispatch = useDispatch();
+  const token = getToken();
+  const [isLoading, setIsLoading] = useState(true);
+  const [agenda, setAgenda] = useState([])
+
+  useEffect(() => {
+    fetchAgenda(token)
+      .then(agendaData => {
+        setAgenda(agendaData);
+        setIsLoading(false);
+      });
+  }, []);
 
   function handleDragStart(event, index) {
     event.dataTransfer.setData("text/plain", index.toString());
@@ -44,6 +57,12 @@ function Agenda() {
 
   function handleAnsweredClick() {
     setCurrentScreen("answered");
+  }
+
+  if (isLoading) {
+    return (
+      <div className="loading-spinner"></div>
+    );
   }
 
   if (currentScreen === "messaging") {
@@ -158,7 +177,7 @@ function Agenda() {
       </div>
 
       <div className="agenda-container">
-        {dataList.map((data, index) => (
+        {agenda.map((agenda, index) => (
           <div
             className="agenda-questions"
             key={index}
@@ -173,9 +192,9 @@ function Agenda() {
               className="dragicon"
             />
             <div className="agenda-text">
-              <text className="question-username">{data.username}</text>
+              <text className="question-username">{agenda.FullChannel}</text>
               <div className="question-text">
-                <text>{data.question}</text>
+                <text>{agenda.Question}</text>
               </div>
             </div>
             <div className="control control-checkbox">

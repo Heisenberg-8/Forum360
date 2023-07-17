@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Select from "react-select";
 import Feedback from "./questions.jsx";
 import "./App.css";
+import { getToken } from "./token";
 
-function Message({ token }) {
+function Message() {
+  const token = getToken();
   const [userName, setUserName] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -154,7 +156,7 @@ function Message({ token }) {
   }
 
   if (currentScreen === "feedback") {
-    return <Feedback token={token} />;
+    return <Feedback />;
   }
 
 

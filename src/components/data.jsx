@@ -71,6 +71,20 @@ export function fetchQuestions(token) {
         });
 }
 
+export function fetchAgenda(token) {
+    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/84573623-aa87-402c-b28d-24d1e181ecbe/2560', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(response => response.json())
+        .then(json => json.Payload.Planneds)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 export function generatetoken() {
     return fetch('https://mgmt-test.forum360.co/api/Token', {
         method: 'POST',

@@ -5,10 +5,12 @@ import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
 import { fetchQuestions } from "./data.jsx";
 import Data from "./data.jsx";
+import { getToken } from "./token";
 
 
-function Feedback({ token }) {
+function Feedback() {
   const { comments } = Data();
+  const token = getToken();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
