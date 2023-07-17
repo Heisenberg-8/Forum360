@@ -143,105 +143,117 @@ function Message({ token }) {
       });
   }
 
-    function handleQuickMessageSelect(selectedOption) {
-        const selectedMessage = selectedOption.value;
-        setSelectedQuickMessage(selectedOption);
-        if (selectedMessage === "welcome") {
-          setSubject("Welcome to our event");
-          setMessage("Thank you for joining us!");
-          sendWelcome();
-        } else if (selectedMessage === "rate") {
-          setSubject("Rate & Review Request");
-          setMessage("We would appreciate your feedback. Please rate and review our event.");
-          sendRate();
-        } else if (selectedMessage === "tech") {
-          setSubject("Technical Issues");
-          setMessage("We apologize for the technical difficulties you experienced. Our team is working on resolving them.");
-          sendTech();
-        } else if (selectedMessage === "delay") {
-          setSubject("Meeting Delay Notification");
-          setMessage("Due to unforeseen circumstances, the meeting has been delayed. We apologize for any inconvenience caused.");
-          sendDelay();
-        } else {
-          setSubject("");
-          setMessage("");
-        }
-      }
-    
-      function handleSubjectChange(event) {
-        setSubject(event.target.value);
-      }
-    
-      function handleMessageChange(event) {
-        setMessage(event.target.value);
-      }
-    
-      function handleSendMessage() {
-        if (message.trim() !== "") {
-          const newMessage = {
-            sender: userName,
-            subject: subject,
-            content: message,
-          };
-          setChatMessages([...chatMessages, newMessage]);
-          setMessage("");
-          setSubject("");
-        }
-      }
-    
-      function handleFeedbackClick() {
-        setCurrentScreen("feedback");
-      }
-    
-      if (currentScreen === "feedback") {
-        return <Feedback />;
-      }
-    
-      const customStyles = {
-        control: (provided, state) => ({
-          ...provided,
-          backgroundColor: "#1F1F1F",
-          borderRadius: "10px",
-          border: "none",
-          boxShadow: state.isFocused ? "0 0 0 2px #7C7C7C" : "none",
-        }),
-        input: (provided) => ({
-          ...provided,
-          color: "white",
-        }),
-        option: (provided, state) => ({
-            ...provided,
-            backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
-            color: state.isSelected ? "white" : "white",
-            fontSize: "12px", // Adjust the font size as needed
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-          }),
-        menu: (provided) => ({
-          ...provided,
-          backgroundColor: "#3D4553",
-          maxWidth: "200px",
-          borderTop: "none",
+  function handleQuickMessageSelect(selectedOption) {
+    const selectedMessage = selectedOption.value;
+    setSelectedQuickMessage(selectedOption);
+    if (selectedMessage === "welcome") {
+      setSubject("Welcome to our event");
+      setMessage("Thank you for joining us!");
+      sendWelcome(token);
+    } else if (selectedMessage === "rate") {
+      setSubject("Rate & Review Request");
+      setMessage("We would appreciate your feedback. Please rate and review our event.");
+      sendRate(token);
+    } else if (selectedMessage === "tech") {
+      setSubject("Technical Issues");
+      setMessage("We apologize for the technical difficulties you experienced. Our team is working on resolving them.");
+      sendTech(token);
+    } else if (selectedMessage === "delay") {
+      setSubject("Meeting Delay Notification");
+      setMessage("Due to unforeseen circumstances, the meeting has been delayed. We apologize for any inconvenience caused.");
+      sendDelay(token);
+    } else {
+      setSubject("");
+      setMessage("");
+    }
+  }
 
-        }),
-        placeholder: (provided) => ({
-          ...provided,
-          fontSize: "13.948px",
-          
-        }),
-        singleValue: (provided) => ({
-            ...provided,
-            color: "#white",
-          }),
-         
-          
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none', 
-  }),
-         
+  function handleSubjectChange(event) {
+    setSubject(event.target.value);
+  }
+
+  function handleMessageChange(event) {
+    setMessage(event.target.value);
+  }
+
+  function handleSendMessage() {
+    if (message.trim() !== "") {
+      const newMessage = {
+        sender: userName,
+        subject: subject,
+        content: message,
       };
+      setChatMessages([...chatMessages, newMessage]);
+      setMessage("");
+      setSubject("");
+    }
+  }
+
+  function handleFeedbackClick() {
+    setCurrentScreen("feedback");
+  }
+
+  if (currentScreen === "feedback") {
+    return <Feedback token={token} />;
+  }
+
+
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: "#1F1F1F",
+      borderRadius: "10px",
+      border: "none",
+      boxShadow: state.isFocused ? "none" : "none",
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "white",
+      readOnly: true,
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
+      color: state.isSelected ? "white" : "white",
+      fontSize: "12px",
+      display: "flex",
+      alignItems: "center",
+      cursor: "default",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#3D4553",
+      maxWidth: "200px",
+      borderTop: "none",
+      cursor: "default",
+
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      fontSize: "13.948px",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#white",
+    }),
+    dropdownIndicator: (provided, state) => ({
+      ...provided,
+      transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+      transition: "transform 0.3s ease",
+      color: "#7f807f",
+      "&:hover": {
+        color: "#7f807f",
+      },
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: 'none',
+    }),
+
+  };
+
+
 
   const OptionWithImage = ({ innerProps, label, data }) => (
     <div className="ddHover" {...innerProps} style={{ display: 'flex', alignItems: 'center' }}>
@@ -336,28 +348,30 @@ function Message({ token }) {
                 </div>
                 <hr className="line" />
               </div> */}
-              <div className="container" style={{ marginTop: "-5px" }}>
-                <h3 className="mh3">Subject</h3>
-                <input
-                  type="text"
-                  value={subject}
-                  onChange={handleSubjectChange}
-                  placeholder="Enter subject"
-                  className="input-box"
-                />
-                <hr className="line" />
-              </div>
-              <div className="container" style={{ marginTop: "-5px" }}>
-                <div className="email-container">
-                  <h3 className="mh3">Message</h3>
-                  <div className="message-dropdown-container" style={{ width: '155px' }}>
-                    <Select
-                      options={quickMessageOptions}
-                      placeholder="Quick Message"
-                      value={selectedQuickMessage}
-                      onChange={handleQuickMessageSelect}
-                      styles={customStyles}
-                     components={{ Option: OptionWithImage }}
+          <div className="container" style={{ marginTop: "-5px" }}>
+            <h3 className="mh3">Subject</h3>
+            <input
+              type="text"
+              value={subject}
+              onChange={handleSubjectChange}
+              placeholder="Enter subject"
+              className="input-box"
+            />
+            <hr className="line" />
+          </div>
+          <div className="container" style={{ marginTop: "-5px" }}>
+            <div className="email-container">
+              <h3 className="mh3">Message</h3>
+              <div className="message-dropdown-container" style={{ width: '155px' }}>
+                <Select
+                  options={quickMessageOptions}
+                  placeholder="Quick Message"
+                  isSearchable={false}
+                  value={selectedQuickMessage}
+                  onChange={handleQuickMessageSelect}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                  components={{ Option: OptionWithImage }}
 
                 />
               </div>
