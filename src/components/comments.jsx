@@ -3,11 +3,12 @@ import Message from "./Message.jsx";
 import Questions from "./questions";
 import Data from "./data.jsx";
 import { fetchQuestions } from "./data.jsx";
+import { getToken } from "./token";
 
 
 function Comments() {
   const { comments } = Data();
-  const { token } = Data();
+  const token = getToken();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
