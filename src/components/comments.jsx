@@ -132,6 +132,7 @@ function Comments() {
 
         </button>
       </div>
+      <div className="main-cont">
       <div className="comments-container">
         {comments.map((comments, index) => (
           <div className="question" key={index}>
@@ -144,7 +145,8 @@ function Comments() {
             </div>
           </div>
         ))}
-        {fadeContainerVisible && (
+      </div>
+      {fadeContainerVisible && (
           <div className="fade-comments">
             <button className="loadmore-button" onClick={handleViewAllClick}>
               Load More
@@ -152,6 +154,7 @@ function Comments() {
           </div>
         )}
       </div>
+
     </div>
   );
 }

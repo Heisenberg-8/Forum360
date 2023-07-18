@@ -298,6 +298,7 @@ button:hover {
 .main {
   /* display: grid; */
   width: fit-content;
+  
   /* grid-auto-rows: min-content; */
   /* gap: var(--size-3); */
   overflow-y: scroll;
@@ -345,13 +346,16 @@ button:hover {
   margin-top: 15px;
   width: 100%;
 }
+.main-cont{
+  position: relative;
+}
 
 .questions-container::-webkit-scrollbar {
   width: 0px;
 }
 
 .fade {
-  position: fixed;
+  position: absolute;
   top: 63%;
   left: 0;
   width: 100%;
@@ -361,7 +365,7 @@ button:hover {
 
 .fade-comments {
   position: absolute;
-  top: 63%;
+  top: 68%;
   left: 0;
   width: 100%;
   height: 36%;
@@ -408,6 +412,7 @@ button:hover {
 
 .comments-container {
   display: grid;
+  position: relative;
   grid-auto-rows: min-content;
   gap: var(--size-3);
   overflow-y: scroll;
@@ -682,3 +687,11 @@ button:hover {
   color: white;
   font-size: 12px;
 } */
+
+.email-box::-webkit-scrollbar {
+  width: 0px; 
+}
+
+.email-box{
+  resize: none;
+}

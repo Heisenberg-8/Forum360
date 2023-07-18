@@ -109,28 +109,42 @@ function Message() {
   function handleQuickMessageSelect(selectedOption) {
     const selectedMessage = selectedOption.value;
     setSelectedQuickMessage(selectedOption);
+  
     if (selectedMessage === "welcome") {
-      setSubject("Welcome to our event");
-      setMessage("Thank you for joining us!");
+      setSubject("Reminder from [Org Name]: Your Meeting will start soon");
+      setMessage(`Hello [First Name],
+  
+This is a reminder that your meeting with [Presenter Full Name] from [Product Name] is due to start on [Event Date, Start Time, Time Zone].`);
       sendWelcome(token);
     } else if (selectedMessage === "rate") {
-      setSubject("Rate & Review Request");
-      setMessage("We would appreciate your feedback. Please rate and review our event.");
+      setSubject("[Org Name] Meeting Follow Up");
+      setMessage(`Hello [First Name],
+  
+How did the meeting go? Click on the link below to share your feedback if you have not done so already.
+  
+Rate and Review
+  
+Can we be of further assistance with your enquiries? Please visit us at [Product Link] for more information or contact us at google@google.com.`);
       sendRate(token);
-    } else if (selectedMessage === "tech") {
-      setSubject("Technical Issues");
-      setMessage("We apologize for the technical difficulties you experienced. Our team is working on resolving them.");
-      sendTech(token);
     } else if (selectedMessage === "delay") {
-      setSubject("Meeting Delay Notification");
-      setMessage("Due to unforeseen circumstances, the meeting has been delayed. We apologize for any inconvenience caused.");
+      setSubject("[Org Name] - Attention - [Meeting Name] has been delayed ");
+      setMessage(`Hello [First Name],
+  
+We would like to inform you that [Event Name - Meeting Name] has been delayed. Please kindly wait and we will notify you once the meeting has started. We apologise for any inconvenience this may cause.
+  
+Kind Regards,
+Team [Org Name]`);
+      sendTech(token);
+    } else if (selectedMessage === "tech") {
+      setSubject("[Org Name] Alert: Technical Difficulties");
+      setMessage(`We are currently experiencing technical difficulties. We are working to resolve this as quickly as possible and will provide an update shortly.`);
       sendDelay(token);
     } else {
       setSubject("");
       setMessage("");
     }
   }
-
+  
   function handleSubjectChange(event) {
     setSubject(event.target.value);
   }
@@ -233,7 +247,7 @@ function Message() {
 
 
   return (
-    <div className="main-message">
+    <div className="main">
       <div className="tab-background">
         <img src={require("./assets/logo.png")} alt="logo" className="logo" />
         <h1 className="h1">

@@ -151,6 +151,7 @@ function Feedback() {
           </div>
         </button>
       </div>
+      <div className="main-cont">
       <div className="questions-container">
         {questions?.map((question, index) => (
           <div className="question" key={index}>
@@ -177,6 +178,7 @@ function Feedback() {
           </button>
         </div>
       )}
+      </div>
       <div className="footer">
         <button className="text-btn" onClick={handleAgendaClick}>
           Agenda
