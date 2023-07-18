@@ -14,13 +14,13 @@ function Message() {
   const [currentScreen, setCurrentScreen] = useState("tab");
   const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
 
-  const optionList = [
-    { value: "red", label: "Send to all" },
-    { value: "green", label: "Bob Vance" },
-    { value: "yellow", label: "Michael Scott" },
-    { value: "blue", label: "Jim Halpert" },
-    { value: "To all", label: "Dwight Shrute" },
-  ];
+  // const optionList = [
+  //   { value: "red", label: "Send to all" },
+  //   { value: "green", label: "Bob Vance" },
+  //   { value: "yellow", label: "Michael Scott" },
+  //   { value: "blue", label: "Jim Halpert" },
+  //   { value: "To all", label: "Dwight Shrute" },
+  // ];
 
   const quickMessageOptions = [
     { value: "welcome", label: "Welcome", icon: require("./assets/welcome.png") },
@@ -160,78 +160,6 @@ function Message() {
     return <Feedback />;
   }
 
-
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      backgroundColor: "#1F1F1F",
-      borderRadius: "10px",
-      border: "none",
-      boxShadow: state.isFocused ? "none" : "none",
-    }),
-    input: (provided) => ({
-      ...provided,
-      color: "white",
-      readOnly: true,
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
-      color: state.isSelected ? "white" : "white",
-      fontSize: "12px",
-      display: "flex",
-      alignItems: "center",
-      cursor: "default",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      backgroundColor: "#3D4553",
-      maxWidth: "200px",
-      borderTop: "none",
-      cursor: "default",
-
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      fontSize: "13.948px",
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#white",
-    }),
-    dropdownIndicator: (provided, state) => ({
-      ...provided,
-      transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
-      transition: "transform 0.3s ease",
-      color: "#7f807f",
-      "&:hover": {
-        color: "#7f807f",
-      },
-    }),
-    indicatorSeparator: (provided) => ({
-      ...provided,
-      display: 'none',
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color:"#7b7b7b",
-      fontSize: "13.948px", 
-    }),
-  
-
-  };
-
-
-
-  const OptionWithImage = ({ innerProps, label, data }) => (
-    <div className="ddHover" {...innerProps} style={{ display: 'flex', alignItems: 'center' }}>
-      <img src={data.icon} style={{ width: '20px', height: '20px', marginRight: '8px' }} />
-      {label}
-    </div>
-  );
-
-
   return (
     <div className="main-message">
       <div className="tab-background">
@@ -302,13 +230,13 @@ function Message() {
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>
-            <div className="container" style={{ marginTop: "-10px" }}>
-                <h3 className="mh3">To:</h3>
-                <div className="dropdown-container">
-                <img src={tag} style={{ width: '130px', height: '30px' }}/>
-                </div>
-                <hr className="line" />
-              </div>
+          <div className="container" style={{ marginTop: "-10px" }}>
+            <h3 className="mh3">To:</h3>
+            <div className="dropdown-container">
+              <img src={tag} style={{ width: '130px', height: '30px', marginTop: '5px' }} />
+            </div>
+            <hr className="line" />
+          </div>
           <div className="container" style={{ marginTop: "-5px" }}>
             <h3 className="mh3">Subject</h3>
             <input
@@ -343,7 +271,7 @@ function Message() {
               onChange={handleMessageChange}
               placeholder="Enter message"
               className="email-box"
-              rows={8.99}
+              rows={12}
             />
             <button onClick={handleSendMessage} className="send-button">
               Send Message
@@ -354,5 +282,72 @@ function Message() {
     </div>
   );
 }
+
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: "#1F1F1F",
+    borderRadius: "10px",
+    border: "none",
+    boxShadow: state.isFocused ? "none" : "none",
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "white",
+    readOnly: true,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
+    color: state.isSelected ? "white" : "white",
+    fontSize: "12px",
+    display: "flex",
+    alignItems: "center",
+    cursor: "default",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#3D4553",
+    maxWidth: "200px",
+    borderTop: "none",
+    cursor: "default",
+
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: "13.948px",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#white",
+  }),
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+    transition: "transform 0.3s ease",
+    color: "#7f807f",
+    "&:hover": {
+      color: "#7f807f",
+    },
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#7b7b7b",
+    fontSize: "13.948px",
+  }),
+
+
+};
+
+const OptionWithImage = ({ innerProps, label, data }) => (
+  <div className="ddHover" {...innerProps} style={{ display: 'flex', alignItems: 'center' }}>
+    <img src={data.icon} style={{ width: '20px', height: '20px', marginRight: '8px' }} />
+    {label}
+  </div>
+);
 
 export default Message;
