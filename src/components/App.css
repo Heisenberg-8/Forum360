@@ -344,7 +344,8 @@ button:hover {
   margin-top: 15px;
   width: 100%;
 }
-.main-cont{
+
+.main-cont {
   position: relative;
 }
 
@@ -414,7 +415,7 @@ button:hover {
   grid-auto-rows: min-content;
   gap: var(--size-3);
   overflow-y: scroll;
-  height: 500px;
+  height: 55%;
   overscroll-behavior: contain;
   grid-auto-flow: row;
   margin-top: 15px;
@@ -688,9 +689,9 @@ button:hover {
 } */
 
 .email-box::-webkit-scrollbar {
-  width: 0px; 
+  width: 0px;
 }
 
-.email-box{
+.email-box {
   resize: none;
 }
