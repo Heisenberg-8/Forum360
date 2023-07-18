@@ -38,7 +38,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2560'
+        SessionId: '2585'
       })
     })
       .then(response => response.json())
@@ -57,7 +57,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2560'
+        SessionId: '2585'
       })
     })
       .then(response => response.json())
@@ -76,7 +76,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2560'
+        SessionId: '2585'
       })
     })
       .then(response => response.json())
@@ -95,7 +95,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2560'
+        SessionId: '2585'
       })
     })
       .then(response => response.json())
@@ -109,7 +109,7 @@ function Message() {
   function handleQuickMessageSelect(selectedOption) {
     const selectedMessage = selectedOption.value;
     setSelectedQuickMessage(selectedOption);
-  
+
     if (selectedMessage === "welcome") {
       setSubject("Reminder from [Org Name]: Your Meeting will start soon");
       setMessage(`Hello [First Name],
@@ -144,7 +144,7 @@ Team [Org Name]`);
       setMessage("");
     }
   }
-  
+
   function handleSubjectChange(event) {
     setSubject(event.target.value);
   }

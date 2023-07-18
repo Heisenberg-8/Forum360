@@ -49,7 +49,12 @@ function Feedback() {
 
   function handleMoveToAgendaClick(questionKey) {
     movetoAgenda(token, questionKey);
-    setCurrentScreen("original");
+    setIsLoading(true)
+    fetchQuestions(token)
+      .then((questionsData) => {
+        setQuestions(questionsData);
+        setIsLoading(false);
+      });
   }
 
   if (isLoading) {
@@ -161,32 +166,32 @@ function Feedback() {
         </button>
       </div>
       <div className="main-cont">
-      <div className="questions-container">
-        {questions?.map((question, index) => (
-          <div className="question" key={index}>
-            <text className="question-username">
-              {question.FullChannel}
-              <span className="time">{question.QuestionTime}</span>
-            </text>
-            <div className="question-text">
-              <text>{question.Question}</text>
+        <div className="questions-container">
+          {questions?.map((question, index) => (
+            <div className="question" key={index}>
+              <text className="question-username">
+                {question.FullChannel}
+                <span className="time">{question.QuestionTime}</span>
+              </text>
+              <div className="question-text">
+                <text>{question.Question}</text>
+              </div>
+              <div className="question-footer">
+                <btn className="text-btn1" onClick={() => handleMoveToAgendaClick(question.QuestionKey)}>Move to agenda</btn>
+                <btn className="text-btn1" style={{ marginLeft: 30 }}>
+                  Send to IRP
+                </btn>
+              </div>
             </div>
-            <div className="question-footer">
-              <btn className="text-btn1" onClick={() => handleMoveToAgendaClick(question.QuestionKey)}>Move to agenda</btn>
-              <btn className="text-btn1" style={{ marginLeft: 30 }}>
-                Send to IRP
-              </btn>
-            </div>
-          </div>
-        ))}
-      </div>
-      {fadeContainerVisible && (
-        <div className="fade">
-          <button className="viewAll-button" onClick={handleViewAllClick}>
-            View All
-          </button>
+          ))}
         </div>
-      )}
+        {fadeContainerVisible && (
+          <div className="fade">
+            <button className="viewAll-button" onClick={handleViewAllClick}>
+              View All
+            </button>
+          </div>
+        )}
       </div>
       <div className="footer">
         <button className="text-btn" onClick={handleAgendaClick}>

@@ -134,20 +134,20 @@ function Comments() {
         </button>
       </div>
       <div className="main-cont">
-      <div className="comments-container">
-        {comments.map((comments, index) => (
-          <div className="question" key={index}>
-            <text className="question-username">
-              {comments.username}
-              <span className="time">{comments.time}</span>
-            </text>
-            <div className="question-text">
-              <text>{comments.text}</text>
+        <div className="comments-container">
+          {comments.map((comments, index) => (
+            <div className="question" key={index}>
+              <text className="question-username">
+                {comments.username}
+                <span className="time">{comments.time}</span>
+              </text>
+              <div className="question-text">
+                <text>{comments.text}</text>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      {fadeContainerVisible && (
+          ))}
+        </div>
+        {fadeContainerVisible && (
           <div className="fade-comments">
             <button className="loadmore-button" onClick={handleViewAllClick}>
               Load More
