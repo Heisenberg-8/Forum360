@@ -19,7 +19,7 @@ function Feedback() {
 
   useEffect(() => {
     fetchQuestions(token)
-      .then(questionsData => {
+      .then((questionsData) => {
         setQuestions(questionsData);
         setIsLoading(false);
       });
@@ -144,7 +144,9 @@ function Feedback() {
       <div className="feedback-container">
         <button name="questions" className="feedback-button">
           <span className="h3" style={{ marginLeft: "-5px" }}>Questions</span>
-          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{messageCount}</span>
+          </div>
         </button>
         <button
           name="comments"
@@ -153,7 +155,9 @@ function Feedback() {
           onClick={handleCommentsClick}
         >
           <span className="h4">Comments</span>
-          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{commentCount}</span></div>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{commentCount}</span>
+          </div>
         </button>
       </div>
       <div className="questions-container">
