@@ -61,7 +61,6 @@
 }
 
 .body {
-  /* background-color: white; */
   height: fit-content;
 }
 
@@ -533,6 +532,7 @@ button:hover {
 
 .agenda-text {
   margin-left: 15px;
+  width: 180px;
 }
 
 .message-count {
