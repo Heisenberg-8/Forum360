@@ -4,6 +4,7 @@ import Questions from "./questions";
 import Data from "./data.jsx";
 import { fetchQuestions } from "./data.jsx";
 import { getToken } from "./token";
+import "./App.css"
 
 
 function Comments() {

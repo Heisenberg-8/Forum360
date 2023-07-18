@@ -547,10 +547,10 @@ button:hover {
 }
 
 .control {
-  position: fixed;
+  position: relative;
   margin-bottom: 5px;
   cursor: pointer;
-  margin-left: 73%;
+  margin-left: 25%;
 }
 
 .control_indicator {
