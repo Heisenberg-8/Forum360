@@ -3,6 +3,7 @@ import Select from "react-select";
 import Feedback from "./questions.jsx";
 import "./App.css";
 import { getToken } from "./token";
+import tag from "./assets/tag.png";
 
 function Message() {
   const token = getToken();
@@ -26,7 +27,7 @@ function Message() {
     { value: "rate", label: "Rate & Review", icon: require("./assets/info.png") },
     { value: "tech", label: "Technical Issues", icon: require("./assets/sad.png") },
     { value: "delay", label: "Meeting Delay", icon: require("./assets/forward.png") },
-    { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
+    // { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
   ];
 
   function sendWelcome(token) {
@@ -212,6 +213,12 @@ function Message() {
       ...provided,
       display: 'none',
     }),
+    singleValue: (provided) => ({
+      ...provided,
+      color:"#7b7b7b",
+      fontSize: "13.948px", 
+    }),
+  
 
   };
 
@@ -295,21 +302,13 @@ function Message() {
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>
-          {/* <div className="container" style={{ marginTop: "-10px" }}>
+            <div className="container" style={{ marginTop: "-10px" }}>
                 <h3 className="mh3">To:</h3>
                 <div className="dropdown-container">
-                  <Select
-                    options={optionList}
-                    placeholder="Select participant"
-                    value={selectedParticipants}
-                    onChange={handleParticipantSelect}
-                    isSearchable={true}
-                    isMulti={true}
-                    styles={customStyles}
-                  />
+                <img src={tag} style={{ width: '130px', height: '30px' }}/>
                 </div>
                 <hr className="line" />
-              </div> */}
+              </div>
           <div className="container" style={{ marginTop: "-5px" }}>
             <h3 className="mh3">Subject</h3>
             <input
@@ -344,7 +343,7 @@ function Message() {
               onChange={handleMessageChange}
               placeholder="Enter message"
               className="email-box"
-              rows={12}
+              rows={8.99}
             />
             <button onClick={handleSendMessage} className="send-button">
               Send Message

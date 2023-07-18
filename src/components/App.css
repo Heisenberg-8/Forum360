@@ -334,8 +334,8 @@ button:hover {
 }
 
 .questions-container {
-  /* display: grid; */
-  /* position: relative; */
+  display: grid;
+  position: relative;
   /* grid-auto-rows: min-content; */
   /* gap: var(--size-3); */
   overflow-y: scroll;
@@ -351,7 +351,7 @@ button:hover {
 }
 
 .fade {
-  position: absolute;
+  position: fixed;
   top: 63%;
   left: 0;
   width: 100%;
@@ -664,3 +664,21 @@ button:hover {
   background-color: #232cff;
   color: white;
 }
+
+/* .custom-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1px solid white;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  margin-left: auto;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: '\2713'; 
+  color: white;
+  font-size: 12px;
+} */
