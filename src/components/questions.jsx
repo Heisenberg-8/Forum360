@@ -3,7 +3,7 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
-import { fetchQuestions } from "./data.jsx";
+import { fetchQuestions, movetoAgenda } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
 
@@ -47,6 +47,11 @@ function Feedback() {
     setFadeContainerVisible(false);
   }
 
+  function handleMoveToAgendaClick(questionKey) {
+    movetoAgenda(token, questionKey);
+    setCurrentScreen("original");
+  }
+
   if (isLoading) {
     return (
       <div className="loading-spinner"></div>
@@ -67,6 +72,10 @@ function Feedback() {
 
   if (currentScreen === "answered") {
     return <Answered />;
+  }
+
+  if (currentScreen === "original") {
+    return <Feedback />
   }
 
   return (
@@ -163,7 +172,7 @@ function Feedback() {
               <text>{question.Question}</text>
             </div>
             <div className="question-footer">
-              <btn className="text-btn1">Move to agenda</btn>
+              <btn className="text-btn1" onClick={() => handleMoveToAgendaClick(question.QuestionKey)}>Move to agenda</btn>
               <btn className="text-btn1" style={{ marginLeft: 30 }}>
                 Send to IRP
               </btn>

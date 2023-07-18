@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import qs from 'qs';
 
 const Data = () => {
-    const [data, setData] = useState(null);
-    const [token, setToken] = useState(null);
-
     const [comments, setComments] = useState([
         {
             username: "Roger Vaccaro",
@@ -43,17 +40,8 @@ const Data = () => {
         },
     ]);
 
-    const [dataList, setDataList] = useState([
-        { username: "Roger Vaccaro", question: "Do fixed income investments on a 30-year period have higher returns?" },
-        { username: "Aarin Kachroo", question: "Do fixed income investments on a 30-year period have higher returns?" },
-        { username: "Alice Smith", question: "What is the impact of climate change on agriculture?" }
-    ]);
-
     return {
         comments,
-        dataList,
-        data,
-        token,
     };
 };
 
@@ -79,6 +67,28 @@ export function fetchAgenda(token) {
     })
         .then(response => response.json())
         .then(json => json.Payload.Planneds)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function movetoAgenda(token, questionkey) {
+    return fetch('https://mgmt-test.forum360.co/api//PA_Event/PlanQuestion', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SessionId: '2560',
+            IsMoveBackToInComing: false,
+            Position: '1',
+            QuestionKey: `${questionkey}`,
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
         .catch(error => {
             console.error(error);
             return [];
