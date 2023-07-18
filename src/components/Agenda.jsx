@@ -16,7 +16,7 @@ function Agenda() {
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
 
-  
+
 
   useEffect(() => {
     fetchAgenda(token)
@@ -31,10 +31,10 @@ function Agenda() {
     if (storedAgendaList) {
       dispatch(updateAgenda(JSON.parse(storedAgendaList)));
     }
-  
+
     setIsLoading(false);
   }, []);
-  
+
 
   function handleDragStart(event, index) {
     event.dataTransfer.setData("text/plain", index.toString());
@@ -53,8 +53,7 @@ function Agenda() {
         updatedAgendaList[dragIndex],
       ];
       dispatch(updateAgenda(updatedAgendaList));
-  
-      // Store the updated agenda list in local storage
+
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
   }
