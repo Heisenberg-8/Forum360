@@ -48,13 +48,14 @@ function Feedback() {
   }
 
   function handleMoveToAgendaClick(questionKey) {
-    movetoAgenda(token, questionKey);
     setIsLoading(true)
+    movetoAgenda(token, questionKey);
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setIsLoading(true)
       });
+    setIsLoading(false);
   }
 
   if (isLoading) {

@@ -386,7 +386,6 @@ button:hover {
 
 .loadmore-button {
   width: 100%;
-  position: absolute;
   margin-top: 40%;
   height: 52px;
   align-items: center;
@@ -396,13 +395,8 @@ button:hover {
   border-radius: 10px;
   padding: 10px;
   font-weight: 550;
-  align-content: center;
   border: none;
   text-align: center;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .viewAll-button:hover {
@@ -470,7 +464,7 @@ button:hover {
 .text-btn:hover {
   color: #ffffff;
   background-color: transparent;
-  cursor:pointer ;
+  cursor: pointer;
 }
 
 .text-btn1:hover {
@@ -492,8 +486,8 @@ button:hover {
   font-weight: 650;
   font-size: 17px;
   color: #ffffff9d;
-    cursor: pointer;
-  
+  cursor: pointer;
+
 }
 
 .text-btn1 {
@@ -513,6 +507,7 @@ button:hover {
   overscroll-behavior: contain;
   grid-auto-flow: row;
   margin-top: 15px;
+  justify-content: center;
 }
 
 .agenda-container::-webkit-scrollbar {
@@ -522,11 +517,16 @@ button:hover {
 .agenda-questions {
   display: flex;
   background-color: #2C2F38;
-  width: "100%";
+  /* width: 40%; */
   border-radius: 10px;
   padding: 15px;
   padding-top: 10px;
   margin-top: 15px;
+}
+
+.agenda-questions:hover {
+  background-color: #393c46;
+  border: solid 0.1px #232cff;
 }
 
 .dragicon {
@@ -560,7 +560,7 @@ button:hover {
   position: relative;
   margin-bottom: 5px;
   cursor: pointer;
-  margin-left: 25%;
+  /* margin-left: 25%;  */
 }
 
 .control_indicator {
@@ -574,24 +574,8 @@ button:hover {
   border-radius: 0px;
 }
 
-.control:hover input~.control_indicator,
-.control input:focus~.control_indicator {
-  background: #cccccc;
-}
-
 .control input:checked~.control_indicator {
   background: #232cff;
-}
-
-.control:hover input:not([disabled]):checked~.control_indicator,
-.control input:checked:focus~.control_indicator {
-  background: "#0e6647d";
-}
-
-.control input:disabled~.control_indicator {
-  background: #e6e6e6;
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 .control_indicator:after {
@@ -615,10 +599,6 @@ button:hover {
   transform: rotate(45deg);
 }
 
-.control-checkbox input:disabled~.control_indicator:after {
-  border-color: #7b7b7b;
-}
-
 .control-checkbox .control_indicator::before {
   content: '';
   display: block;
@@ -634,14 +614,6 @@ button:hover {
   opacity: 0.6;
   z-index: 99999;
   transform: scale(0);
-}
-
-.control-checkbox input+.control_indicator::before {
-  animation: s-ripple 250ms ease-out;
-}
-
-.control-checkbox input:checked+.control_indicator::before {
-  animation-name: s-ripple-dup;
 }
 
 .loading-spinner {
