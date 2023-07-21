@@ -115,7 +115,4 @@ export function generatetoken() {
         });
 }
 
-
-
-
 export default Data;

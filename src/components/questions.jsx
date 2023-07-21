@@ -53,7 +53,6 @@ function Feedback() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(true)
       });
     setIsLoading(false);
   }

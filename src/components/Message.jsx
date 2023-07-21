@@ -244,13 +244,6 @@ Team [Org Name]`);
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>
-          <div className="container" style={{ marginTop: "-10px" }}>
-            <h3 className="mh3">To:</h3>
-            <div className="dropdown-container">
-              <img src={tag} style={{ width: '130px', height: '30px', marginTop: '5px' }} />
-            </div>
-            <hr className="line" />
-          </div>
           <div className="container" style={{ marginTop: "-5px" }}>
             <h3 className="mh3">Subject</h3>
             <input
