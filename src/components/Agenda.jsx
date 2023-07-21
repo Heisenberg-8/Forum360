@@ -15,8 +15,7 @@ function Agenda() {
   const dispatch = useDispatch();
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
-
-
+  const [expandedItems, setExpandedItems] = useState([]);
 
   useEffect(() => {
     fetchAgenda(token)
@@ -34,7 +33,6 @@ function Agenda() {
 
     setIsLoading(false);
   }, []);
-
 
   function handleDragStart(event, index) {
     event.dataTransfer.setData("text/plain", index.toString());
@@ -74,6 +72,14 @@ function Agenda() {
     setCurrentScreen("answered");
   }
 
+  function toggleExpand(index) {
+    setExpandedItems((prevExpandedItems) => {
+      const updatedExpandedItems = [...prevExpandedItems];
+      updatedExpandedItems[index] = !updatedExpandedItems[index];
+      return updatedExpandedItems;
+    });
+  }
+
   if (isLoading) {
     return <div className="loading-spinner"></div>;
   }
@@ -93,7 +99,6 @@ function Agenda() {
   if (currentScreen === "answered") {
     return <Answered />;
   }
-
 
   return (
     <div className="main">
@@ -212,8 +217,30 @@ function Agenda() {
             <div className="agenda-text">
               <text className="question-username">{agendaItem.FullChannel}</text>
               <div className="question-text">
-                <text>{agendaItem.Question}</text>
+                {expandedItems[index] ? (
+                  <text>{agendaItem.Question}</text>
+                ) : (
+                  <>
+                    <text>{agendaItem.Question.substring(0, 30)}</text>
+                    {agendaItem.Question.length > 30 && (
+                      <button
+                        className="read-more-button"
+                        onClick={() => toggleExpand(index)}
+                      >
+                        Read More
+                      </button>
+                    )}
+                  </>
+                )}
               </div>
+              {expandedItems[index] && (
+                <button
+                  className="read-more-button"
+                  onClick={() => toggleExpand(index)}
+                >
+                  Read Less
+                </button>
+              )}
             </div>
             <div className="control control-checkbox">
               <input type="checkbox" id={`myCheckbox${index}`} />
