@@ -227,7 +227,7 @@ function Agenda() {
                         className="read-more-button"
                         onClick={() => toggleExpand(index)}
                       >
-                        Read More
+                        ...read more
                       </button>
                     )}
                   </>
@@ -238,7 +238,7 @@ function Agenda() {
                   className="read-more-button"
                   onClick={() => toggleExpand(index)}
                 >
-                  Read Less
+                read less
                 </button>
               )}
             </div>

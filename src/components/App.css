@@ -396,13 +396,8 @@ button:hover {
   border-radius: 10px;
   padding: 10px;
   font-weight: 550;
-  align-content: center;
   border: none;
   text-align: center;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .viewAll-button:hover {
@@ -470,7 +465,7 @@ button:hover {
 .text-btn:hover {
   color: #ffffff;
   background-color: transparent;
-  cursor:pointer ;
+  cursor: pointer;
 }
 
 .text-btn1:hover {
@@ -493,6 +488,7 @@ button:hover {
   font-size: 17px;
   color: #ffffff9d;
   cursor: pointer;
+
 }
 
 .text-btn1 {
@@ -512,7 +508,7 @@ button:hover {
   overscroll-behavior: contain;
   grid-auto-flow: row;
   margin-top: 15px;
-  position: relative;
+  justify-content: center;
 }
 
 .agenda-container::-webkit-scrollbar {
@@ -522,12 +518,19 @@ button:hover {
 .agenda-questions {
   display: flex;
   background-color: #2C2F38;
-  width: "100%";
+  /* width: 40%; */
   border-radius: 10px;
   padding: 15px;
   padding-top: 10px;
   margin-top: 15px;
+  text-align:auto;
 }
+
+.agenda-questions:hover {
+  background-color: #393c46;
+  box-shadow: inset 0 0 0 1px #232cff;
+}
+
 
 .dragicon {
   width: 12px;
@@ -560,7 +563,7 @@ button:hover {
   position: relative;
   margin-bottom: 5px;
   cursor: pointer;
-  margin-left: 25%;
+  /* margin-left: 25%;  */
 }
 
 .control_indicator {
@@ -574,24 +577,8 @@ button:hover {
   border-radius: 0px;
 }
 
-.control:hover input~.control_indicator,
-.control input:focus~.control_indicator {
-  background: #cccccc;
-}
-
 .control input:checked~.control_indicator {
   background: #232cff;
-}
-
-.control:hover input:not([disabled]):checked~.control_indicator,
-.control input:checked:focus~.control_indicator {
-  background: "#0e6647d";
-}
-
-.control input:disabled~.control_indicator {
-  background: #e6e6e6;
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 .control_indicator:after {
@@ -615,10 +602,6 @@ button:hover {
   transform: rotate(45deg);
 }
 
-.control-checkbox input:disabled~.control_indicator:after {
-  border-color: #7b7b7b;
-}
-
 .control-checkbox .control_indicator::before {
   content: '';
   display: block;
@@ -634,14 +617,6 @@ button:hover {
   opacity: 0.6;
   z-index: 99999;
   transform: scale(0);
-}
-
-.control-checkbox input+.control_indicator::before {
-  animation: s-ripple 250ms ease-out;
-}
-
-.control-checkbox input:checked+.control_indicator::before {
-  animation-name: s-ripple-dup;
 }
 
 .loading-spinner {
@@ -701,18 +676,19 @@ button:hover {
   resize: none;
 }
 
+/* Assuming you have a CSS file where you define your styles */
 .read-more-button {
   background-color: transparent;
-  color:#ffffff9d ;
-  border: 1px solid #ccc;
-  padding: 6px 12px;
+  color: #ffffff9d;
+  border: 1px solid transparent;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
 
 .read-more-button:hover {
-  background-color: #ddd;
+  color: white;
+  background-color: transparent;
 }
 
 .read-more-button:focus {
@@ -720,12 +696,4 @@ button:hover {
 }
 
 /* Optional: If you want to style the "Read Less" button differently */
-.read-more-button.read-less {
-  background-color: #eaf2ff;
-  color: #0069d9;
-  border: 1px solid #0069d9;
-}
 
-.read-more-button.read-less:hover {
-  background-color: #d3e7ff;
-}
