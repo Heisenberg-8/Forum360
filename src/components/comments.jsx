@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Message from "./Message.jsx";
-import Questions from "./questions";
+import { getToken } from "./token";
+import "./App.css";
 import Data from "./data.jsx";
 import { fetchQuestions } from "./data.jsx";
-import { getToken } from "./token";
-import "./App.css"
-
+import Message from "./Message.jsx";
+import Questions from "./questions";
 
 function Comments() {
   const { comments } = Data();
@@ -14,30 +13,56 @@ function Comments() {
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const commentCount = comments.length;
+  const [commentsList, setCommentsList] = useState(comments);
 
   useEffect(() => {
     fetchQuestions(token)
-      .then(questionsData => {
+      .then((questionsData) => {
         setQuestions(questionsData);
         setIsLoading(false);
       });
   }, []);
 
   const messageCount = questions.length;
+  const commentCount = commentsList.length;
 
+  const handleDragStart = (event, index) => {
+    event.dataTransfer.setData("text/plain", index.toString());
+  };
 
-  function handleMessagingClick() {
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event, dropIndex) => {
+    const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
+    if (dragIndex !== dropIndex) {
+      const updatedCommentsList = [...commentsList];
+      const draggedComment = updatedCommentsList[dragIndex];
+      updatedCommentsList.splice(dragIndex, 1);
+      updatedCommentsList.splice(dropIndex, 0, draggedComment);
+
+      // Update priorities based on new order
+      updatedCommentsList.forEach((comment, index) => {
+        comment.priority = index + 1;
+      });
+
+      setCommentsList(updatedCommentsList);
+      setFadeContainerVisible(true); // Show "Load More" button again after drop
+    }
+  };
+
+  const handleMessagingClick = () => {
     setCurrentScreen("messaging");
-  }
+  };
 
-  function handleQuestionsClick() {
+  const handleQuestionsClick = () => {
     setCurrentScreen("questions");
-  }
+  };
 
-  function handleViewAllClick() {
+  const handleViewAllClick = () => {
     setFadeContainerVisible(false);
-  }
+  };
 
   if (isLoading) {
     return (
@@ -130,19 +155,25 @@ function Comments() {
         >
           <span className="h3" style={{ marginLeft: "-5px" }}>Comments</span>
           <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{commentCount}</span></div>
-
         </button>
       </div>
       <div className="main-cont">
         <div className="comments-container">
-          {comments.map((comments, index) => (
-            <div className="question" key={index}>
+          {commentsList.map((comment, index) => (
+            <div
+              className="question"
+              key={index}
+              draggable="true"
+              onDragStart={(event) => handleDragStart(event, index)}
+              onDragOver={handleDragOver}
+              onDrop={(event) => handleDrop(event, index)}
+            >
               <text className="question-username">
-                {comments.username}
-                <span className="time">{comments.time}</span>
+                {comment.username}
+                <span className="time">{comment.time}</span>
               </text>
               <div className="question-text">
-                <text>{comments.text}</text>
+                <text>{comment.text}</text>
               </div>
             </div>
           ))}
@@ -155,7 +186,6 @@ function Comments() {
           </div>
         )}
       </div>
-
     </div>
   );
 }

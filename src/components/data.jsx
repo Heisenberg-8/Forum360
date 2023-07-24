@@ -6,27 +6,27 @@ const Data = () => {
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "Do fixed income investments on a 30 year period have higher returns?"
+            text: "1"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "Do fixed income investments on a 30 year period have higher returns?"
+            text: "2"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "Do fixed income investments on a 30 year period have higher returns?"
+            text: "3"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "Do fixed income investments on a 30 year period have higher returns?"
+            text: "4"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "Do fixed income investments on a 30 year period have higher returns?"
+            text: "5"
         },
         {
             username: "Roger Vaccaro",
