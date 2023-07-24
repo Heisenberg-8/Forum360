@@ -46,10 +46,14 @@ function Agenda() {
     const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
     if (dragIndex !== dropIndex) {
       const updatedAgendaList = [...agenda];
-      [updatedAgendaList[dragIndex], updatedAgendaList[dropIndex]] = [
-        updatedAgendaList[dropIndex],
-        updatedAgendaList[dragIndex],
-      ];
+      const draggedItem = updatedAgendaList[dragIndex];
+      updatedAgendaList.splice(dragIndex, 1);
+      updatedAgendaList.splice(dropIndex, 0, draggedItem);
+
+      updatedAgendaList.forEach((item, index) => {
+        item.priority = index + 1;
+      });
+
       dispatch(updateAgenda(updatedAgendaList));
 
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
