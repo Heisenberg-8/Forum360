@@ -44,21 +44,20 @@ function Agenda() {
 
   function handleDrop(event, dropIndex) {
     const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
+  
     if (dragIndex !== dropIndex) {
       const updatedAgendaList = [...agenda];
       const draggedItem = updatedAgendaList[dragIndex];
+
       updatedAgendaList.splice(dragIndex, 1);
       updatedAgendaList.splice(dropIndex, 0, draggedItem);
-
-      updatedAgendaList.forEach((item, index) => {
-        item.priority = index + 1;
-      });
-
+        
       dispatch(updateAgenda(updatedAgendaList));
-
+  
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
   }
+  
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -231,7 +230,7 @@ function Agenda() {
                         className="read-more-button"
                         onClick={() => toggleExpand(index)}
                       >
-                        ...read more
+                        ... <span className="read-more-text">View More</span>
                       </button>
                     )}
                   </>
@@ -242,7 +241,7 @@ function Agenda() {
                   className="read-more-button"
                   onClick={() => toggleExpand(index)}
                 >
-                read less
+                  <span className="read-more-text">View Less</span>
                 </button>
               )}
             </div>

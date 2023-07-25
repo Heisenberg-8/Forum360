@@ -6,12 +6,12 @@ const Data = () => {
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "1"
+            text: "1 aarin"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "2"
+            text: "2 kachroo"
         },
         {
             username: "Roger Vaccaro",

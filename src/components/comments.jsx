@@ -42,13 +42,12 @@ function Comments() {
       updatedCommentsList.splice(dragIndex, 1);
       updatedCommentsList.splice(dropIndex, 0, draggedComment);
 
-      // Update priorities based on new order
       updatedCommentsList.forEach((comment, index) => {
         comment.priority = index + 1;
       });
 
       setCommentsList(updatedCommentsList);
-      setFadeContainerVisible(true); // Show "Load More" button again after drop
+      setFadeContainerVisible(true); 
     }
   };
 
