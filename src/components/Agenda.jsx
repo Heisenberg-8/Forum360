@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions";
 import Answered from "./Answered.jsx";
-import Data from "./data.jsx";
 import { getToken } from "./token";
+import Resources from "./resources.jsx";
+import Data from "./data.jsx";
 import { fetchAgenda, fetchQuestions } from "./data.jsx";
-import { updateAgenda } from "./agendaReducer";
 
 function Agenda() {
+  const { comments } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
-  const agenda = useSelector((state) => state.agenda);
-  const dispatch = useDispatch();
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [expandedItems, setExpandedItems] = useState([]);
+  const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const { comments } = Data();
+  const [expandedItems, setExpandedItems] = useState([]);
+  const agendaCount = agenda.length;
+
+
+  useEffect(() => {
+    fetchAgenda(token)
+      .then((agendaData) => {
+        setAgenda(agendaData);
+        setIsLoading(false);
+      })
+  }, []);
 
   useEffect(() => {
     fetchQuestions(token)
-      .then(questionsData => {
+      .then((questionsData) => {
         setQuestions(questionsData);
         setIsLoading(false);
       });
@@ -30,43 +39,28 @@ function Agenda() {
   const messageCount = questions.length;
   const commentCount = comments.length;
 
-  useEffect(() => {
-    fetchAgenda(token)
-      .then((agendaData) => {
-        dispatch(updateAgenda(agendaData));
-        setIsLoading(false);
-      });
-  }, []);
+  function handleDragEnd(result) {
+    if (!result.destination) return;
 
-  const agendaCount = agenda.length;
+    const { source, destination } = result;
 
-  useEffect(() => {
-    const storedAgendaList = localStorage.getItem("agendaList");
-    if (storedAgendaList) {
-      dispatch(updateAgenda(JSON.parse(storedAgendaList)));
-    }
-    setIsLoading(false);
-  }, []);
-
-  function handleDragStart(event, index) {
-    event.dataTransfer.setData("text/plain", index.toString());
-  }
-
-  function handleDragOver(event) {
-    event.preventDefault();
-  }
-
-  function handleDrop(event, dropIndex) {
-    const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
-
-    if (dragIndex !== dropIndex) {
+    if (source.index !== destination.index) {
       const updatedAgendaList = [...agenda];
-      const draggedItem = updatedAgendaList[dragIndex];
-      updatedAgendaList.splice(dragIndex, 1);
-      updatedAgendaList.splice(dropIndex, 0, draggedItem);
-      dispatch(updateAgenda(updatedAgendaList));
+      const [draggedItem] = updatedAgendaList.splice(source.index, 1);
+      updatedAgendaList.splice(destination.index, 0, draggedItem);
+
+      setAgenda(updatedAgendaList);
+
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
+  }
+
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />;
   }
 
   function handleMessagingClick() {
@@ -112,7 +106,6 @@ function Agenda() {
   if (currentScreen === "answered") {
     return <Answered />;
   }
-
   return (
     <div className="main">
       <div className="tab-background">
@@ -168,7 +161,7 @@ function Agenda() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button">
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
             <img
               src={require("./assets/file.png")}
               alt="logo"
@@ -188,12 +181,14 @@ function Agenda() {
           onClick={handleQuestionsClick}
         >
           <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
-          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{messageCount}</span>
+          </div>
         </button>
         <button
           name="comments"
           className="feedback-button"
-          style={{ border: "none" }}
+          style={{ border: "none", marginLeft: "-5px" }}
           onClick={handleCommentsClick}
         >
           <span className="h4">Comments</span>
@@ -218,60 +213,72 @@ function Agenda() {
           <span className="h4">Answered</span>
         </button>
       </div>
-
-      <div className="agenda-container">
-        {agenda.map((agendaItem, index) => (
-          <div
-            className="agenda-questions"
-            key={index}
-            draggable="true"
-            onDragStart={(event) => handleDragStart(event, index)}
-            onDragOver={handleDragOver}
-            onDrop={(event) => handleDrop(event, index)}
-          >
-            <img
-              src={require("./assets/drag.png")}
-              alt="drag"
-              className="dragicon"
-            />
-            <div className="agenda-text">
-              <text className="question-username">{agendaItem.FullChannel}</text>
-              <div className="question-text">
-                {expandedItems[index] ? (
-                  <text>{agendaItem.Question}</text>
-                ) : (
-                  <>
-                    <text>{agendaItem.Question.substring(0, 30)}</text>
-                    {agendaItem.Question.length > 30 && (
-                      <button
-                        className="read-more-button"
-                        onClick={() => toggleExpand(index)}
-                      >
-                        ... <span className="read-more-text">View More</span>
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-              {expandedItems[index] && (
-                <button
-                  className="read-more-button"
-                  onClick={() => toggleExpand(index)}
-                >
-                  <span className="read-more-text">View Less</span>
-                </button>
-              )}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="agenda">
+          {(provided) => (
+            <div
+              className="agenda-container"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {agenda.map((agendaItem, index) => (
+                <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
+                  {(provided) => (
+                    <div
+                      className="agenda-questions"
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <img
+                        src={require("./assets/drag.png")}
+                        alt="drag"
+                        className="dragicon"
+                      />
+                      <div className="agenda-text">
+                        <text className="question-username">{agendaItem.FullName}</text>
+                        <div className="question-text">
+                          {expandedItems[index] ? (
+                            <text>{agendaItem.Question}</text>
+                          ) : (
+                            <>
+                              <text>{agendaItem.Question.substring(0, 30)}</text>
+                              {agendaItem.Question.length > 30 && (
+                                <button
+                                  className="read-more-button"
+                                  onClick={() => toggleExpand(index)}
+                                >
+                                  ... <span className="read-more-text">View More</span>
+                                </button>
+                              )}
+                            </>
+                          )}
+                        </div>
+                        {expandedItems[index] && (
+                          <button
+                            className="read-more-button"
+                            onClick={() => toggleExpand(index)}
+                          >
+                            <span className="read-more-text">View Less</span>
+                          </button>
+                        )}
+                      </div>
+                      <div className="control control-checkbox">
+                        <input type="checkbox" id={`myCheckbox${index}`} />
+                        <label
+                          htmlFor={`myCheckbox${index}`}
+                          className="control_indicator"
+                        ></label>
+                      </div>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
             </div>
-            <div className="control control-checkbox">
-              <input type="checkbox" id={`myCheckbox${index}`} />
-              <label
-                htmlFor={`myCheckbox${index}`}
-                className="control_indicator"
-              ></label>
-            </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import Feedback from "./questions.jsx";
-import Resources from "./Resources.jsx";
+import Resources from "./resources.jsx";
 import "./App.css";
 import { getToken } from "./token";
 import tag from "./assets/tag.png";

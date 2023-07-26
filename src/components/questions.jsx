@@ -49,8 +49,8 @@ function Feedback() {
     setFadeContainerVisible(false);
   }
 
-  function handleMoveToAgendaClick(questionKey) {
-    movetoAgenda(token, questionKey);
+  async function handleMoveToAgendaClick(questionKey) {
+    await movetoAgenda(token, questionKey);
     setIsLoading(true)
     fetchQuestions(token)
       .then((questionsData) => {
@@ -181,7 +181,7 @@ function Feedback() {
           {questions?.map((question, index) => (
             <div className="question" key={index}>
               <text className="question-username">
-                {question.FullChannel}
+                {question.FullName}
                 <span className="time">{question.QuestionTime}</span>
               </text>
               <div className="question-text">

@@ -6,27 +6,27 @@ const Data = () => {
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "1 aarin"
+            text: "Do fixed income investments on a 30 year period have higher returns?"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "2 kachroo"
+            text: "Do fixed income investments on a 30 year period have higher returns?"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "3"
+            text: "Do fixed income investments on a 30 year period have higher returns?"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "4"
+            text: "Do fixed income investments on a 30 year period have higher returns?"
         },
         {
             username: "Roger Vaccaro",
             time: "20:19:20",
-            text: "5"
+            text: "Do fixed income investments on a 30 year period have higher returns?"
         },
         {
             username: "Roger Vaccaro",
@@ -66,12 +66,33 @@ export function fetchAgenda(token) {
         },
     })
         .then(response => response.json())
-        .then(json => json.Payload.Planneds)
+        .then(json => {
+            const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus !== 902);
+            return filteredQuestions;
+        })
         .catch(error => {
             console.error(error);
             return [];
         });
 }
+
+export function fetchAnswered(token) {
+    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/9B764B89-66B2-4701-9682-3F3D7E8F1347/2591', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(response => response.json())
+        .then(json => {
+            const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus == 902);
+            return filteredQuestions;
+        })
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 
 export function movetoAgenda(token, questionkey) {
     return fetch('https://mgmt-test.forum360.co/api//PA_Event/PlanQuestion', {
