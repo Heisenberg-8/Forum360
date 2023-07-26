@@ -42,29 +42,7 @@ function Agenda() {
     }
   }
 
-  function handleDragStart(event, index) {
-    event.dataTransfer.setData("text/plain", index.toString());
-  }
 
-  function handleDragOver(event) {
-    event.preventDefault();
-  }
-
-  function handleDrop(event, dropIndex) {
-    const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
-
-    if (dragIndex !== dropIndex) {
-      const updatedAgendaList = [...agenda];
-      const draggedItem = updatedAgendaList[dragIndex];
-
-      updatedAgendaList.splice(dragIndex, 1);
-      updatedAgendaList.splice(dropIndex, 0, draggedItem);
-
-      setAgenda(updatedAgendaList);
-
-      localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
-    }
-  }
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
