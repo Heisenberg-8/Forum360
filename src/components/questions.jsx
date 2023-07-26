@@ -6,6 +6,7 @@ import Answered from "./Answered.jsx";
 import { fetchQuestions, movetoAgenda } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
+import Resources from "./resources.jsx";
 
 function Feedback() {
   const { comments } = Data();
@@ -85,6 +86,14 @@ function Feedback() {
     return <Feedback />
   }
 
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />;
+  }
+
   function toggleExpand(index) {
     setExpandedItems((prevExpandedItems) => {
       const updatedExpandedItems = [...prevExpandedItems];
@@ -145,7 +154,7 @@ function Feedback() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button">
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
             <img
               src={require("./assets/file.png")}
               alt="logo"

@@ -4,6 +4,7 @@ import Feedback from "./questions.jsx";
 import "./App.css";
 import { getToken } from "./token";
 import tag from "./assets/tag.png";
+import Resources from "./resources.jsx";
 
 function Message() {
   const token = getToken();
@@ -14,13 +15,7 @@ function Message() {
   const [currentScreen, setCurrentScreen] = useState("tab");
   const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
 
-  // const optionList = [
-  //   { value: "red", label: "Send to all" },
-  //   { value: "green", label: "Bob Vance" },
-  //   { value: "yellow", label: "Michael Scott" },
-  //   { value: "blue", label: "Jim Halpert" },
-  //   { value: "To all", label: "Dwight Shrute" },
-  // ];
+ 
 
   const quickMessageOptions = [
     { value: "welcome", label: "Welcome", icon: require("./assets/welcome.png") },
@@ -174,6 +169,14 @@ Team [Org Name]`);
     return <Feedback />;
   }
 
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />;
+  }
+
   return (
     <div className="main">
       <div className="tab-background">
@@ -230,7 +233,8 @@ Team [Org Name]`);
               />
               <span className="button-text">Analytics</span>
             </button>
-            <button type="button" name="resources" className="button">
+            <button type="button" name="resources" className="button" onClick={handleResourcesClick}
+>
               <img
                 src={require("./assets/file.png")}
                 alt="logo"

@@ -5,6 +5,7 @@ import Comments from "./comments";
 import Questions from "./questions";
 import Answered from "./Answered.jsx";
 import { getToken } from "./token";
+import Resources from "./resources.jsx";
 import { fetchAgenda } from "./data.jsx";
 
 function Agenda() {
@@ -44,7 +45,13 @@ function Agenda() {
     }
   }
 
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
+  }
 
+  if (currentScreen === "resources") {
+    return <Resources />;
+  }
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -144,7 +151,7 @@ function Agenda() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button">
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
             <img
               src={require("./assets/file.png")}
               alt="logo"

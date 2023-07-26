@@ -3,6 +3,7 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions"
 import Agenda from "./Agenda.jsx";
+import Resources from "./resources.jsx";
 
 function Answered() {
     const [currentScreen, setCurrentScreen] = useState("");
@@ -38,6 +39,14 @@ function Answered() {
     if (currentScreen === "comments") {
         return <Comments />;
     }
+
+    function handleResourcesClick() {
+        setCurrentScreen("resources");
+      }
+    
+      if (currentScreen === "resources") {
+        return <Resources />;
+      }
 
     return (
         <div className="main">
@@ -81,7 +90,7 @@ function Answered() {
                         />
                         <span className="button-text">Analytics</span>
                     </button>
-                    <button type="button" name="resources" className="button">
+                    <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
                         <img
                             src={require("./assets/file.png")}
                             alt="logo"

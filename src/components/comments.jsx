@@ -4,6 +4,7 @@ import "./App.css";
 import Data from "./data.jsx";
 import { fetchQuestions } from "./data.jsx";
 import Message from "./Message.jsx";
+import Resources from "./resources.jsx";
 import Questions from "./questions";
 
 function Comments() {
@@ -52,6 +53,14 @@ function Comments() {
 
   if (currentScreen === "questions") {
     return <Questions />;
+  }
+
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />;
   }
 
   return (
@@ -105,7 +114,7 @@ function Comments() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button">
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
             <img
               src={require("./assets/file.png")}
               alt="logo"
