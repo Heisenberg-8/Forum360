@@ -13,6 +13,8 @@ function Agenda() {
   const [isLoading, setIsLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
+  const agendaCount = agenda.length;
+
 
   useEffect(() => {
     fetchAgenda(token)
@@ -174,7 +176,10 @@ function Agenda() {
       </div>
       <div className="feedback-container1">
         <button name="questions" className="feedback-button">
-          <span className="h3">Agenda</span>
+        <span className="h3">Agenda</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{agendaCount}</span>
+          </div>
         </button>
         <button
           name="comments"
