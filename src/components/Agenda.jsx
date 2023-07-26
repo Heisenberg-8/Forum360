@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions";
@@ -6,12 +7,11 @@ import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import { fetchAgenda } from "./data.jsx";
 
-
 function Agenda() {
   const [currentScreen, setCurrentScreen] = useState("");
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [agenda, setAgenda] = useState([]); 
+  const [agenda, setAgenda] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
 
   useEffect(() => {
@@ -24,8 +24,23 @@ function Agenda() {
         console.error("Error fetching agenda data:", error);
         setIsLoading(false);
       });
-  }, [token]); 
- 
+  }, [token]);
+
+  function handleDragEnd(result) {
+    if (!result.destination) return;
+
+    const { source, destination } = result;
+
+    if (source.index !== destination.index) {
+      const updatedAgendaList = [...agenda];
+      const [draggedItem] = updatedAgendaList.splice(source.index, 1);
+      updatedAgendaList.splice(destination.index, 0, draggedItem);
+
+      setAgenda(updatedAgendaList);
+
+      localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
+    }
+  }
 
   function handleDragStart(event, index) {
     event.dataTransfer.setData("text/plain", index.toString());
@@ -94,7 +109,6 @@ function Agenda() {
   if (currentScreen === "answered") {
     return <Answered />;
   }
-
   return (
     <div className="main">
       <div className="tab-background">
@@ -193,60 +207,72 @@ function Agenda() {
           <span className="h4">Answered</span>
         </button>
       </div>
-
-      <div className="agenda-container">
-        {agenda.map((agendaItem, index) => (
-          <div
-            className="agenda-questions"
-            key={index}
-            draggable="true"
-            onDragStart={(event) => handleDragStart(event, index)}
-            onDragOver={handleDragOver}
-            onDrop={(event) => handleDrop(event, index)}
-          >
-            <img
-              src={require("./assets/drag.png")}
-              alt="drag"
-              className="dragicon"
-            />
-            <div className="agenda-text">
-              <text className="question-username">{agendaItem.FullChannel}</text>
-              <div className="question-text">
-                {expandedItems[index] ? (
-                  <text>{agendaItem.Question}</text>
-                ) : (
-                  <>
-                    <text>{agendaItem.Question.substring(0, 30)}</text>
-                    {agendaItem.Question.length > 30 && (
-                      <button
-                        className="read-more-button"
-                        onClick={() => toggleExpand(index)}
-                      >
-                        ... <span className="read-more-text">View More</span>
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-              {expandedItems[index] && (
-                <button
-                  className="read-more-button"
-                  onClick={() => toggleExpand(index)}
-                >
-                  <span className="read-more-text">View Less</span>
-                </button>
-              )}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="agenda">
+          {(provided) => (
+            <div
+              className="agenda-container"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {agenda.map((agendaItem, index) => (
+                <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
+                  {(provided) => (
+                    <div
+                      className="agenda-questions"
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <img
+                        src={require("./assets/drag.png")}
+                        alt="drag"
+                        className="dragicon"
+                      />
+                      <div className="agenda-text">
+                        <text className="question-username">{agendaItem.FullChannel}</text>
+                        <div className="question-text">
+                          {expandedItems[index] ? (
+                            <text>{agendaItem.Question}</text>
+                          ) : (
+                            <>
+                              <text>{agendaItem.Question.substring(0, 30)}</text>
+                              {agendaItem.Question.length > 30 && (
+                                <button
+                                  className="read-more-button"
+                                  onClick={() => toggleExpand(index)}
+                                >
+                                  ... <span className="read-more-text">View More</span>
+                                </button>
+                              )}
+                            </>
+                          )}
+                        </div>
+                        {expandedItems[index] && (
+                          <button
+                            className="read-more-button"
+                            onClick={() => toggleExpand(index)}
+                          >
+                            <span className="read-more-text">View Less</span>
+                          </button>
+                        )}
+                      </div>
+                      <div className="control control-checkbox">
+                        <input type="checkbox" id={`myCheckbox${index}`} />
+                        <label
+                          htmlFor={`myCheckbox${index}`}
+                          className="control_indicator"
+                        ></label>
+                      </div>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
             </div>
-            <div className="control control-checkbox">
-              <input type="checkbox" id={`myCheckbox${index}`} />
-              <label
-                htmlFor={`myCheckbox${index}`}
-                className="control_indicator"
-              ></label>
-            </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 }
