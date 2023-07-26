@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import Feedback from "./questions.jsx";
+import Resources from "./Resources.jsx";
 import "./App.css";
 import { getToken } from "./token";
 import tag from "./assets/tag.png";
@@ -170,8 +171,16 @@ Team [Org Name]`);
     setCurrentScreen("feedback");
   }
 
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
+  }
+
   if (currentScreen === "feedback") {
     return <Feedback />;
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />
   }
 
   return (
@@ -230,7 +239,7 @@ Team [Org Name]`);
               />
               <span className="button-text">Analytics</span>
             </button>
-            <button type="button" name="resources" className="button">
+            <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
               <img
                 src={require("./assets/file.png")}
                 alt="logo"

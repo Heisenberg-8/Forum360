@@ -4,18 +4,31 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions";
 import Answered from "./Answered.jsx";
+import Data from "./data.jsx";
 import { getToken } from "./token";
-import { fetchAgenda } from "./data.jsx";
+import { fetchAgenda, fetchQuestions } from "./data.jsx";
 import { updateAgenda } from "./agendaReducer";
 
 function Agenda() {
   const [currentScreen, setCurrentScreen] = useState("");
-  const dataList = useSelector((state) => state.dataList);
   const agenda = useSelector((state) => state.agenda);
   const dispatch = useDispatch();
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
   const [expandedItems, setExpandedItems] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const { comments } = Data();
+
+  useEffect(() => {
+    fetchQuestions(token)
+      .then(questionsData => {
+        setQuestions(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const messageCount = questions.length;
+  const commentCount = comments.length;
 
   useEffect(() => {
     fetchAgenda(token)
@@ -25,12 +38,13 @@ function Agenda() {
       });
   }, []);
 
+  const agendaCount = agenda.length;
+
   useEffect(() => {
     const storedAgendaList = localStorage.getItem("agendaList");
     if (storedAgendaList) {
       dispatch(updateAgenda(JSON.parse(storedAgendaList)));
     }
-
     setIsLoading(false);
   }, []);
 
@@ -44,20 +58,16 @@ function Agenda() {
 
   function handleDrop(event, dropIndex) {
     const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
-  
+
     if (dragIndex !== dropIndex) {
       const updatedAgendaList = [...agenda];
       const draggedItem = updatedAgendaList[dragIndex];
-
       updatedAgendaList.splice(dragIndex, 1);
       updatedAgendaList.splice(dropIndex, 0, draggedItem);
-        
       dispatch(updateAgenda(updatedAgendaList));
-  
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
   }
-  
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
@@ -177,7 +187,8 @@ function Agenda() {
           style={{ border: "none" }}
           onClick={handleQuestionsClick}
         >
-          <span className="h4">Questions</span>
+          <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}><span className="count">{messageCount}</span></div>
         </button>
         <button
           name="comments"
@@ -186,11 +197,17 @@ function Agenda() {
           onClick={handleCommentsClick}
         >
           <span className="h4">Comments</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{commentCount}</span>
+          </div>
         </button>
       </div>
       <div className="feedback-container1">
         <button name="questions" className="feedback-button">
           <span className="h3">Agenda</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{agendaCount}</span>
+          </div>
         </button>
         <button
           name="comments"
