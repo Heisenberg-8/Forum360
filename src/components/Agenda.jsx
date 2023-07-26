@@ -1,38 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions";
 import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import { fetchAgenda } from "./data.jsx";
-import { updateAgenda } from "./agendaReducer";
+
 
 function Agenda() {
   const [currentScreen, setCurrentScreen] = useState("");
-  const dataList = useSelector((state) => state.dataList);
-  const agenda = useSelector((state) => state.agenda);
-  const dispatch = useDispatch();
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
+  const [agenda, setAgenda] = useState([]); 
   const [expandedItems, setExpandedItems] = useState([]);
 
   useEffect(() => {
     fetchAgenda(token)
       .then((agendaData) => {
-        dispatch(updateAgenda(agendaData));
+        setAgenda(agendaData);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching agenda data:", error);
         setIsLoading(false);
       });
-  }, []);
-
-  useEffect(() => {
-    const storedAgendaList = localStorage.getItem("agendaList");
-    if (storedAgendaList) {
-      dispatch(updateAgenda(JSON.parse(storedAgendaList)));
-    }
-
-    setIsLoading(false);
-  }, []);
+  }, [token]); 
+ 
 
   function handleDragStart(event, index) {
     event.dataTransfer.setData("text/plain", index.toString());
@@ -44,20 +37,19 @@ function Agenda() {
 
   function handleDrop(event, dropIndex) {
     const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
-  
+
     if (dragIndex !== dropIndex) {
       const updatedAgendaList = [...agenda];
       const draggedItem = updatedAgendaList[dragIndex];
 
       updatedAgendaList.splice(dragIndex, 1);
       updatedAgendaList.splice(dropIndex, 0, draggedItem);
-        
-      dispatch(updateAgenda(updatedAgendaList));
-  
+
+      setAgenda(updatedAgendaList);
+
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
   }
-  
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");

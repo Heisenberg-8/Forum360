@@ -26,30 +26,7 @@ function Comments() {
   const messageCount = questions.length;
   const commentCount = commentsList.length;
 
-  const handleDragStart = (event, index) => {
-    event.dataTransfer.setData("text/plain", index.toString());
-  };
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event, dropIndex) => {
-    const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
-    if (dragIndex !== dropIndex) {
-      const updatedCommentsList = [...commentsList];
-      const draggedComment = updatedCommentsList[dragIndex];
-      updatedCommentsList.splice(dragIndex, 1);
-      updatedCommentsList.splice(dropIndex, 0, draggedComment);
-
-      updatedCommentsList.forEach((comment, index) => {
-        comment.priority = index + 1;
-      });
-
-      setCommentsList(updatedCommentsList);
-      setFadeContainerVisible(true); 
-    }
-  };
 
   const handleMessagingClick = () => {
     setCurrentScreen("messaging");
@@ -162,10 +139,7 @@ function Comments() {
             <div
               className="question"
               key={index}
-              draggable="true"
-              onDragStart={(event) => handleDragStart(event, index)}
-              onDragOver={handleDragOver}
-              onDrop={(event) => handleDrop(event, index)}
+          
             >
               <text className="question-username">
                 {comment.username}
