@@ -174,9 +174,9 @@ function Resources() {
       <div className="keypoints-head">
         <div className="d1-flex">
           <img src={ai} className="ai" alt="AI"  />
-          <div className="points" >Key Points </div>
+          <div className="points" >KeyPoints </div>
           <div onClick={handleExpandClick}>
-          <img src={expand} alt="Expand" style={{marginLeft: "120px"}}/>
+          <img src={expand} className="expand"/>
         </div>
         </div>
        

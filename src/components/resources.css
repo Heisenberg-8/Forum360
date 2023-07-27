@@ -132,28 +132,33 @@ line-height: normal;
 .keypoints{
     margin-top: 10px;
     border-radius: 0.625rem;
-background: rgba(10, 14, 23, 0.60);
-backdrop-filter: blur(5px);
+    background:  #13161b;
+    backdrop-filter: blur(5px);
 height: fit-content;
 margin-bottom: 0px;
 padding: 5px 16px 20px 16px;
 }
 
-.ai{}
+.expand{
+    margin-left: 127px;
+}
+
+.ai{
+    height: 30px;
+    margin-top: 0px;
+}
 
 .points{
     color: #F8F8F8;
-/* font-feature-settings: 'clig' off, 'liga' off; */
+font-feature-settings: 'clig' off, 'liga' off;
 font-family: Albert ;
-/* font-size: 0.875rem; */
 font-style: albert;
 font-weight: 700;
 /* line-height: 1.3125rem; */
 /* padding-bottom: 2px; */
-padding-left: 4px;
-/* min-width: 60px; */
-margin-top:"2px";
-font-size:"14px";
+padding-left: 7px;
+width: 50;
+padding-top:5px;
 }
 
 .keypoints-head{
