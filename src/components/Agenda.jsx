@@ -194,7 +194,7 @@ function Agenda() {
           style={{ border: "none" }}
           onClick={handleAnsweredClick}
         >
-          <span className="h4">Answered</span>
+          <span className="h4">Resolved</span>
         </button>
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>

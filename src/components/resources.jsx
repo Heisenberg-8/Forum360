@@ -6,6 +6,13 @@ import Answered from "./Answered.jsx";
 import Questions from "./questions.jsx"
 import { fetchQuestions } from "./data.jsx";
 import Data from "./data.jsx";
+import addComment from './assets/addComment.svg';
+import thumbdislike from './assets/thumbdislike.svg';
+import thumblike from './assets/thumblike.svg';
+import './resources.css';
+import ai from './assets/ai.svg';
+import expand from './assets/expand.svg';
+
 
 
 function Resources() {
@@ -16,6 +23,11 @@ function Resources() {
   const [isLoading, setIsLoading] = useState(true);
 
   const commentCount = comments.length;
+  
+  const [expanded, setExpanded] = useState(false);
+
+  function handleExpandClick() {
+    setExpanded(!expanded);}
 
   useEffect(() => {
     fetchQuestions()
@@ -121,7 +133,63 @@ function Resources() {
           </button>
         </div>
       </div>
-    
+
+{/* CustomerExperienceForm */}
+
+      <div className="customerexperience">
+      <div className="d-flex">
+        <img src={addComment} style={{ marginTop: "0px" }} />
+        <div className="gri">
+        <div className="customer">Customer Experience</div>
+        <div className="sessionnotes">Enter session notes</div>
+</div>
+      </div>
+      <div className="formdata">
+        <div className="labels">Comment</div>
+
+        <div className="typeable">
+          <input className="input" placeholder="Start typing..."/>
+          <img src ={require ("./assets/tick.png") } className="tickimg"/>
+        </div>
+        <div className="labels">Question</div>
+        <div className="typeable">
+          <input className="input" placeholder="Start typing..." />
+          <img src ={require ("./assets/tick.png") } className="tickimg"/>
+        </div>
+        <div className="labels">Review</div>
+        <div className="typeable">
+          <input className="input" placeholder="Start typing..." />
+          <img src ={require ("./assets/tick.png") } className="tickimg"/>
+        </div>
+        <div className="d-flex justify-content-space-between like">
+          <img src={thumbdislike} />
+          <img src={thumblike} />
+        </div>
+      </div>
+    </div>
+
+    {/* keypoints */}
+
+    <div className={`keypoints ${expanded ? "expandable" : ""}`}>
+      <div className="keypoints-head">
+        <div className="d1-flex">
+          <img src={ai} className="ai" alt="AI"  />
+          <div className="points" >Key Points </div>
+          <div onClick={handleExpandClick}>
+          <img src={expand} alt="Expand" style={{marginLeft: "120px"}}/>
+        </div>
+        </div>
+       
+      </div>
+      <div>
+        <ul>
+          <li>
+            Ensuring a well-diversified portfolio to minimize risk-consistent dividend payouts and
+            strong growth potential
+          </li>
+        </ul>
+      </div>
+    </div>
     </div>
   );
 }

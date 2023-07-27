@@ -3,10 +3,14 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions"
 import Agenda from "./Agenda.jsx";
-import Resources from "./resources.jsx";
+
 
 function Answered() {
     const [currentScreen, setCurrentScreen] = useState("");
+    const [expandedItems, setExpandedItems] = useState([]);
+    const [agenda, setAgenda] = useState([]);
+
+
 
     function handleMessagingClick() {
         setCurrentScreen("messaging");
@@ -40,12 +44,12 @@ function Answered() {
         return <Comments />;
     }
 
-    function handleResourcesClick() {
-        setCurrentScreen("resources");
-      }
-    
-      if (currentScreen === "resources") {
-        return <Resources />;
+    function toggleExpand(index) {
+        setExpandedItems((prevExpandedItems) => {
+          const updatedExpandedItems = [...prevExpandedItems];
+          updatedExpandedItems[index] = !updatedExpandedItems[index];
+          return updatedExpandedItems;
+        });
       }
 
     return (
@@ -90,7 +94,7 @@ function Answered() {
                         />
                         <span className="button-text">Analytics</span>
                     </button>
-                    <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+                    <button type="button" name="resources" className="button">
                         <img
                             src={require("./assets/file.png")}
                             alt="logo"
@@ -133,11 +137,42 @@ function Answered() {
                     name="comments"
                     className="feedback-button"
                 >
-                    <span className="h3">Answered</span>
+                    <span className="h3">Resolved</span>
                 </button>
             </div>
             <div className="agenda-container">
-            </div>
+  {agenda.map((agendaItem, index) => (
+    <div key={index} className="agenda-questions">
+      <div className="agenda-text">
+        <text className="question-username">{agendaItem.FullName}</text>
+        <div className="question-text">
+          {expandedItems[index] ? (
+            <text>{agendaItem.Question}</text>
+          ) : (
+            <>
+              <text>{agendaItem.Question.substring(0, 30)}</text>
+              {agendaItem.Question.length > 30 && (
+                <button className="read-more-button" onClick={() => toggleExpand(index)}>
+                  ... <span className="read-more-text">View More</span>
+                </button>
+              )}
+            </>
+          )}
+        </div>
+        {expandedItems[index] && (
+          <button className="read-more-button" onClick={() => toggleExpand(index)}>
+            <span className="read-more-text">View Less</span>
+          </button>
+        )}
+      </div>
+      <div className="control control-checkbox">
+        <input type="checkbox" id={`myCheckbox${index}`} />
+        <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
+      </div>
+    </div>
+  ))}
+</div>
+
         </div>
     );
 }
