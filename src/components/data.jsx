@@ -116,6 +116,52 @@ export function movetoAgenda(token, questionkey) {
         });
 }
 
+export function movetoAnswered(token, questionid) {
+    return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SpeakerId: '0',
+            QuestionStatus: '902',
+            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            QuestionId: `${questionid}`,
+            SessionId: '2591'
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function movebacktoAgenda(token, questionid) {
+    return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SpeakerId: '0',
+            QuestionStatus: '900',
+            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            QuestionId: `${questionid}`,
+            SessionId: '2591'
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 export function generatetoken() {
     return fetch('https://mgmt-test.forum360.co/api/Token', {
         method: 'POST',

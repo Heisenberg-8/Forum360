@@ -7,7 +7,7 @@ import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import Resources from "./resources.jsx";
 import Data from "./data.jsx";
-import { fetchAgenda, fetchQuestions } from "./data.jsx";
+import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered } from "./data.jsx";
 
 function Agenda() {
   const { comments } = Data();
@@ -16,9 +16,9 @@ function Agenda() {
   const [isLoading, setIsLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
   const agendaCount = agenda.length;
-
 
   useEffect(() => {
     fetchAgenda(token)
@@ -36,6 +36,25 @@ function Agenda() {
       });
   }, []);
 
+  useEffect(() => {
+    fetchAnswered(token)
+      .then((questionsData) => {
+        setAnswered(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
+
+  async function handleMoveToAnsweredClick(questionid) {
+    await movetoAnswered(token, questionid);
+    setIsLoading(true)
+    fetchAgenda(token)
+      .then((agendaData) => {
+        setAgenda(agendaData);
+        setIsLoading(false);
+      })
+  }
+
+  const answeredCount = answered.length;
   const messageCount = questions.length;
   const commentCount = comments.length;
 
@@ -57,10 +76,6 @@ function Agenda() {
 
   function handleResourcesClick() {
     setCurrentScreen("resources");
-  }
-
-  if (currentScreen === "resources") {
-    return <Resources />;
   }
 
   function handleMessagingClick() {
@@ -85,6 +100,10 @@ function Agenda() {
       updatedExpandedItems[index] = !updatedExpandedItems[index];
       return updatedExpandedItems;
     });
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />;
   }
 
   if (isLoading) {
@@ -211,6 +230,9 @@ function Agenda() {
           onClick={handleAnsweredClick}
         >
           <span className="h4">Answered</span>
+          <div className="message-count" style={{ marginLeft: "10px" }}>
+            <span className="count">{answeredCount}</span>
+          </div>
         </button>
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -264,7 +286,7 @@ function Agenda() {
                         )}
                       </div>
                       <div className="control control-checkbox">
-                        <input type="checkbox" id={`myCheckbox${index}`} />
+                        <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handleMoveToAnsweredClick(agendaItem.QuestionId)} />
                         <label
                           htmlFor={`myCheckbox${index}`}
                           className="control_indicator"

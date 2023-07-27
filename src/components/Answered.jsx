@@ -1,11 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions"
 import Agenda from "./Agenda.jsx";
+import { getToken } from "./token";
+import Data from "./data.jsx";
+import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 
 function Answered() {
+    const { comments } = Data();
+    const [questions, setQuestions] = useState([]);
+    const token = getToken();
     const [currentScreen, setCurrentScreen] = useState("");
+    const [expandedItems, setExpandedItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [agenda, setAgenda] = useState([]);
+    const [answered, setAnswered] = useState([]);
+
+    useEffect(() => {
+        fetchAnswered(token)
+            .then((agendaData) => {
+                setAnswered(agendaData);
+                setIsLoading(false);
+            })
+    }, []);
+
+    useEffect(() => {
+        fetchAgenda(token)
+            .then((agendaData) => {
+                setAgenda(agendaData);
+                setIsLoading(false);
+            })
+    }, []);
+
+    useEffect(() => {
+        fetchQuestions(token)
+            .then((agendaData) => {
+                setQuestions(agendaData);
+                setIsLoading(false);
+            })
+    }, []);
+
+    const commentCount = comments.length;
+    const agendaCount = agenda.length;
+    const questioncount = questions.length;
+    const answeredCount = answered.length;
+
+    async function handlemovebacktoagendaclick(questionid) {
+        await movebacktoAgenda(token, questionid);
+        setIsLoading(true)
+        fetchAnswered(token)
+            .then((agendaData) => {
+                setAnswered(agendaData);
+                setIsLoading(false);
+            })
+    }
 
     function handleMessagingClick() {
         setCurrentScreen("messaging");
@@ -23,6 +72,10 @@ function Answered() {
         setCurrentScreen("agenda")
     }
 
+    if (isLoading) {
+        return <div className="loading-spinner"></div>;
+    }
+
     if (currentScreen === "messaging") {
         return <Message />;
     }
@@ -37,6 +90,14 @@ function Answered() {
 
     if (currentScreen === "comments") {
         return <Comments />;
+    }
+
+    function toggleExpand(index) {
+        setExpandedItems((prevExpandedItems) => {
+            const updatedExpandedItems = [...prevExpandedItems];
+            updatedExpandedItems[index] = !updatedExpandedItems[index];
+            return updatedExpandedItems;
+        });
     }
 
     return (
@@ -63,7 +124,7 @@ function Answered() {
                         />
                         <span className="button-text">Messaging</span>
                     </button>
-                    <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff" }}>
+                    <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "solid 1px white" }}>
                         <img
                             src={require("./assets/whitefeedback.png")}
                             alt="logo"
@@ -101,6 +162,9 @@ function Answered() {
                     onClick={handleQuestionsClick}
                 >
                     <span className="h4">Questions</span>
+                    <div className="message-count" style={{ marginLeft: "10px" }}>
+                        <span className="count">{questioncount}</span>
+                    </div>
                 </button>
                 <button
                     name="comments"
@@ -109,6 +173,9 @@ function Answered() {
                     onClick={handleCommentsClick}
                 >
                     <span className="h4">Comments</span>
+                    <div className="message-count" style={{ marginLeft: "5px" }}>
+                        <span className="count">{commentCount}</span>
+                    </div>
                 </button>
             </div>
             <div className="feedback-container1">
@@ -119,16 +186,53 @@ function Answered() {
                     onClick={handleAgendaClick}
                 >
                     <span className="h4">Agenda</span>
+                    <div className="message-count" style={{ marginLeft: "10px" }}>
+                        <span className="count">{agendaCount}</span>
+                    </div>
                 </button>
                 <button
                     name="comments"
                     className="feedback-button"
                 >
-                    <span className="h3">Answered</span>
+                    <span className="h3">Resolved</span>
+                    <div className="message-count" style={{ marginLeft: "10px" }}>
+                        <span className="count">{answeredCount}</span>
+                    </div>
                 </button>
             </div>
             <div className="agenda-container">
+                {answered.map((agendaItem, index) => (
+                    <div key={index} className="agenda-questions">
+                        <div className="agenda-text">
+                            <text className="question-username">{agendaItem.FullName}</text>
+                            <div className="question-text">
+                                {expandedItems[index] ? (
+                                    <text>{agendaItem.Question}</text>
+                                ) : (
+                                    <>
+                                        <text>{agendaItem.Question.substring(0, 30)}</text>
+                                        {agendaItem.Question.length > 30 && (
+                                            <button className="read-more-button" onClick={() => toggleExpand(index)}>
+                                                ... <span className="read-more-text">View More</span>
+                                            </button>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                            {expandedItems[index] && (
+                                <button className="read-more-button" onClick={() => toggleExpand(index)}>
+                                    <span className="read-more-text">View Less</span>
+                                </button>
+                            )}
+                        </div>
+                        <div className="control control-checkbox">
+                            <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)} defaultChecked />
+                            <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
+                        </div>
+                    </div>
+                ))}
             </div>
+
         </div>
     );
 }
