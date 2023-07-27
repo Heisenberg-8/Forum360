@@ -34,7 +34,7 @@ function Agenda() {
         setQuestions(questionsData);
         setIsLoading(false);
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     fetchAnswered(token)
@@ -229,7 +229,7 @@ function Agenda() {
           style={{ border: "none" }}
           onClick={handleAnsweredClick}
         >
-          <span className="h4">Answered</span>
+          <span className="h4">Resolved</span>
           <div className="message-count" style={{ marginLeft: "10px" }}>
             <span className="count">{answeredCount}</span>
           </div>
@@ -291,17 +291,18 @@ function Agenda() {
                           htmlFor={`myCheckbox${index}`}
                           className="control_indicator"
                         ></label>
-                      </div>
-                    </div>
-                  )}
-                </Draggable>
+                      </div >
+                    </div >
+                  )
+                  }
+                </Draggable >
               ))}
               {provided.placeholder}
-            </div>
+            </div >
           )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+        </Droppable >
+      </DragDropContext >
+    </div >
   );
 }
 

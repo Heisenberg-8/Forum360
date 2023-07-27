@@ -1,0 +1,186 @@
+.feedback-heading {
+    color: #F8F8F8;
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* header */
+    font-family: Albert;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-top: 16px;
+}
+
+.resource {
+    width: 100%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+
+.customerexperience {
+    margin-top: 15px;
+    width: 87.5%;
+    background: #13161b;
+    color: white;
+    padding: 16px 16px 20px 16px;
+    border-radius: 10px;
+}
+
+.sessionnotes {
+    color: rgba(248, 248, 248, 0.60);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Albert;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-left: 10px;
+    margin-top: 0px;
+}
+
+.gri {
+    display: grid;
+}
+
+.customer {
+    margin-left: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.typeable {
+    display: flex;
+    position: relative;
+}
+
+.tickimg {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    /* Position the image absolutely inside the .typeable container */
+    top: -3px;
+    /* Adjust the top value to move the image above the input */
+    right: 0px;
+}
+
+.input {
+    background-color: #13161b;
+    border: none;
+    border-bottom: solid 0.3px rgba(248, 248, 248, 0.60);
+    height: 30px;
+    width: 100%;
+    color: white;
+
+}
+
+.formdata {
+    color: #F8F8F8;
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* subheading */
+    font-family: Albert;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: 100%;
+}
+
+.like {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    padding-top: 20px;
+}
+
+.attendee {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.city {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding-left: 10px;
+}
+
+.userlist {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-data {
+    color: #F8F8F8;
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* headline */
+    font-family: Albert;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.labels {
+    padding-top: 1.31rem;
+}
+
+
+/* keypoint css */
+
+.keypoints {
+    margin-top: 10px;
+    border-radius: 0.625rem;
+    background: #13161b;
+    backdrop-filter: blur(5px);
+    height: fit-content;
+    margin-bottom: 0px;
+    padding: 5px 16px 20px 16px;
+}
+
+.expand {
+    margin-left: 127px;
+}
+
+.ai {
+    height: 30px;
+    margin-top: 0px;
+}
+
+.points {
+    color: #F8F8F8;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Albert;
+    font-style: albert;
+    font-weight: 700;
+    /* line-height: 1.3125rem; */
+    /* padding-bottom: 2px; */
+    padding-left: 7px;
+    width: 50;
+    padding-top: 5px;
+}
+
+.keypoints-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+ul li {
+    color: white;
+    list-style-type: disc;
+}
+
+.expandable {
+    max-height: 4em;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.d1-flex {
+    display: flex;
+    height: fit-content;
+}

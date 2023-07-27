@@ -236,7 +236,7 @@ function Feedback() {
           Agenda
         </button>
         <button className="text-btn" onClick={handleAnsweredClick} style={{ marginLeft: 10 }}>
-          Answers
+          Resolved
         </button>
       </div>
     </div>

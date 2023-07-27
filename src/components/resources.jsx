@@ -1,24 +1,42 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
-import Feedback from "./questions.jsx";
+import Feedback from "./questions.jsx"
+import { fetchQuestions } from "./data.jsx";
+import addComment from './assets/addComment.svg';
+import thumbdislike from './assets/thumbdislike.svg';
+import thumblike from './assets/thumblike.svg';
+import './resources.css';
+import ai from './assets/ai.svg';
+import expand from './assets/expand.svg';
 
 function Resources() {
   const [currentScreen, setCurrentScreen] = useState("");
-  // const [isLoading, setIsLoading] = useState(true);
+  const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
+  const [questions, setQuestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+
+  function handleExpandClick() {
+    setExpanded(!expanded);
+  }
+
+  useEffect(() => {
+    fetchQuestions()
+      .then(questionsData => {
+        setQuestions(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
 
   function handleMessagingClick() {
     setCurrentScreen("messaging");
   }
 
-  function handleFeedbackClick() {
-    setCurrentScreen("feedback")
+  if (isLoading) {
+    return (
+      <div className="loading-spinner"></div>
+    );
   }
-
-  // if (isLoading) {
-  //   return (
-  //     <div className="loading-spinner"></div>
-  //   );
-  // }
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -63,7 +81,7 @@ function Resources() {
             className="button"
           >
             <img
-              src={require("./assets/whitefeedback.png")}
+              src={require("./assets/feedback.png")}
               alt="logo"
               className="message"
             />
@@ -79,18 +97,74 @@ function Resources() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}>
+          <button type="button" name="resources" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
+          >
             <img
-              src={require("./assets/file.png")}
+              src={require("./assets/whitefile.png")}
               alt="logo"
               className="file"
             />
-            <span
-              className="button-text"
-              style={{ marginLeft: "10px", }}>
+            <span className="button-text" style={{ marginLeft: "10px" }}>
               Resources
             </span>
           </button>
+        </div>
+      </div>
+
+      {/* CustomerExperienceForm */}
+
+      <div className="customerexperience">
+        <div className="d-flex">
+          <img src={addComment} style={{ marginTop: "0px" }} />
+          <div className="gri">
+            <div className="customer">Customer Experience</div>
+            <div className="sessionnotes">Enter session notes</div>
+          </div>
+        </div>
+        <div className="formdata">
+          <div className="labels">Comment</div>
+
+          <div className="typeable">
+            <input className="input" placeholder="Start typing..." />
+            <img src={require("./assets/tick.png")} className="tickimg" />
+          </div>
+          <div className="labels">Question</div>
+          <div className="typeable">
+            <input className="input" placeholder="Start typing..." />
+            <img src={require("./assets/tick.png")} className="tickimg" />
+          </div>
+          <div className="labels">Review</div>
+          <div className="typeable">
+            <input className="input" placeholder="Start typing..." />
+            <img src={require("./assets/tick.png")} className="tickimg" />
+          </div>
+          <div className="d-flex justify-content-space-between like">
+            <img src={thumbdislike} />
+            <img src={thumblike} />
+          </div>
+        </div>
+      </div>
+
+      {/* keypoints */}
+
+      <div className={`keypoints ${expanded ? "expandable" : ""}`}>
+        <div className="keypoints-head">
+          <div className="d1-flex">
+            <img src={ai} className="ai" alt="AI" />
+            <div className="points" >KeyPoints </div>
+            <div onClick={handleExpandClick}>
+              <img src={expand} className="expand" />
+            </div>
+          </div>
+
+        </div>
+        <div>
+          <ul>
+            <li>
+              Ensuring a well-diversified portfolio to minimize risk-consistent dividend payouts and
+              strong growth potential
+            </li>
+          </ul>
         </div>
       </div>
     </div>

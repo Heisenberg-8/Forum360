@@ -7,6 +7,7 @@ import { getToken } from "./token";
 import Data from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 
+
 function Answered() {
     const { comments } = Data();
     const [questions, setQuestions] = useState([]);
