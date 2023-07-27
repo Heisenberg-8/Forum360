@@ -296,7 +296,7 @@ button:hover {
 
 .main {
   /* display: grid; */
-  width: fit-content;
+  /* width: fit-content; */
   /* grid-auto-rows: min-content; */
   /* gap: var(--size-3); */
   overflow-y: scroll;
