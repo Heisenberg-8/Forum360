@@ -1,42 +1,69 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
-import Feedback from "./questions.jsx"
+import Comments from "./comments.jsx";
+import Agenda from "./Agenda.jsx";
+import Answered from "./Answered.jsx";
+import Questions from "./questions.jsx"
+import Feedback from "./questions.jsx";
 import { fetchQuestions } from "./data.jsx";
+import './resources.css';
+import ai from './assets/ai.svg';
 import addComment from './assets/addComment.svg';
 import thumbdislike from './assets/thumbdislike.svg';
 import thumblike from './assets/thumblike.svg';
-import './resources.css';
-import ai from './assets/ai.svg';
 import expand from './assets/expand.svg';
+import pin from './assets/pin.svg';
+import user1 from './assets/user1.png';
+import user2 from './assets/user2.png';
+import edit from './assets/edit.png';
+import link from './assets/link.svg'
+
+
 
 function Resources() {
   const [currentScreen, setCurrentScreen] = useState("");
-  const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
-  const [questions, setQuestions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [commentInput, setCommentInput] = useState("");
+  const [questionInput, setQuestionInput] = useState("");
+  const [reviewInput, setReviewInput] = useState("");
+  // const [isLoading, setIsLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
+
+  const [links, setLinks] = useState([
+    'Information Center',
+    'Announcements',
+    'Product Performance',
+    'Company Website',
+    'Research Providers',
+    'Product Providers',
+    'Product Specifications',
+    'Product Information Page'
+  ]);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
 
-  useEffect(() => {
-    fetchQuestions()
-      .then(questionsData => {
-        setQuestions(questionsData);
-        setIsLoading(false);
-      });
-  }, []);
-
   function handleMessagingClick() {
     setCurrentScreen("messaging");
   }
 
-  if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
+  function handleFeedbackClick() {
+    setCurrentScreen("feedback");
   }
+
+  function handleLinkButtonClick(linkUrl) {
+    window.open('https://veersatech.com/', '_blank');
+  }
+
+  function handleSubmitComment() {
+    setCommentInput("");
+  }
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="loading-spinner"></div>
+  //   );
+  // }
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -45,7 +72,6 @@ function Resources() {
   if (currentScreen === "feedback") {
     return <Feedback />;
   }
-
 
   return (
     <div className="main">
@@ -79,6 +105,7 @@ function Resources() {
             type="button"
             name="feedback"
             className="button"
+            onClick={handleFeedbackClick}
           >
             <img
               src={require("./assets/feedback.png")}
@@ -125,18 +152,28 @@ function Resources() {
           <div className="labels">Comment</div>
 
           <div className="typeable">
-            <input className="input" placeholder="Start typing..." />
-            <img src={require("./assets/tick.png")} className="tickimg" />
+            <input
+              className="input"
+              placeholder="Start typing..."
+              value={commentInput}
+              onChange={(x) => setCommentInput(x.target.value)} />
+            <button className="tick-button">
+              <img src={require("./assets/tick.png")} className="tick-img" onClick={handleSubmitComment} />
+            </button>
           </div>
           <div className="labels">Question</div>
           <div className="typeable">
             <input className="input" placeholder="Start typing..." />
-            <img src={require("./assets/tick.png")} className="tickimg" />
+            <button className="tick-button">
+              <img src={require("./assets/tick.png")} className="tick-img" />
+            </button>
           </div>
           <div className="labels">Review</div>
           <div className="typeable">
             <input className="input" placeholder="Start typing..." />
-            <img src={require("./assets/tick.png")} className="tickimg" />
+            <button className="tick-button">
+              <img src={require("./assets/tick.png")} className="tick-img" />
+            </button>
           </div>
           <div className="d-flex justify-content-space-between like">
             <img src={thumbdislike} />
@@ -156,9 +193,8 @@ function Resources() {
               <img src={expand} className="expand" />
             </div>
           </div>
-
         </div>
-        <div>
+        <div className="keypoints-text">
           <ul>
             <li>
               Ensuring a well-diversified portfolio to minimize risk-consistent dividend payouts and
@@ -167,6 +203,127 @@ function Resources() {
           </ul>
         </div>
       </div>
+
+      {/* transcription */}
+
+      <div className="transcription-container">
+        <div className="script">
+          <div className="d2-flex">
+            <img src={ai} className="ai" />
+            <div className="transcription" style={{ color: "white" }}>Transcription</div>
+            <div className="expand1">
+              <img src={expand} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* carbon */}
+
+      <div className="carbon">
+        <div className="save">
+          <div className="carbon-head">Calculate your Carbon saving</div>
+          <div className="carbon-head-icon">
+            <img src={expand} />
+            <img src={pin} />
+          </div>
+        </div>
+        <div className="cities-head" style={{ marginTop: '10px' }}>Confirm the cities where attendees are joining this meeting </div>
+
+        <div className="count-resources">16,000 lbs</div>
+        <div className="details">
+          <div className="attendee" style={{ marginTop: "10px" }}>
+            <div style={{ color: "white" }}>Attendee Name </div>
+            <input className="input" placeholder="Filter attendee name..." />
+          </div>
+          <div className="attendee" style={{ marginTop: "10px" }}>
+            <div style={{ color: "white" }}>City Name </div>
+            <input className="input" placeholder="Filter city name..." />
+          </div>
+        </div>
+        <div className="userlist">
+          <div className="user-info">
+            <div className="d-flex">
+              <img src={user1} className="avatar" />
+              <div className="username">Zain Philips</div>
+            </div>
+            <div className="place">
+              <div className="location">NSW Australia</div>
+              <img src={edit} className="edit" />
+            </div>
+          </div>
+          <div className="user-info">
+            <div className="d-flex">
+              <img src={user2} className="avatar" />
+              <div className="username">Madelyn</div>
+            </div>
+            <div className="place">
+              <div className="location">NY USA</div>
+              <img src={edit} className="edit" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* fulfilment */}
+
+      <div className="fulfilment">
+        <div className="form">Fulfilment</div>
+
+        <div className="question-form">
+          <div>Would you like to research the product further?</div>
+          <input className="input" placeholder="Product Links" />
+        </div>
+        <div className="question-form">
+          <div>
+            Would you like a follow up meeting with another product expert?If so, with whom?
+          </div>
+          <input className="input" placeholder="Search for name" />
+        </div>
+        <div className="question-form">
+          <div>Should you decide, how will you invest in this product?</div>
+          <input className="input" placeholder="List fulfilment pathways" />
+        </div>
+      </div>
+
+      {/* meeting-details */}
+
+      <div className="sharemeeting">
+        <div className="share-head">Share Meeting Details</div>
+
+        <div className="team">Individual Team Members</div>
+
+        <input className="input" placeholder="Start typing..." />
+
+        <div className="d3-flex">
+          <input type="checkbox" id="team" name="team" value="all" className="check" />
+          <label htmlFor="team" className="team-members">
+            All Team Members
+          </label>
+          <br />
+        </div>
+      </div>
+
+      {/* research */}
+
+      <div className="research">
+        <div className="research-head">Research Key Links</div>
+        <div className="links">
+          {links.length > 0
+            ? links.map((val) => {
+              return (
+                <>
+                  <button className="link-button" onClick={handleLinkButtonClick}>
+                    <img className="link-image" src={link} />
+                    <span className="link-text">{val}</span>
+                  </button>
+                </>
+              );
+            })
+            : ''}
+        </div>
+      </div>
+
     </div>
   );
 }

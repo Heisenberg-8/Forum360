@@ -6,6 +6,7 @@ import Agenda from "./Agenda.jsx";
 import { getToken } from "./token";
 import Data from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
+import Resources from "./resources.jsx";
 
 
 function Answered() {
@@ -73,6 +74,10 @@ function Answered() {
         setCurrentScreen("agenda")
     }
 
+    function handleResourcesClick() {
+        setCurrentScreen("resources")
+    }
+
     if (isLoading) {
         return <div className="loading-spinner"></div>;
     }
@@ -91,6 +96,10 @@ function Answered() {
 
     if (currentScreen === "comments") {
         return <Comments />;
+    }
+
+    if (currentScreen === "resources") {
+        return <Resources />
     }
 
     function toggleExpand(index) {
@@ -143,7 +152,11 @@ function Answered() {
                         />
                         <span className="button-text">Analytics</span>
                     </button>
-                    <button type="button" name="resources" className="button">
+                    <button
+                        type="button"
+                        name="resources"
+                        className="button"
+                        onClick={handleResourcesClick}>
                         <img
                             src={require("./assets/file.png")}
                             alt="logo"

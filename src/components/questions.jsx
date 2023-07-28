@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Comments from "./comments";
 import Agenda from "./Agenda.jsx";
+import Resources from "./resources.jsx";
 import Answered from "./Answered.jsx";
-import { fetchQuestions, movetoAgenda } from "./data.jsx";
+import { fetchQuestions, movetoAgenda, movetoAnswered } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
 
@@ -29,6 +30,15 @@ function Feedback() {
 
   const messageCount = questions.length;
 
+  async function handleSendtoIRPClick(questionKey, questionid) {
+    await handleMoveToAgendaClick(questionKey)
+    await movetoAnswered(token, questionid);
+    fetchQuestions(token)
+      .then((agendaData) => {
+        setQuestions(agendaData);
+      })
+  }
+
   function handleMessagingClick() {
     setCurrentScreen("messaging");
   }
@@ -47,6 +57,10 @@ function Feedback() {
 
   function handleViewAllClick() {
     setFadeContainerVisible(false);
+  }
+
+  function handleResourcesClick() {
+    setCurrentScreen("resources");
   }
 
   async function handleMoveToAgendaClick(questionKey) {
@@ -83,6 +97,10 @@ function Feedback() {
 
   if (currentScreen === "original") {
     return <Feedback />
+  }
+
+  if (currentScreen === "resources") {
+    return <Resources />;
   }
 
   function toggleExpand(index) {
@@ -145,13 +163,19 @@ function Feedback() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button">
+          <button
+            type="button"
+            name="resources"
+            className="button"
+            onClick={handleResourcesClick}>
             <img
               src={require("./assets/file.png")}
               alt="logo"
               className="file"
             />
-            <span className="button-text" style={{ marginLeft: "10px" }}>
+            <span
+              className="button-text"
+              style={{ marginLeft: "10px" }}>
               Resources
             </span>
           </button>
@@ -216,7 +240,10 @@ function Feedback() {
                 >
                   Move to agenda
                 </btn>
-                <btn className="text-btn1" style={{ marginLeft: 30 }}>
+                <btn
+                  className="text-btn1"
+                  style={{ marginLeft: 30 }}
+                  onClick={() => handleSendtoIRPClick(question.QuestionKey, question.QuestionId)}>
                   Send to IRP
                 </btn>
               </div>

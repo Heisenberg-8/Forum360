@@ -55,14 +55,27 @@
     position: relative;
 }
 
-.tickimg {
-    height: 20px;
-    width: 20px;
+.tick-img {
+    height: 10px;
+    width: 12.5px;
+}
+
+.tick-button {
+    border-radius: 100px;
+    padding: 0px;
+    width: 25px;
+    height: 25px;
     position: absolute;
-    /* Position the image absolutely inside the .typeable container */
-    top: -3px;
-    /* Adjust the top value to move the image above the input */
+    background-color: transparent;
+    border: 2px solid white;
+    top: 5px;
     right: 0px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tick-button:hover {
+    background-color: #232cff;
 }
 
 .input {
@@ -72,7 +85,13 @@
     height: 30px;
     width: 100%;
     color: white;
+    font-size: 14px;
+    margin-top: 5px;
+    font-family: Albert;
+}
 
+.input:focus {
+    outline: none;
 }
 
 .formdata {
@@ -139,7 +158,7 @@
     backdrop-filter: blur(5px);
     height: fit-content;
     margin-bottom: 0px;
-    padding: 5px 16px 20px 16px;
+    padding: 5px 16px 0.08px 16px;
 }
 
 .expand {
@@ -157,8 +176,6 @@
     font-family: Albert;
     font-style: albert;
     font-weight: 700;
-    /* line-height: 1.3125rem; */
-    /* padding-bottom: 2px; */
     padding-left: 7px;
     width: 50;
     padding-top: 5px;
@@ -167,6 +184,11 @@
 .keypoints-head {
     display: flex;
     justify-content: space-between;
+}
+
+.keypoints-text {
+    margin-top: -10px;
+    font-family: Albert;
 }
 
 ul li {
@@ -183,4 +205,255 @@ ul li {
 .d1-flex {
     display: flex;
     height: fit-content;
+}
+
+/* transcription */
+
+.transcription-container {
+    margin-top: 10px;
+    border-radius: 0.625rem;
+    background: #13161b;
+    backdrop-filter: blur(5px);
+    height: fit-content;
+    margin-bottom: 0px;
+    padding: 5px 16px 5px 16px;
+}
+
+.d2-flex {
+    display: flex;
+    height: fit-content;
+}
+
+.script {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transcription {
+    padding-left: 4px;
+    padding-top: 5px;
+    font-weight: 700;
+}
+
+.expand1 {
+    margin-left: 86px;
+}
+
+/* carbon */
+
+.carbon {
+    margin-top: 10px;
+    padding: 1rem 2rem 1.25rem 1.25rem;
+    border-radius: 0.625rem;
+    background: rgba(10, 14, 23, 0.60);
+    width: 80%;
+}
+
+.attendee {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.save {
+    display: flex;
+}
+
+.carbon-head {
+    color: #F8F8F8;
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* header */
+    font-family: Albert;
+    font-size: 16px;
+    font-weight: 650;
+    line-height: normal;
+}
+
+.carbon-head-icon {
+    display: flex;
+    margin-right: -20px;
+    margin-top: -15px;
+}
+
+.cities-head {
+    color: rgba(248, 248, 248, 0.60);
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* body */
+    font-family: Albert;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 90%;
+}
+
+.count-resources {
+    color: #2DF09E;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Albert;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-top: 10px;
+}
+
+.details {
+    display: grid;
+}
+
+.userlist {
+    width: 100%;
+    margin-top: 5px;
+    display: grid;
+    flex-direction: column;
+}
+
+.user-info {
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+    margin-top: 5px;
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    margin-right: 2px;
+}
+
+.username {
+    padding-top: 3px;
+    font-size: 14px;
+    padding-left: 5px;
+    color: rgba(248, 248, 248, 0.60);
+    font-family: Albert;
+    padding-right: 3px;
+}
+
+.place {
+    padding-top: 3px;
+    /* margin-left: -5px; */
+    color: rgba(248, 248, 248, 0.60);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Albert;
+    font-style: normal;
+    line-height: normal;
+    /* max-width: 90%; */
+    display: flex;
+}
+
+.location {
+    min-width: 120px;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 250;
+    margin-right: 0px;
+}
+
+.edit {
+    height: 15px;
+    width: 20px;
+    margin-left: 5px;
+}
+
+/* fulfilment */
+
+.form {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.fulfilment {
+    margin-top: 10px;
+    padding: 1rem 2rem 1.25rem 1.25rem;
+    border-radius: 0.625rem;
+    background: rgba(10, 14, 23, 0.60);
+    width: 80%;
+    color: #F8F8F8;
+}
+
+.question-form {
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+/* meeting-details */
+
+.sharemeeting {
+    margin-top: 10px;
+    padding: 1rem 2rem 1.25rem 1.25rem;
+    border-radius: 0.625rem;
+    background: rgba(10, 14, 23, 0.60);
+    width: 80%;
+    color: #F8F8F8;
+}
+
+.share-head {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.team {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 6px;
+}
+
+.d3-flex {
+    margin-top: 10px;
+}
+
+.team-members {
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* research */
+
+.research {
+    border-radius: 0.625rem;
+    background: rgba(10, 14, 23, 0.60);
+    /* backdrop-filter: blur(5px); */
+    height: fit-content;
+    padding: 5px 16px 20px 16px;
+    margin-top: 10px;
+}
+
+.links {
+    margin-top: 10px;
+}
+
+.research-head {
+    color: #F8F8F8;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Albert Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.3125rem;
+}
+
+.link-button {
+    border-radius: 10px;
+    display: flex;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 6px;
+    margin-top: 6px;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+}
+
+.link-text {
+    font-size: 14px;
+    font-family: Albert;
+    color: white;
+    margin-left: 5px;
+}
+
+.link-image {
+    width: 16px;
+    height: 16px;
 }
