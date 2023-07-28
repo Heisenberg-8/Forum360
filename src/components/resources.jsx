@@ -5,7 +5,7 @@ import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
 import Questions from "./questions.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 
@@ -26,7 +26,7 @@ function Resources() {
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
+  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
 
   // const [isLoading, setIsLoading] = useState(true);
   const token = getToken()
@@ -46,11 +46,11 @@ function Resources() {
 
   const quickMessageOptions = [
     { value: "Investor Center", label: "Investor Center" },
-    { value: "Fund Performance", label: "Fund Performance"},
+    { value: "Fund Performance", label: "Fund Performance" },
     { value: "Announcements", label: "Announcements" },
     { value: "Research Providers", label: "Research Providers" },
-    { value: "Product Specifications (eg PDS, IM)", label: "Product Specifications (eg PDS, IM)"},
-    { value: "Product Information page", label: "Product Information page"},
+    { value: "Product Specifications (eg PDS, IM)", label: "Product Specifications (eg PDS, IM)" },
+    { value: "Product Information page", label: "Product Information page" },
   ];
 
   function handleExpandClick() {
@@ -77,6 +77,11 @@ function Resources() {
   function handleSubmitQuestion(message) {
     SubmitQuestion(token, userkey, message)
     setQuestionInput("");
+  }
+
+  function handleSubmitReview(message) {
+    SubmitReview(token, userkey, message)
+    setReviewInput("");
   }
 
   // if (isLoading) {
@@ -121,7 +126,7 @@ function Resources() {
       maxWidth: "200px",
       borderTop: "none",
       cursor: "default",
-  
+
     }),
     placeholder: (provided) => ({
       ...provided,
@@ -149,10 +154,10 @@ function Resources() {
       color: "#7b7b7b",
       fontSize: "13.948px",
     }),
-  
-  
+
+
   };
-  
+
 
   return (
     <div className="main">
@@ -237,9 +242,10 @@ function Resources() {
               className="input"
               placeholder="Start typing..."
               value={commentInput}
-              onChange={(x) => setCommentInput(x.target.value)} />
-            <button className="tick-button">
-              <img src={require("./assets/tick.png")} className="tick-img" onClick={() => handleSubmitComment(commentInput)} />
+              onChange={(x) => setCommentInput(x.target.value)}
+              style={{ width: '85%' }} />
+            <button className="tick-button" onClick={() => handleSubmitComment(commentInput)}>
+              <img src={require("./assets/tick.png")} className="tick-img" />
             </button>
           </div>
           <div className="labels">Question</div>
@@ -248,24 +254,30 @@ function Resources() {
               className="input"
               placeholder="Start typing..."
               value={questionInput}
-              onChange={(x) => setQuestionInput(x.target.value)} />
-            <button className="tick-button">
-              <img src={require("./assets/tick.png")} className="tick-img" onClick={() => handleSubmitQuestion(questionInput)} />
+              onChange={(x) => setQuestionInput(x.target.value)}
+              style={{ width: '85%' }} />
+            <button className="tick-button" onClick={() => handleSubmitQuestion(questionInput)} >
+              <img src={require("./assets/tick.png")} className="tick-img" />
             </button>
           </div>
           <div className="labels">Review</div>
           <div className="typeable">
-            <input className="input" placeholder="Start typing..." />
-            <button className="tick-button">
+            <input
+              className="input"
+              placeholder="Start typing..."
+              value={reviewInput}
+              onChange={(x) => setReviewInput(x.target.value)}
+              style={{ width: '85%' }} />
+            <button className="tick-button" onClick={() => handleSubmitReview(reviewInput)} >
               <img src={require("./assets/tick.png")} className="tick-img" />
             </button>
           </div>
           <div className="d-flex justify-content-space-between like">
-          <btn className="tu">
-            <img src={thumbdislike}  />
-          </btn>
-            <btn className="td">
-            <img src={thumblike}/>
+            <btn className="tu" onClick={() => SubmitThumbsUp(token, userkey)}>
+              <img src={thumbdislike} />
+            </btn>
+            <btn className="td" onClick={() => SubmitThumbsDown(token, userkey)}>
+              <img src={thumblike} />
             </btn>
           </div>
         </div>
@@ -362,16 +374,16 @@ function Resources() {
         <div className="question-form">
           <div>Would you like to research the product further?</div>
           <div className="message-dropdown-container" style={{ width: '155px' }}>
-                <Select
-                  options={quickMessageOptions}
-                  placeholder="Quick Message"
-                  isSearchable={false}
-                  // value={selectedQuickMessage}
-                  // onChange={handleQuickMessageSelect}
-                  styles={customStyles}
-                  classNamePrefix="custom-select"
-                />
-              </div>
+            <Select
+              options={quickMessageOptions}
+              placeholder="Quick Message"
+              isSearchable={false}
+              // value={selectedQuickMessage}
+              // onChange={handleQuickMessageSelect}
+              styles={customStyles}
+              classNamePrefix="custom-select"
+            />
+          </div>
         </div>
         <div className="question-form">
           <div>

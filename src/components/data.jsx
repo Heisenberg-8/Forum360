@@ -212,6 +212,78 @@ export function SubmitQuestion(token, userKey, message) {
         });
 }
 
+export function SubmitReview(token, userKey, message) {
+    return fetch('https://mgmt-test.forum360.co/api/User/ReviewRate', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            EventKey: "9b764b89-66b2-4701-9682-3f3d7e8f1347",
+            SessionId: "2591",
+            Rating: "5",
+            Comment: `${message}`,
+            SpeakerUserKey: '0',
+            ReqUserKey: `${userKey}`
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function SubmitThumbsUp(token, userKey) {
+    return fetch('https://mgmt-test.forum360.co/api/Booking/feedback', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            SessionId: '2591',
+            indicator: '1',
+            UserKey: `${userKey}`,
+            SpeakerUserKey: '0',
+            // Message: `${message}`
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function SubmitThumbsDown(token, userKey) {
+    return fetch('https://mgmt-test.forum360.co/api/Booking/feedback', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            SessionId: '2591',
+            indicator: '2',
+            UserKey: `${userKey}`,
+            SpeakerUserKey: '0',
+            // Message: `${message}`
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 export function generatetoken() {
     return fetch('https://mgmt-test.forum360.co/api/Token', {
         method: 'POST',
