@@ -86,24 +86,33 @@ function Resources() {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      backgroundColor: "#1F1F1F",
-      borderRadius: "10px",
-      border: "none",
-      boxShadow: state.isFocused ? "none" : "none",
+      backgroundColor: '#13161b',
+      borderBottom: 'solid 0.3px rgba(248, 248, 248, 0.60)',
+      borderTop:'#13161b',
+      borderLeft:'#13161b',
+      borderRight:'#13161b',
+      borderRadius:'0px',
+      outline:'none',
     }),
     input: (provided) => ({
       ...provided,
       color: "white",
       readOnly: true,
+      outline:'none',
+
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
+      // backgroundColor: "#3D4553",
+
+      backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553"  ,
       color: state.isSelected ? "white" : "white",
       fontSize: "12px",
       display: "flex",
       alignItems: "center",
       cursor: "default",
+      outline:'none',
+
     }),
     menu: (provided) => ({
       ...provided,
@@ -111,19 +120,26 @@ function Resources() {
       maxWidth: "200px",
       borderTop: "none",
       cursor: "default",
+      outline:'none',
   
     }),
     placeholder: (provided) => ({
       ...provided,
       fontSize: "13.948px",
+      marginLeft:'-5.2px',
+      outline:'none',
+
     }),
     singleValue: (provided) => ({
       ...provided,
       color: "#white",
+      outline:'none',
+
     }),
     dropdownIndicator: (provided, state) => ({
       ...provided,
       transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+      marginRight:'-7px',
       transition: "transform 0.3s ease",
       color: "#7f807f",
       "&:hover": {
@@ -248,7 +264,7 @@ function Resources() {
           </div>
           <div className="d-flex justify-content-space-between like">
           <btn className="tu">
-            <img src={thumbdislike}  />
+            <img src={thumbdislike} />
           </btn>
             <btn className="td">
             <img src={thumblike}/>
@@ -347,10 +363,10 @@ function Resources() {
 
         <div className="question-form">
           <div>Would you like to research the product further?</div>
-          <div className="message-dropdown-container" style={{ width: '155px' }}>
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
                 <Select
                   options={quickMessageOptions}
-                  placeholder="Quick Message"
+                  placeholder="Product Links"
                   isSearchable={false}
                   // value={selectedQuickMessage}
                   // onChange={handleQuickMessageSelect}

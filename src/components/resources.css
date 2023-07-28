@@ -392,6 +392,15 @@ ul li {
 
 /* fulfilment */
 
+
+.message-dropdown-container-res{
+margin-top: 10px;
+text-size-adjust: 1px;
+outline: none;
+color: rgba(255, 255, 255, 0.61);
+
+}
+
 .form {
     font-size: 16px;
     font-weight: 700;
