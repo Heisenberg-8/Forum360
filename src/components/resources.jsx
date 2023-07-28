@@ -383,8 +383,18 @@ function Resources() {
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
-          <input className="input" placeholder="List fulfilment pathways" />
-        </div>
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+                <Select
+                  options={quickMessageOptions}
+                  placeholder="List fullfilment pathways"
+                  isSearchable={false}
+                  // value={selectedQuickMessage}
+                  // onChange={handleQuickMessageSelect}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                />
+              </div>
+                      </div>
       </div>
 
       {/* meeting-details */}
