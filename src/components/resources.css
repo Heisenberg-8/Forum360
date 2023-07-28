@@ -18,6 +18,40 @@
     display: flex;
 }
 
+.tu{
+    background-color: transparent;
+    border: none;
+    
+}
+.td{
+    background-color: transparent;
+    border: none;
+
+}
+
+
+
+.tu:hover{
+    margin-left:0.8px;
+    margin-top: 0.9px;
+}
+
+.td:hover{
+    margin-right:0.8px;
+    margin-top: 0.9px;
+}
+
+.tu:hover img {
+  content: url('./assets/clickedTD.svg');
+  background-color: transparent;
+}
+
+.td:hover img {
+  content: url('./assets/clickedTU.svg');
+  background-color: transparent;
+
+}
+
 
 .customerexperience {
     margin-top: 15px;

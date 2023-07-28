@@ -16,15 +16,16 @@ import pin from './assets/pin.svg';
 import user1 from './assets/user1.png';
 import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
-import link from './assets/link.svg'
-
-
+import link from './assets/link.svg';
+import Select from "react-select";
 
 function Resources() {
   const [currentScreen, setCurrentScreen] = useState("");
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
+  const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
+
   // const [isLoading, setIsLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
 
@@ -38,6 +39,15 @@ function Resources() {
     'Product Specifications',
     'Product Information Page'
   ]);
+
+  const quickMessageOptions = [
+    { value: "Investor Center", label: "Investor Center" },
+    { value: "Fund Performance", label: "Fund Performance"},
+    { value: "Announcements", label: "Announcements" },
+    { value: "Research Providers", label: "Research Providers" },
+    { value: "Product Specifications (eg PDS, IM)", label: "Product Specifications (eg PDS, IM)"},
+    { value: "Product Information page", label: "Product Information page"},
+  ];
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -72,6 +82,67 @@ function Resources() {
   if (currentScreen === "feedback") {
     return <Feedback />;
   }
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: "#1F1F1F",
+      borderRadius: "10px",
+      border: "none",
+      boxShadow: state.isFocused ? "none" : "none",
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "white",
+      readOnly: true,
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#7C7C7C" : "#1F1F1F",
+      color: state.isSelected ? "white" : "white",
+      fontSize: "12px",
+      display: "flex",
+      alignItems: "center",
+      cursor: "default",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#3D4553",
+      maxWidth: "200px",
+      borderTop: "none",
+      cursor: "default",
+  
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      fontSize: "13.948px",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#white",
+    }),
+    dropdownIndicator: (provided, state) => ({
+      ...provided,
+      transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+      transition: "transform 0.3s ease",
+      color: "#7f807f",
+      "&:hover": {
+        color: "#7f807f",
+      },
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: 'none',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#7b7b7b",
+      fontSize: "13.948px",
+    }),
+  
+  
+  };
+  
 
   return (
     <div className="main">
@@ -176,8 +247,12 @@ function Resources() {
             </button>
           </div>
           <div className="d-flex justify-content-space-between like">
-            <img src={thumbdislike} />
-            <img src={thumblike} />
+          <btn className="tu">
+            <img src={thumbdislike}  />
+          </btn>
+            <btn className="td">
+            <img src={thumblike}/>
+            </btn>
           </div>
         </div>
       </div>
@@ -272,7 +347,17 @@ function Resources() {
 
         <div className="question-form">
           <div>Would you like to research the product further?</div>
-          <input className="input" placeholder="Product Links" />
+          <div className="message-dropdown-container" style={{ width: '155px' }}>
+                <Select
+                  options={quickMessageOptions}
+                  placeholder="Quick Message"
+                  isSearchable={false}
+                  // value={selectedQuickMessage}
+                  // onChange={handleQuickMessageSelect}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                />
+              </div>
         </div>
         <div className="question-form">
           <div>
