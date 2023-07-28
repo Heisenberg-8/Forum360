@@ -5,8 +5,10 @@ import Agenda from "./Agenda.jsx";
 import Answered from "./Answered.jsx";
 import Questions from "./questions.jsx"
 import Feedback from "./questions.jsx";
-import { fetchQuestions } from "./data.jsx";
+import { SubmitComment, SubmitQuestion } from "./data.jsx";
+import { getToken, getUserkey } from "./token.js";
 import './resources.css';
+
 import ai from './assets/ai.svg';
 import addComment from './assets/addComment.svg';
 import thumbdislike from './assets/thumbdislike.svg';
@@ -26,6 +28,8 @@ function Resources() {
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
   // const [isLoading, setIsLoading] = useState(true);
+  const token = getToken()
+  const userkey = getUserkey()
   const [expanded, setExpanded] = useState(false);
 
   const [links, setLinks] = useState([
@@ -55,8 +59,14 @@ function Resources() {
     window.open('https://veersatech.com/', '_blank');
   }
 
-  function handleSubmitComment() {
+  function handleSubmitComment(message) {
+    SubmitComment(token, userkey, message)
     setCommentInput("");
+  }
+
+  function handleSubmitQuestion(message) {
+    SubmitQuestion(token, userkey, message)
+    setQuestionInput("");
   }
 
   // if (isLoading) {
@@ -158,14 +168,18 @@ function Resources() {
               value={commentInput}
               onChange={(x) => setCommentInput(x.target.value)} />
             <button className="tick-button">
-              <img src={require("./assets/tick.png")} className="tick-img" onClick={handleSubmitComment} />
+              <img src={require("./assets/tick.png")} className="tick-img" onClick={() => handleSubmitComment(commentInput)} />
             </button>
           </div>
           <div className="labels">Question</div>
           <div className="typeable">
-            <input className="input" placeholder="Start typing..." />
+            <input
+              className="input"
+              placeholder="Start typing..."
+              value={questionInput}
+              onChange={(x) => setQuestionInput(x.target.value)} />
             <button className="tick-button">
-              <img src={require("./assets/tick.png")} className="tick-img" />
+              <img src={require("./assets/tick.png")} className="tick-img" onClick={() => handleSubmitQuestion(questionInput)} />
             </button>
           </div>
           <div className="labels">Review</div>

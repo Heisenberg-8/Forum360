@@ -145,6 +145,8 @@ export function movebacktoAgenda(token, questionid) {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
+            OrgId: '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            AppId: '4'
         },
         body: JSON.stringify({
             SpeakerId: '0',
@@ -152,6 +154,54 @@ export function movebacktoAgenda(token, questionid) {
             EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
             QuestionId: `${questionid}`,
             SessionId: '2591'
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+
+export function SubmitComment(token, userKey, message) {
+    return fetch('https://mgmt-test.forum360.co/api/Booking/feedback', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            SessionId: '2591',
+            indicator: '0',
+            UserKey: `${userKey}`,
+            SpeakerUserKey: '0',
+            Message: `${message}`
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function SubmitQuestion(token, userKey, message) {
+    return fetch('https://mgmt-test.forum360.co/api/Question/AskQuestion', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            EventKey: "9b764b89-66b2-4701-9682-3f3d7e8f1347",
+            SessionId: "2591",
+            Question: `${message}`,
+            UserKey: `${userKey}`,
+            Appid: '4'
         }),
     })
         .then(response => response.json())
@@ -176,7 +226,7 @@ export function generatetoken() {
         })
     })
         .then(response => response.json())
-        .then(json => json.access_token)
+        .then(json => json)
         .catch(error => {
             console.error('Error:', error);
         });
