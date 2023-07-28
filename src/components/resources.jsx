@@ -189,7 +189,7 @@ function Resources() {
           className="menu"
         />
       </div>
-      <div className="">
+      <div className="mainbuttons">
         <div className="buttons">
           <button
             type="button"
@@ -390,13 +390,11 @@ function Resources() {
 
         <div className="question-form">
           <div>Would you like to research the product further?</div>
-          <div className="message-dropdown-container" style={{ width: '155px' }}>
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
               options={quickMessageOptions}
               placeholder="Quick Message"
               isSearchable={false}
-              // value={selectedQuickMessage}
-              // onChange={handleQuickMessageSelect}
               styles={customStyles}
               classNamePrefix="custom-select"
             />
@@ -411,17 +409,17 @@ function Resources() {
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
           <div className="message-dropdown-container-res" style={{ width: '100%' }}>
-                <Select
-                  options={quickMessageOptions}
-                  placeholder="List fullfilment pathways"
-                  isSearchable={false}
-                  // value={selectedQuickMessage}
-                  // onChange={handleQuickMessageSelect}
-                  styles={customStyles}
-                  classNamePrefix="custom-select"
-                />
-              </div>
-                      </div>
+            <Select
+              options={quickMessageOptions}
+              placeholder="List fullfilment pathways"
+              isSearchable={false}
+              // value={selectedQuickMessage}
+              // onChange={handleQuickMessageSelect}
+              styles={customStyles}
+              classNamePrefix="custom-select"
+            />
+          </div>
+        </div>
       </div>
 
       {/* meeting-details */}

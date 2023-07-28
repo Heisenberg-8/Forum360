@@ -125,7 +125,7 @@ function Feedback() {
           className="menu"
         />
       </div>
-      <div className="">
+      <div className="mainbuttons">
         <div className="buttons">
           <button
             type="button"

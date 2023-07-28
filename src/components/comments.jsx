@@ -99,7 +99,7 @@ function Comments() {
           className="menu"
         />
       </div>
-      <div>
+      <div className="mainbuttons">
         <div className="buttons">
           <button
             type="button"

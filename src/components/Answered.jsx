@@ -119,7 +119,7 @@ function Answered() {
                 </h1>
                 <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
             </div>
-            <div ckassName="mainbuttons">
+            <div className="mainbuttons">
                 <div className="buttons">
                     <button
                         type="button"
@@ -134,7 +134,16 @@ function Answered() {
                         />
                         <span className="button-text">Messaging</span>
                     </button>
-                    <button type="button" name="feedback" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "solid 1px white" }}>
+                    <button
+                        type="button"
+                        name="feedback"
+                        className="button"
+                        style={{
+                            backgroundColor: "#232cff",
+                            color: "#ffffff",
+                            border: "1px solid white",
+                        }}
+                    >
                         <img
                             src={require("./assets/whitefeedback.png")}
                             alt="logo"
@@ -152,11 +161,7 @@ function Answered() {
                         />
                         <span className="button-text">Analytics</span>
                     </button>
-                    <button
-                        type="button"
-                        name="resources"
-                        className="button"
-                        onClick={handleResourcesClick}>
+                    <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
                         <img
                             src={require("./assets/file.png")}
                             alt="logo"
