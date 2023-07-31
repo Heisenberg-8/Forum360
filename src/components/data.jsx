@@ -304,4 +304,18 @@ export function generatetoken() {
         });
 }
 
+export function getproductlinks(token) {
+    return fetch('https://mgmt-test.forum360.co/api/SalesMeetingNotes/OrgProductSetupLinks/3eeac22c-0f14-4ffb-90eb-899a08e95e5e', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(response => response.json())
+        .then(json => json.Payload)
+        .catch(error => {
+            // console.error(error);
+            return [];
+        });
+}
+
 export default Data;

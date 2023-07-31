@@ -7,6 +7,7 @@ import Answered from "./Answered.jsx";
 import { fetchQuestions, movetoAgenda, movetoAnswered } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
+import Analytics from "./Analytics.jsx"
 
 function Feedback() {
   const { comments } = Data();
@@ -63,6 +64,10 @@ function Feedback() {
     setCurrentScreen("resources");
   }
 
+  function handleAnalyticsClick() {
+    setCurrentScreen("analytics");
+  }
+
   async function handleMoveToAgendaClick(questionKey) {
     await movetoAgenda(token, questionKey);
     setIsLoading(true)
@@ -71,6 +76,11 @@ function Feedback() {
         setQuestions(questionsData);
         setIsLoading(false);
       });
+  }
+
+
+  if (currentScreen === "analytics") {
+    return <Analytics />
   }
 
   if (isLoading) {
@@ -155,7 +165,7 @@ function Feedback() {
           </button>
         </div>
         <div className="buttons1">
-          <button type="button" name="analytics" className="button">
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
               alt="logo"

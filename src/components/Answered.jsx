@@ -7,7 +7,7 @@ import { getToken } from "./token";
 import Data from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 import Resources from "./resources.jsx";
-
+import Analytics from "./Analytics.jsx"
 
 function Answered() {
     const { comments } = Data();
@@ -76,6 +76,14 @@ function Answered() {
 
     function handleResourcesClick() {
         setCurrentScreen("resources")
+    }
+
+    function handleAnalyticsClick() {
+        setCurrentScreen("analytics");
+    }
+
+    if (currentScreen === "analytics") {
+        return <Analytics />
     }
 
     if (isLoading) {
@@ -153,7 +161,7 @@ function Answered() {
                     </button>
                 </div>
                 <div className="buttons1">
-                    <button type="button" name="analytics" className="button">
+                    <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
                         <img
                             src={require("./assets/chart.png")}
                             alt="logo"

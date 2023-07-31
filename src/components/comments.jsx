@@ -6,6 +6,7 @@ import { fetchQuestions } from "./data.jsx";
 import Message from "./Message.jsx";
 import Resources from "./resources.jsx";
 import Questions from "./questions";
+import Analytics from "./Analytics.jsx"
 
 function Comments() {
   const { comments } = Data();
@@ -70,6 +71,14 @@ function Comments() {
     );
   }
 
+  function handleAnalyticsClick() {
+    setCurrentScreen("analytics");
+  }
+
+  if (currentScreen === "analytics") {
+    return <Analytics />
+  }
+
   if (currentScreen === "messaging") {
     return <Message />;
   }
@@ -129,7 +138,7 @@ function Comments() {
           </button>
         </div>
         <div className="buttons1">
-          <button type="button" name="analytics" className="button">
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
               alt="logo"

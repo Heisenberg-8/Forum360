@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
-import Comments from "./comments.jsx";
-import Agenda from "./Agenda.jsx";
-import Answered from "./Answered.jsx";
-import Questions from "./questions.jsx"
+import Analytics from "./Analytics.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 
+// assets
 import ai from './assets/ai.svg';
 import addComment from './assets/addComment.svg';
 import thumbdislike from './assets/thumbdislike.svg';
@@ -26,23 +24,12 @@ function Resources() {
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
-
-  // const [isLoading, setIsLoading] = useState(true);
+  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);/
+  const [isLoading, setIsLoading] = useState(true);
   const token = getToken()
   const userkey = getUserkey()
   const [expanded, setExpanded] = useState(false);
-
-  const [links, setLinks] = useState([
-    'Information Center',
-    'Announcements',
-    'Product Performance',
-    'Company Website',
-    'Research Providers',
-    'Product Providers',
-    'Product Specifications',
-    'Product Information Page'
-  ]);
+  const [links, setLinks] = useState([]);
 
   const quickMessageOptions = [
     { value: "Investor Center", label: "Investor Center" },
@@ -52,6 +39,15 @@ function Resources() {
     { value: "Product Specifications (eg PDS, IM)", label: "Product Specifications (eg PDS, IM)" },
     { value: "Product Information page", label: "Product Information page" },
   ];
+
+  useEffect(() => {
+    getproductlinks(token)
+      .then((questionsData) => {
+        setLinks(questionsData);
+        setIsLoading(false);
+      });
+    console.log(links)
+  }, []);
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -66,7 +62,7 @@ function Resources() {
   }
 
   function handleLinkButtonClick(linkUrl) {
-    window.open('https://veersatech.com/', '_blank');
+    window.open(`${linkUrl}`, '_blank');
   }
 
   function handleSubmitComment(message) {
@@ -84,11 +80,19 @@ function Resources() {
     setReviewInput("");
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="loading-spinner"></div>
-  //   );
-  // }
+  function handleAnalyticsClick() {
+    setCurrentScreen("analytics");
+  }
+
+  if (currentScreen === "analytics") {
+    return <Analytics />
+  }
+
+  if (isLoading) {
+    return (
+      <div className="loading-spinner"></div>
+    );
+  }
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -97,84 +101,6 @@ function Resources() {
   if (currentScreen === "feedback") {
     return <Feedback />;
   }
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      backgroundColor: '#13161b',
-      borderBottom: 'solid 0.3px rgba(248, 248, 248, 0.60)',
-      borderTop: '#13161b',
-      borderLeft: '#13161b',
-      borderRight: '#13161b',
-      borderRadius: '0px',
-      outline: 'none',
-    }),
-    input: (provided) => ({
-      ...provided,
-      color: "white",
-      readOnly: true,
-      outline: 'none',
-
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      // backgroundColor: "#3D4553",
-
-      backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553",
-      color: state.isSelected ? "white" : "white",
-      fontSize: "12px",
-      display: "flex",
-      alignItems: "center",
-      cursor: "default",
-      outline: 'none',
-
-    }),
-    menu: (provided) => ({
-      ...provided,
-      backgroundColor: "#3D4553",
-      maxWidth: "200px",
-      borderTop: "none",
-      cursor: "default",
-
-      outline: 'none',
-
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      fontSize: "13.948px",
-      marginLeft: '-5.2px',
-      outline: 'none',
-
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#white",
-      outline: 'none',
-
-    }),
-    dropdownIndicator: (provided, state) => ({
-      ...provided,
-      transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
-      marginRight: '-7px',
-      transition: "transform 0.3s ease",
-      color: "#7f807f",
-      "&:hover": {
-        color: "#7f807f",
-      },
-    }),
-    indicatorSeparator: (provided) => ({
-      ...provided,
-      display: 'none',
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#7b7b7b",
-      fontSize: "13.948px",
-    }),
-
-
-  };
-
 
   return (
     <div className="main">
@@ -219,7 +145,7 @@ function Resources() {
           </button>
         </div>
         <div className="buttons1">
-          <button type="button" name="analytics" className="button">
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
               alt="logo"
@@ -234,7 +160,7 @@ function Resources() {
               alt="logo"
               className="file"
             />
-            <span className="button-text" style={{ marginLeft: "10px" }}>
+            <span className="button-text" >
               Resources
             </span>
           </button>
@@ -290,10 +216,10 @@ function Resources() {
             </button>
           </div>
           <div className="d-flex justify-content-space-between like">
-            <btn className="tu">
+            <btn className="tu" onClick={SubmitThumbsUp}>
               <img src={thumbdislike} />
             </btn>
-            <btn className="td">
+            <btn className="td" onClick={SubmitThumbsDown}>
               <img src={thumblike} />
             </btn>
           </div>
@@ -445,23 +371,125 @@ function Resources() {
       <div className="research">
         <div className="research-head">Research Key Links</div>
         <div className="links">
-          {links.length > 0
-            ? links.map((val) => {
-              return (
-                <>
-                  <button className="link-button" onClick={handleLinkButtonClick}>
-                    <img className="link-image" src={link} />
-                    <span className="link-text">{val}</span>
-                  </button>
-                </>
-              );
-            })
-            : ''}
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["InvestorCentre"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Information Center</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["Announcements"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Announcements</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Product Performence</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["CompanyWebsite"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Company Website</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["ResearchProviders"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Research Providers</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Product Providers</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductSpecifications"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Product Specifications</span>
+          </button>
+
+          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
+            <img className="link-image" src={link} />
+            <span className="link-text">Product Information Page</span>
+          </button>
         </div>
       </div>
 
     </div>
   );
 }
+
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: '#13161b',
+    borderBottom: 'solid 0.3px rgba(248, 248, 248, 0.60)',
+    borderTop: '#13161b',
+    borderLeft: '#13161b',
+    borderRight: '#13161b',
+    borderRadius: '0px',
+    outline: 'none',
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "white",
+    readOnly: true,
+    outline: 'none',
+
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    // backgroundColor: "#3D4553",
+
+    backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553",
+    color: state.isSelected ? "white" : "white",
+    fontSize: "12px",
+    display: "flex",
+    alignItems: "center",
+    cursor: "default",
+    outline: 'none',
+
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#3D4553",
+    maxWidth: "200px",
+    borderTop: "none",
+    cursor: "default",
+
+    outline: 'none',
+
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: "13.948px",
+    marginLeft: '-5.2px',
+    outline: 'none',
+
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#white",
+    outline: 'none',
+
+  }),
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+    marginRight: '-7px',
+    transition: "transform 0.3s ease",
+    color: "#7f807f",
+    "&:hover": {
+      color: "#7f807f",
+    },
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#7b7b7b",
+    fontSize: "13.948px",
+  }),
+};
 
 export default Resources;

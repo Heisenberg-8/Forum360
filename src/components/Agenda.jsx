@@ -7,6 +7,7 @@ import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import Resources from "./resources.jsx";
 import Data from "./data.jsx";
+import Analytics from "./Analytics.jsx"
 import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered } from "./data.jsx";
 
 function Agenda() {
@@ -102,6 +103,14 @@ function Agenda() {
     });
   }
 
+  function handleAnalyticsClick() {
+    setCurrentScreen("analytics");
+  }
+
+  if (currentScreen === "analytics") {
+    return <Analytics />
+  }
+
   if (currentScreen === "resources") {
     return <Resources />;
   }
@@ -172,7 +181,7 @@ function Agenda() {
           </button>
         </div>
         <div className="buttons1">
-          <button type="button" name="analytics" className="button">
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
               alt="logo"

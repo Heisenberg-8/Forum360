@@ -449,11 +449,11 @@ button:hover {
 }
 
 .question-text {
-  margin-top: 15px;
+  margin-top: 5px;
   color: #ffffff9d;
   font-size: 14px;
   font-weight: 500;
-  line-height:0px;
+  /* line-height: 10px; */
 
 }
 
@@ -508,7 +508,7 @@ button:hover {
   grid-auto-rows: min-content;
   gap: var(--size-3);
   overflow-y: scroll;
-  height: 430px;
+  height: 65%;
   overscroll-behavior: contain;
   grid-auto-flow: row;
   margin-top: 15px;

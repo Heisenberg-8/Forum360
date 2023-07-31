@@ -4,7 +4,7 @@ import Feedback from "./questions.jsx";
 import Resources from "./resources.jsx";
 import "./App.css";
 import { getToken } from "./token";
-import tag from "./assets/tag.png";
+import Analytics from "./Analytics.jsx"
 
 function Message() {
   const token = getToken();
@@ -175,6 +175,14 @@ Team [Org Name]`);
     setCurrentScreen("resources");
   }
 
+  function handleAnalyticsClick() {
+    setCurrentScreen("analytics");
+  }
+
+  if (currentScreen === "analytics") {
+    return <Analytics />
+  }
+
   if (currentScreen === "feedback") {
     return <Feedback />;
   }
@@ -201,7 +209,7 @@ Team [Org Name]`);
         />
       </div>
       <div>
-        <div className="mainbuttons">
+        <div className="mainbuttons" style={{ marginTop: "25px" }}>
           <div className="buttonsquestions">
             <button
               type="button"
@@ -235,7 +243,7 @@ Team [Org Name]`);
             </button>
           </div>
           <div className="buttons1">
-            <button type="button" name="analytics" className="button">
+            <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
               <img
                 src={require("./assets/chart.png")}
                 alt="logo"
