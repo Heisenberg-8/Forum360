@@ -24,7 +24,7 @@ function Resources() {
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);/
+  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const token = getToken()
   const userkey = getUserkey()
