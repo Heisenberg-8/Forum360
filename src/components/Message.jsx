@@ -187,10 +187,6 @@ Team [Org Name]`);
     return <Feedback />;
   }
 
-  function handleResourcesClick() {
-    setCurrentScreen("resources");
-  }
-
   if (currentScreen === "resources") {
     return <Resources />;
   }

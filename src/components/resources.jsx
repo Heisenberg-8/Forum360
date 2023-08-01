@@ -330,7 +330,7 @@ function Resources() {
           <div>
             Would you like a follow up meeting with another product expert?If so, with whom?
           </div>
-          <input className="input" placeholder="Search for name" />
+          <input className="input" placeholder="Search for name" style={{ marginTop: "15px" }} />
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
@@ -339,8 +339,6 @@ function Resources() {
               options={quickMessageOptions}
               placeholder="List fullfilment pathways"
               isSearchable={false}
-              // value={selectedQuickMessage}
-              // onChange={handleQuickMessageSelect}
               styles={customStyles}
               classNamePrefix="custom-select"
             />
