@@ -318,4 +318,48 @@ export function getproductlinks(token) {
         });
 }
 
+export function submitfulfilment(token, userKey, pathname) {
+    return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/HitVisitedFulfilment', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SessionId: '2591',
+            ReqUserKey: `${userKey}`,
+            Pathname: `${pathname}`,
+            EventUrl: null
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
+    return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/HitVisitedFulfilment', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SessionId: '2591',
+            ReqUserKey: `${ReqUserKey}`,
+            // AllIRMangers
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+
 export default Data;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Analytics from "./Analytics.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 
@@ -30,14 +30,24 @@ function Resources() {
   const userkey = getUserkey()
   const [expanded, setExpanded] = useState(false);
   const [links, setLinks] = useState([]);
+  const [fulfilment1, setFulfilment1] = useState([])
+  const [fulfilment2, setFulfilment2] = useState([])
 
   const quickMessageOptions = [
-    { value: "Investor Center", label: "Investor Center" },
-    { value: "Fund Performance", label: "Fund Performance" },
+    { value: "InvestorCenter", label: "Investor Center" },
+    { value: "FundPerformance", label: "Fund Performance" },
     { value: "Announcements", label: "Announcements" },
-    { value: "Research Providers", label: "Research Providers" },
-    { value: "Product Specifications (eg PDS, IM)", label: "Product Specifications (eg PDS, IM)" },
-    { value: "Product Information page", label: "Product Information page" },
+    { value: "ResearchProviders", label: "Research Providers" },
+    { value: "ProductSpecifications", label: "Product Specifications (eg PDS, IM)" },
+    { value: "ProductInformationPage", label: "Product Information page" },
+  ];
+  const quickMessageOptions1 = [
+    { value: "InvestorCenter", label: "Investor Center" },
+    { value: "FundPerformance", label: "Fund Performance" },
+    { value: "Announcements", label: "Announcements" },
+    { value: "ResearchProviders", label: "Research Providers" },
+    { value: "ProductSpecifications", label: "Product Specifications (eg PDS, IM)" },
+    { value: "ProductInformationPage", label: "Product Information page" },
   ];
 
   useEffect(() => {
@@ -48,6 +58,20 @@ function Resources() {
       });
     console.log(links)
   }, []);
+
+  async function handlefulfilment1select(selectedOption) {
+    const selectedMessage = selectedOption.value;
+    setFulfilment1(selectedOption);
+    await submitfulfilment(token, userkey, selectedMessage)
+    handleLinkButtonClick(links[selectedMessage])
+  }
+
+  async function handlefulfilment2select(selectedOption) {
+    const selectedMessage = selectedOption.value;
+    setFulfilment2(selectedOption);
+    await submitfulfilment(token, userkey, selectedMessage)
+    handleLinkButtonClick(links[selectedMessage])
+  }
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -319,6 +343,8 @@ function Resources() {
           <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
               options={quickMessageOptions}
+              onChange={handlefulfilment1select}
+              value={fulfilment1}
               placeholder="Quick Message"
               isSearchable={false}
               styles={customStyles}
@@ -336,7 +362,9 @@ function Resources() {
           <div>Should you decide, how will you invest in this product?</div>
           <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
-              options={quickMessageOptions}
+              options={quickMessageOptions1}
+              onChange={handlefulfilment2select}
+              value={fulfilment2}
               placeholder="List fullfilment pathways"
               isSearchable={false}
               styles={customStyles}
