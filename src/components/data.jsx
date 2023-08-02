@@ -60,21 +60,24 @@ export function fetchQuestions(token) {
 }
 
 export function fetchAgenda(token) {
+    // Fetch data from the remote API
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/9B764B89-66B2-4701-9682-3F3D7E8F1347/2591', {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Set the Authorization header with the provided token
         },
     })
-        .then(response => response.json())
+        .then(response => response.json()) // Parse the response as JSON
         .then(json => {
-            const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus !== 902);
-            return filteredQuestions;
+            // Filter the questions based on their QuestionStatus
+            const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus !== 902 && question.QuestionStatus !== 909);
+            return filteredQuestions; // Return the filtered questions
         })
         .catch(error => {
-            console.error(error);
-            return [];
+            console.error(error); // Log any errors that occurred during the fetch or parsing
+            return []; // Return an empty array in case of an error
         });
 }
+
 
 export function fetchAnswered(token) {
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/9B764B89-66B2-4701-9682-3F3D7E8F1347/2591', {
@@ -84,7 +87,7 @@ export function fetchAnswered(token) {
     })
         .then(response => response.json())
         .then(json => {
-            const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus == 902);
+            const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus == 909 || question.QuestionStatus == 902);
             return filteredQuestions;
         })
         .catch(error => {
@@ -95,7 +98,7 @@ export function fetchAnswered(token) {
 
 
 export function movetoAgenda(token, questionkey) {
-    return fetch('https://mgmt-test.forum360.co/api//PA_Event/PlanQuestion', {
+    return fetch('https://mgmt-test.forum360.co/api/PA_Event/PlanQuestion', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -126,6 +129,29 @@ export function movetoAnswered(token, questionid) {
         body: JSON.stringify({
             SpeakerId: '0',
             QuestionStatus: '902',
+            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            QuestionId: `${questionid}`,
+            SessionId: '2591'
+        }),
+    })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function movetoirp(token, questionid) {
+    return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SpeakerId: '0',
+            QuestionStatus: '909',
             EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
             QuestionId: `${questionid}`,
             SessionId: '2591'

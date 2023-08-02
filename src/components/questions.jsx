@@ -4,7 +4,7 @@ import Comments from "./comments";
 import Agenda from "./Agenda.jsx";
 import Resources from "./resources.jsx";
 import Answered from "./Answered.jsx";
-import { fetchQuestions, movetoAgenda, movetoAnswered } from "./data.jsx";
+import { fetchQuestions, movetoAgenda, movetoAnswered, movetoirp } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
 import Analytics from "./Analytics.jsx"
@@ -33,7 +33,7 @@ function Feedback() {
 
   async function handleSendtoIRPClick(questionKey, questionid) {
     await handleMoveToAgendaClick(questionKey)
-    await movetoAnswered(token, questionid);
+    await movetoirp(token, questionid);
     fetchQuestions(token)
       .then((agendaData) => {
         setQuestions(agendaData);

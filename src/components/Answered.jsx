@@ -231,7 +231,14 @@ function Answered() {
                 {answered.map((agendaItem, index) => (
                     <div key={index} className="agenda-questions">
                         <div className="agenda-text">
-                            <text className="question-username">{agendaItem.FullName}</text>
+                            <div style={{ display: "flex" }}>
+                                <text className="question-username">{agendaItem.FullName}</text>
+                                {agendaItem.QuestionStatus === 909 && (
+                                    <div className="irp-text">
+                                        <text>IRP</text>
+                                    </div>
+                                )}
+                            </div>
                             <div className="question-text">
                                 {expandedItems[index] ? (
                                     <text>{agendaItem.Question}</text>
@@ -253,7 +260,11 @@ function Answered() {
                             )}
                         </div>
                         <div className="control control-checkbox">
-                            <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)} defaultChecked />
+                            <input
+                                type="checkbox"
+                                id={`myCheckbox${index}`}
+                                onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
+                                defaultChecked={agendaItem.QuestionStatus !== 909} />
                             <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
                         </div>
                     </div>

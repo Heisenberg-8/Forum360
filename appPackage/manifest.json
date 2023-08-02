@@ -1,14 +1,15 @@
+
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
     "manifestVersion": "1.16",
     "version": "1.0.0",
-    "id": "${{TEAMS_APP_ID}}",
+    "id": "1038ea7f-e88c-4c6b-978e-9f10fbfe9e78",
     "packageName": "com.microsoft.teams.extension",
     "developer": {
         "name": "Veersa Tech",
-        "websiteUrl": "${{TAB_ENDPOINT}}",
-        "privacyUrl": "${{TAB_ENDPOINT}}/index.html#/privacy",
-        "termsOfUseUrl": "${{TAB_ENDPOINT}}/index.html#/termsofuse"
+        "websiteUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/tab",
+        "privacyUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/privacy",
+        "termsOfUseUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/termsofuse"
     },
     "icons": {
         "color": "color.png",
@@ -16,7 +17,7 @@
     },
     "name": {
         "short": "Forum360",
-        "full": "Fprum360"
+        "full": "Forum360"
     },
     "description": {
         "short": "Short description",
@@ -27,7 +28,7 @@
     "composeExtensions": [],
     "configurableTabs": [
         {
-            "configurationUrl": "${{TAB_ENDPOINT}}/index.html#/config",
+            "configurationUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/config",
             "canUpdateConfiguration": true,
             "scopes": [
                 "team",
@@ -46,6 +47,6 @@
         "messageTeamMembers"
     ],
     "validDomains": [
-        "${{TAB_DOMAIN}}"
+        "https://azapp-relate-teams-dev-001.azurewebsites.net/#/tab"
     ]
 }

@@ -565,9 +565,10 @@ button:hover {
 
 .control {
   position: relative;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
   cursor: pointer;
   /* margin-left: 25%;  */
+  margin-top: -3.6px;
 }
 
 .control_indicator {
@@ -689,4 +690,16 @@ button:hover {
   font-size: 14px;
   color: white;
   font-family: Albert;
+}
+
+.irp-text {
+  background-color: #232cff;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 55px;
 }
