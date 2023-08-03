@@ -7,7 +7,13 @@ import TabConfig from "./TabConfig";
 import "./App.css";
 
 export default function App() {
+  const containerStyle = {
+    borderRadius: '10px', 
+    overflow: 'hidden', 
+    backgroundColor:'#3f3f3f',
+  };
   return (
+
     <Router>
       <Routes>
         {/* <Route path="/privacy" element={<Privacy />} />
@@ -17,5 +23,7 @@ export default function App() {
         <Route path="/config" element={<TabConfig />} />
       </Routes>
     </Router>
+    
+
   );
 }

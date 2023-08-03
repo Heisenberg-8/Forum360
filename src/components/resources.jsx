@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Analytics from "./Analytics.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 import DatePicker from 'react-datepicker';
@@ -35,6 +35,9 @@ function Resources() {
   const [links, setLinks] = useState([]);
   const [fulfilment1, setFulfilment1] = useState([])
   const [fulfilment2, setFulfilment2] = useState([])
+  const [usersData, setUsersData] = useState([])
+  const [fulfilmentuser, setFulfilmentuser] = useState([])
+  const [sharemeetinguser, setSharemeetinguser] = useState([])
 
   const quickMessageOptions = [
     { value: "InvestorCenter", label: "Investor Center" },
@@ -44,6 +47,7 @@ function Resources() {
     { value: "ProductSpecifications", label: "Product Specifications (eg PDS, IM)" },
     { value: "ProductInformationPage", label: "Product Information page" },
   ];
+
   const quickMessageOptions1 = [
     { value: "ProductInformationPage", label: "Direct to product issuer" },
     { value: "ProductInformationPage", label: "Via a specialist intermediary" },
@@ -56,8 +60,20 @@ function Resources() {
         setLinks(questionsData);
         setIsLoading(false);
       });
-    console.log(links)
   }, []);
+
+  useEffect(() => {
+    getUsers(token)
+      .then((questionsData) => {
+        setUsersData(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const users = usersData.map((user) => ({
+    value: user.UserId,
+    label: user.UserName,
+  }));
 
   async function handlefulfilment1select(selectedOption) {
     const selectedMessage = selectedOption.value;
@@ -71,6 +87,14 @@ function Resources() {
     setFulfilment2(selectedOption);
     await submitfulfilment(token, userkey, selectedMessage)
     handleLinkButtonClick(links[selectedMessage])
+  }
+
+  function handlefulfilmentuserselect(selectedOption) {
+    setFulfilmentuser(selectedOption)
+  }
+
+  function handlesharemeetinguserselect(selectedOption) {
+    setSharemeetinguser(selectedOption)
   }
 
   const handleDateChange = (date) => {
@@ -360,7 +384,15 @@ function Resources() {
           <div>
             Would you like a follow up meeting with another product expert?If so, with whom?
           </div>
-          <input className="input" placeholder="Search for name" style={{ marginTop: "15px" }} />
+          <Select
+            options={users}
+            placeholder="Search for name"
+            isSearchable={true}
+            styles={customStyles}
+            classNamePrefix="custom-select"
+            value={fulfilmentuser}
+            onChange={handlefulfilmentuserselect}
+          />
           {/* <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
               options={quickMessageOptions1}
@@ -407,7 +439,15 @@ function Resources() {
 
         <div className="team">Individual Team Members</div>
 
-        <input className="input" placeholder="Start typing..." />
+        <Select
+          options={users}
+          placeholder="Search for name"
+          isSearchable={true}
+          styles={customStyles}
+          classNamePrefix="custom-select"
+          value={sharemeetinguser}
+          onChange={handlesharemeetinguserselect}
+        />
 
         <div className="d3-flex">
           <input type="checkbox" id="team" name="team" value="all" className="check" />
@@ -506,9 +546,20 @@ const customStyles = {
     maxWidth: "200px",
     borderTop: "none",
     cursor: "default",
-
     outline: 'none',
+    overflow: 'hidden', // Remove horizontal and vertical scroll bars
+    '&::-webkit-scrollbar': {
+      width: '0.4em', // Set the width of the vertical scrollbar
+      height: '0.4em', // Set the height of the horizontal scrollbar
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#7C7C7C', // Set color of the scroll thumb
+    },
+  }),
 
+  menuList: (provided) => ({
+    ...provided,
+    padding: 0, // Remove padding to ensure no unnecessary space is shown
   }),
   placeholder: (provided) => ({
     ...provided,

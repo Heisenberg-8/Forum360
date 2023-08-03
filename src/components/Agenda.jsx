@@ -19,6 +19,7 @@ function Agenda() {
   const [questions, setQuestions] = useState([]);
   const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
+  const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
   const agendaCount = agenda.length;
 
   useEffect(() => {
@@ -26,7 +27,7 @@ function Agenda() {
       .then((agendaData) => {
         setAgenda(agendaData);
         setIsLoading(false);
-      })
+      });
   }, []);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function Agenda() {
 
   async function handleMoveToAnsweredClick(questionid) {
     await movetoAnswered(token, questionid);
-    setIsLoading(true)
+    setIsLoading(true);
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
@@ -76,6 +77,7 @@ function Agenda() {
       updatedAgendaList.splice(destination.index, 0, draggedItem);
 
       setAgenda(updatedAgendaList);
+      setDraggedQuestionIndex(null);
 
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
@@ -260,12 +262,16 @@ function Agenda() {
             >
               {agenda.map((agendaItem, index) => (
                 <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
-                  {(provided) => (
+                  {(provided, snapshot) => (
                     <div
-                      className="agenda-questions"
+                      className={`agenda-questions ${draggedQuestionIndex === index ? "dragged" : ""}`}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      style={{
+                        border: snapshot.isDragging ? "2px solid #232cff " : "none",
+                        ...provided.draggableProps.style,
+                      }}
                     >
                       <img
                         src={require("./assets/drag.png")}

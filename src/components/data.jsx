@@ -408,5 +408,19 @@ export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
         });
 }
 
+export function getUsers(token) {
+    return fetch("https://mgmt-test.forum360.co/api/User/UserByOrg/795d68b3-49a8-4747-befd-17addcde0844/15", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(response => response.json())
+        .then(json => json.Payload)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 
 export default Data;

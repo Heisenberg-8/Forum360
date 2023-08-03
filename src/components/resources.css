@@ -27,10 +27,7 @@
 .td {
     background-color: transparent;
     border: none;
-
 }
-
-
 
 .tu:hover {
     margin-left: 0.8px;
@@ -50,9 +47,7 @@
 .td:hover img {
     content: url('./assets/clickedTU.svg');
     background-color: transparent;
-
 }
-
 
 .customerexperience {
     margin-top: 15px;
@@ -394,11 +389,11 @@ ul li {
 /* fulfilment */
 
 
-.message-dropdown-container-res{
-margin-top: 10px;
-text-size-adjust: 1px;
-outline: none;
-color: rgba(255, 255, 255, 0.61);
+.message-dropdown-container-res {
+    margin-top: 10px;
+    text-size-adjust: 1px;
+    outline: none;
+    color: rgba(255, 255, 255, 0.61);
 
 }
 
@@ -488,6 +483,10 @@ color: rgba(255, 255, 255, 0.61);
     align-items: center;
     justify-content: center;
     padding-right: 10px;
+}
+
+.link-button:hover {
+    background-color: #232cff;
 }
 
 .link-text {
