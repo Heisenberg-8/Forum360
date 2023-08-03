@@ -56,6 +56,11 @@ function Answered() {
                 setAnswered(agendaData);
                 setIsLoading(false);
             })
+        fetchAgenda(token)
+            .then((agendaData) => {
+                setAgenda(agendaData);
+                setIsLoading(false);
+            })
     }
 
     function handleMessagingClick() {

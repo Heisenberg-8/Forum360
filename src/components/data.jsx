@@ -67,18 +67,17 @@ export function fetchAgenda(token) {
     const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/' + eventkey + '/' + sessionid, {
         headers: {
-            Authorization: `Bearer ${token}`, // Set the Authorization header with the provided token
+            Authorization: `Bearer ${token}`,
         },
     })
-        .then(response => response.json()) // Parse the response as JSON
+        .then(response => response.json())
         .then(json => {
-            // Filter the questions based on their QuestionStatus
             const filteredQuestions = json.Payload.Planneds.filter(question => question.QuestionStatus !== 902 && question.QuestionStatus !== 909);
-            return filteredQuestions; // Return the filtered questions
+            return filteredQuestions;
         })
         .catch(error => {
-            console.error(error); // Log any errors that occurred during the fetch or parsing
-            return []; // Return an empty array in case of an error
+            console.error(error);
+            return [];
         });
 }
 
@@ -339,8 +338,8 @@ export function generatetoken() {
             'Appid': '4'
         },
         body: qs.stringify({
-            username: 'gaurav.goyal@veersatech.com',
-            password: 'Gauravgoyal$2',
+            username: 'sidak@veersatech.com',
+            password: 'Sidak@123',
             grant_type: 'password'
         })
     })

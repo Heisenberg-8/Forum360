@@ -53,6 +53,12 @@ function Agenda() {
         setAgenda(agendaData);
         setIsLoading(false);
       })
+    fetchAnswered(token)
+      .then((questionsData) => {
+        setAnswered(questionsData);
+        setIsLoading(false);
+      });
+
   }
 
   const answeredCount = answered.length;

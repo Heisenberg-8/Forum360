@@ -5,6 +5,8 @@ import Feedback from "./questions.jsx";
 import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // assets
 import ai from './assets/ai.svg';
@@ -21,6 +23,7 @@ import Select from "react-select";
 
 function Resources() {
   const [currentScreen, setCurrentScreen] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
@@ -42,12 +45,9 @@ function Resources() {
     { value: "ProductInformationPage", label: "Product Information page" },
   ];
   const quickMessageOptions1 = [
-    { value: "InvestorCenter", label: "Investor Center" },
-    { value: "FundPerformance", label: "Fund Performance" },
-    { value: "Announcements", label: "Announcements" },
-    { value: "ResearchProviders", label: "Research Providers" },
-    { value: "ProductSpecifications", label: "Product Specifications (eg PDS, IM)" },
-    { value: "ProductInformationPage", label: "Product Information page" },
+    { value: "ProductInformationPage", label: "Direct to product issuer" },
+    { value: "ProductInformationPage", label: "Via a specialist intermediary" },
+    { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
   ];
 
   useEffect(() => {
@@ -72,6 +72,10 @@ function Resources() {
     await submitfulfilment(token, userkey, selectedMessage)
     handleLinkButtonClick(links[selectedMessage])
   }
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -357,6 +361,28 @@ function Resources() {
             Would you like a follow up meeting with another product expert?If so, with whom?
           </div>
           <input className="input" placeholder="Search for name" style={{ marginTop: "15px" }} />
+          {/* <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+            <Select
+              options={quickMessageOptions1}
+              onChange={handlefulfilment2select}
+              value={fulfilment2}
+              placeholder="Purpose of the meeting"
+              isSearchable={false}
+              styles={customStyles}
+              classNamePrefix="custom-select"
+            />
+          </div>
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              placeholderText="Select Date"
+              isClearable
+              dateFormat="dd/MM/yyyy"
+              className="custom-select"
+              styles={customStyles}
+            />
+          </div> */}
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
