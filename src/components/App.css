@@ -210,10 +210,10 @@
 
 .send-button {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 5%;
   height: 52px;
   align-items: center;
-  background-color: #0a0e17;
+  background-color: #232cff;
   color: white;
   font-size: 16px;
   font-weight: 700;
@@ -227,12 +227,10 @@
   justify-content: center;
   align-items: center;
   font-weight: bolder;
+  position: relative;
 }
 
-button:hover {
-  color: #ffffff;
-  background-color: #232cff;
-}
+
 
 .input-box {
   font-family: Arial, sans-serif;
@@ -433,7 +431,11 @@ button:hover {
   margin-top: 15px;
   padding-bottom: 9px;
   height: max-content;
+  cursor: pointer;
+
 }
+
+
 
 .question-username {
   color: #ffffff;
@@ -528,6 +530,8 @@ button:hover {
   padding-top: 10px;
   margin-top: 15px;
   text-align: auto;
+  cursor: pointer;
+
 }
 
 .agenda-questions:hover {
@@ -661,6 +665,8 @@ button:hover {
 
 .email-box {
   resize: none;
+  padding: 10%;
+  font-size: 14px;
 }
 
 .read-more-button {
@@ -702,4 +708,16 @@ button:hover {
   padding-left: 5px;
   padding-right: 5px;
   margin-left: 55px;
+}
+
+.disabled-button {
+  background-color: #0a0e17;
+
+  color: #7f807f; 
+  cursor: not-allowed; 
+}
+.disabled-button :hover{
+  margin-bottom: 0%;
+  background-color: #7f807f; 
+  cursor: not-allowed; 
 }

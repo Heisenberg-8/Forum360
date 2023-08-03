@@ -1,7 +1,9 @@
 let token = null;
 let userKey = null;
-let sessionid = '2591';
-let eventkey = '9B764B89-66B2-4701-9682-3F3D7E8F1347';
+
+let sessionid = '2645';
+
+let eventkey = '44472A33-562D-484D-B9B3-4031954AF8DD';
 
 export function setToken(newToken) {
     token = newToken;

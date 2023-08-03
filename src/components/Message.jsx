@@ -14,6 +14,8 @@ function Message() {
   const [chatMessages, setChatMessages] = useState([]);
   const [currentScreen, setCurrentScreen] = useState("tab");
   const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
+  const [isQuickMessageSelected, setIsQuickMessageSelected] = useState(false);
+
 
   // const optionList = [
   //   { value: "red", label: "Send to all" },
@@ -144,6 +146,8 @@ Team [Org Name]`);
       setSubject("");
       setMessage("");
     }
+    setIsQuickMessageSelected(selectedMessage !== null);
+
   }
 
   function handleSubjectChange(event) {
@@ -155,6 +159,10 @@ Team [Org Name]`);
   }
 
   function handleSendMessage() {
+    if (!isQuickMessageSelected) {
+      return; 
+    }
+  
     if (message.trim() !== "") {
       const newMessage = {
         sender: userName,
@@ -164,6 +172,8 @@ Team [Org Name]`);
       setChatMessages([...chatMessages, newMessage]);
       setMessage("");
       setSubject("");
+      setSelectedQuickMessage(null); 
+      setIsQuickMessageSelected(false); 
     }
   }
 
@@ -295,11 +305,15 @@ Team [Org Name]`);
               onChange={handleMessageChange}
               placeholder="Enter message"
               className="email-box"
-              rows={12}
+              rows={16}
             />
-            <button onClick={handleSendMessage} className="send-button">
-              Send Message
-            </button>
+                <button
+                 onClick={handleSendMessage}
+                 className={`send-button ${!isQuickMessageSelected ? 'disabled-button' : ''}`}
+                disabled={!isQuickMessageSelected}
+              >             Send Message
+           </button>
+
           </div>
         </div>
       </div>

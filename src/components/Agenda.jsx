@@ -19,6 +19,7 @@ function Agenda() {
   const [questions, setQuestions] = useState([]);
   const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
+  const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null); // Add this state
   const agendaCount = agenda.length;
 
   useEffect(() => {
@@ -26,7 +27,7 @@ function Agenda() {
       .then((agendaData) => {
         setAgenda(agendaData);
         setIsLoading(false);
-      })
+      });
   }, []);
 
   useEffect(() => {
@@ -47,12 +48,12 @@ function Agenda() {
 
   async function handleMoveToAnsweredClick(questionid) {
     await movetoAnswered(token, questionid);
-    setIsLoading(true)
+    setIsLoading(true);
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
         setIsLoading(false);
-      })
+      });
   }
 
   const answeredCount = answered.length;
@@ -70,6 +71,7 @@ function Agenda() {
       updatedAgendaList.splice(destination.index, 0, draggedItem);
 
       setAgenda(updatedAgendaList);
+      setDraggedQuestionIndex(null); // Reset the dragged question index
 
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
@@ -245,27 +247,31 @@ function Agenda() {
         </button>
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="agenda">
-          {(provided) => (
-            <div
-              className="agenda-container"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {agenda.map((agendaItem, index) => (
-                <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
-                  {(provided) => (
-                    <div
-                      className="agenda-questions"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <img
-                        src={require("./assets/drag.png")}
-                        alt="drag"
-                        className="dragicon"
-                      />
+      <Droppable droppableId="agenda">
+        {(provided) => (
+          <div
+            className="agenda-container"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {agenda.map((agendaItem, index) => (
+              <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
+  {(provided, snapshot) => (
+    <div
+      className={`agenda-questions ${draggedQuestionIndex === index ? "dragged" : ""}`}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      style={{
+        border: snapshot.isDragging ? "2px solid #232cff " : "none", 
+        ...provided.draggableProps.style, 
+      }}
+    >
+                    <img
+                      src={require("./assets/drag.png")}
+                      alt="drag"
+                      className="dragicon"
+                    />
                       <div className="agenda-text">
                         <text className="question-username">{agendaItem.FullName}</text>
                         <div className="question-text">
