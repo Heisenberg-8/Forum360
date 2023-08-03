@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import qs from 'qs';
+import { getSessionId, getEventKey } from "./token"
 
 const Data = () => {
     const [comments, setComments] = useState([
@@ -46,7 +47,9 @@ const Data = () => {
 };
 
 export function fetchQuestions(token) {
-    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/9B764B89-66B2-4701-9682-3F3D7E8F1347/2591', {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
+    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/' + eventkey + '/' + sessionid, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -60,8 +63,9 @@ export function fetchQuestions(token) {
 }
 
 export function fetchAgenda(token) {
-    // Fetch data from the remote API
-    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/9B764B89-66B2-4701-9682-3F3D7E8F1347/2591', {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
+    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/' + eventkey + '/' + sessionid, {
         headers: {
             Authorization: `Bearer ${token}`, // Set the Authorization header with the provided token
         },
@@ -80,7 +84,9 @@ export function fetchAgenda(token) {
 
 
 export function fetchAnswered(token) {
-    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/9B764B89-66B2-4701-9682-3F3D7E8F1347/2591', {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
+    return fetch('https://mgmt-test.forum360.co/api/PA_Event/InProgressQuestion/' + eventkey + '/' + sessionid, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -98,6 +104,7 @@ export function fetchAnswered(token) {
 
 
 export function movetoAgenda(token, questionkey) {
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/PA_Event/PlanQuestion', {
         method: 'POST',
         headers: {
@@ -105,7 +112,7 @@ export function movetoAgenda(token, questionkey) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            SessionId: '2591',
+            SessionId: `${sessionid}`,
             IsMoveBackToInComing: false,
             Position: '1',
             QuestionKey: `${questionkey}`,
@@ -120,6 +127,8 @@ export function movetoAgenda(token, questionkey) {
 }
 
 export function movetoAnswered(token, questionid) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
         method: 'POST',
         headers: {
@@ -129,9 +138,9 @@ export function movetoAnswered(token, questionid) {
         body: JSON.stringify({
             SpeakerId: '0',
             QuestionStatus: '902',
-            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            EventKey: `${eventkey}`,
             QuestionId: `${questionid}`,
-            SessionId: '2591'
+            SessionId: `${sessionid}`
         }),
     })
         .then(response => response.json())
@@ -143,6 +152,8 @@ export function movetoAnswered(token, questionid) {
 }
 
 export function movetoirp(token, questionid) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
         method: 'POST',
         headers: {
@@ -152,9 +163,9 @@ export function movetoirp(token, questionid) {
         body: JSON.stringify({
             SpeakerId: '0',
             QuestionStatus: '909',
-            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            EventKey: `${eventkey}`,
             QuestionId: `${questionid}`,
-            SessionId: '2591'
+            SessionId: `${sessionid}`
         }),
     })
         .then(response => response.json())
@@ -166,6 +177,8 @@ export function movetoirp(token, questionid) {
 }
 
 export function movebacktoAgenda(token, questionid) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
         method: 'POST',
         headers: {
@@ -177,9 +190,9 @@ export function movebacktoAgenda(token, questionid) {
         body: JSON.stringify({
             SpeakerId: '0',
             QuestionStatus: '900',
-            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
+            EventKey: `${eventkey}`,
             QuestionId: `${questionid}`,
-            SessionId: '2591'
+            SessionId: `${sessionid}`
         }),
     })
         .then(response => response.json())
@@ -192,6 +205,8 @@ export function movebacktoAgenda(token, questionid) {
 
 
 export function SubmitComment(token, userKey, message) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Booking/feedback', {
         method: 'POST',
         headers: {
@@ -199,8 +214,8 @@ export function SubmitComment(token, userKey, message) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
-            SessionId: '2591',
+            EventKey: `${eventkey}`,
+            SessionId: `${sessionid}`,
             indicator: '0',
             UserKey: `${userKey}`,
             SpeakerUserKey: '0',
@@ -216,6 +231,8 @@ export function SubmitComment(token, userKey, message) {
 }
 
 export function SubmitQuestion(token, userKey, message) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Question/AskQuestion', {
         method: 'POST',
         headers: {
@@ -223,8 +240,8 @@ export function SubmitQuestion(token, userKey, message) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            EventKey: "9b764b89-66b2-4701-9682-3f3d7e8f1347",
-            SessionId: "2591",
+            EventKey: `${eventkey}`,
+            SessionId: `${sessionid}`,
             Question: `${message}`,
             UserKey: `${userKey}`,
             Appid: '4'
@@ -239,6 +256,8 @@ export function SubmitQuestion(token, userKey, message) {
 }
 
 export function SubmitReview(token, userKey, message) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/User/ReviewRate', {
         method: 'POST',
         headers: {
@@ -246,8 +265,8 @@ export function SubmitReview(token, userKey, message) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            EventKey: "9b764b89-66b2-4701-9682-3f3d7e8f1347",
-            SessionId: "2591",
+            EventKey: `${eventkey}`,
+            SessionId: `${sessionid}`,
             Rating: "5",
             Comment: `${message}`,
             SpeakerUserKey: '0',
@@ -263,6 +282,8 @@ export function SubmitReview(token, userKey, message) {
 }
 
 export function SubmitThumbsUp(token, userKey) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Booking/feedback', {
         method: 'POST',
         headers: {
@@ -270,12 +291,11 @@ export function SubmitThumbsUp(token, userKey) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
-            SessionId: '2591',
+            EventKey: `${eventkey}`,
+            SessionId: `${sessionid}`,
             indicator: '1',
             UserKey: `${userKey}`,
             SpeakerUserKey: '0',
-            // Message: `${message}`
         }),
     })
         .then(response => response.json())
@@ -287,6 +307,8 @@ export function SubmitThumbsUp(token, userKey) {
 }
 
 export function SubmitThumbsDown(token, userKey) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/Booking/feedback', {
         method: 'POST',
         headers: {
@@ -294,12 +316,11 @@ export function SubmitThumbsDown(token, userKey) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            EventKey: '9B764B89-66B2-4701-9682-3F3D7E8F1347',
-            SessionId: '2591',
+            EventKey: `${eventkey}`,
+            SessionId: `${sessionid}`,
             indicator: '2',
             UserKey: `${userKey}`,
             SpeakerUserKey: '0',
-            // Message: `${message}`
         }),
     })
         .then(response => response.json())
@@ -339,12 +360,13 @@ export function getproductlinks(token) {
         .then(response => response.json())
         .then(json => json.Payload)
         .catch(error => {
-            // console.error(error);
+            console.error(error);
             return [];
         });
 }
 
 export function submitfulfilment(token, userKey, pathname) {
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/HitVisitedFulfilment', {
         method: 'POST',
         headers: {
@@ -352,7 +374,7 @@ export function submitfulfilment(token, userKey, pathname) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            SessionId: '2591',
+            SessionId: `${sessionid}`,
             ReqUserKey: `${userKey}`,
             Pathname: `${pathname}`,
             EventUrl: null
@@ -367,6 +389,7 @@ export function submitfulfilment(token, userKey, pathname) {
 }
 
 export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
+    const sessionid = getSessionId()
     return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/HitVisitedFulfilment', {
         method: 'POST',
         headers: {
@@ -374,9 +397,8 @@ export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            SessionId: '2591',
+            SessionId: `${sessionid}`,
             ReqUserKey: `${ReqUserKey}`,
-            // AllIRMangers
         }),
     })
         .then(response => response.json())
