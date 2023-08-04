@@ -1,0 +1,149 @@
+.custom-datepicker{
+    /* background-color: red; */
+    background-color: transparent;
+
+    margin-top: 14px;
+}
+/* Custom styles for React Date Picker */
+.react-datepicker {
+    font-family: Arial, sans-serif;
+    border-radius: 0px;
+    width: 80.5%; 
+    background-color:  #2a2d35;
+    /* background-color:  red; */
+}
+
+.react-datepicker__input-container {
+    display: block;
+    background-color: #13161b;
+    border: none;
+
+}
+
+.react-datepicker__input-container input {
+    width: 120.5%;
+    height: 4.5%;
+    font-size: 14px; 
+    color: white;
+    background-color: #13161b;
+    border-radius: 0;
+    outline: none; /* Remove the default focus outline */
+    border: none; /* Remove the border on focus */
+    border-bottom: outset 1px white; /* Reapply the bottom border style */
+
+}
+
+.react-datepicker__day {
+    color: white;
+    font-size: 12px; 
+    /* background-color: red; */
+    background-color: #13161b;
+}
+
+.react-datepicker__day--selected {
+    background-color: #232cff;
+    color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+    background-color: #232cff;
+    color: white;
+}
+
+.react-datepicker__day--today {
+    font-weight: bold;
+}
+
+.react-datepicker__header {
+    background-color: #13161b;
+    text-align: center;
+}
+
+.react-datepicker__calendar-container {
+    position: absolute;
+    background-color: #1f1f1f; 
+    border-radius: 0px;
+    z-index: 9999;
+    box-shadow: none;
+    border: none;
+    /* background-color: red; */
+}
+
+.react-datepicker__day:hover {
+    background-color: #232cff;
+        /* background-color: red; */
+
+}
+
+.react-datepicker__navigation {
+    border: 1px solid transparent;
+    background-color: #13161b;
+}
+
+.react-datepicker__navigation--previous {
+    border-right-color: #ccc;
+    background-color: #13161b;
+
+}
+
+.react-datepicker__navigation--next {
+    border-left-color: #ccc;
+    background-color: #13161b;
+
+}
+
+.react-datepicker__month-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    background-color: #13161b;
+
+}
+
+.react-datepicker__month {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    box-sizing: border-box;
+    background-color: #13161b;
+
+}
+
+.react-datepicker__month-text {
+    font-size: 6px; 
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background-color: #13161b;
+
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+    color: white;
+}
+
+/* Customize the close button */
+.react-datepicker__close-icon::after {
+    content: "✕";
+     /* You can replace this with your preferred cross symbol or customize as needed */
+    font-size: 14px;
+    color: white;
+    background-color: transparent; /* Background color when hovered */
+    border-radius: 50%; /* Make it circular */
+    padding: 2px; /* Add some spacing around the cross */
+    position: absolute;
+    right: -32px; /* Adjust the position as needed */
+    top: 24px; /* Adjust the position as needed */
+    cursor: pointer;
+}
+
+/* Style the close button on hover */
+.react-datepicker__close-icon::after:hover {
+    background-color: #13161b; /* Background color when hovered */
+}
+
+.react-datepicker__input-container input:focus {
+    outline: none; /* Remove the default focus outline */
+    border: none; /* Remove the border on focus */
+    border-bottom: outset 1px white; /* Reapply the bottom border style */
+}
+

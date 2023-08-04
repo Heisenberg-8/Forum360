@@ -7,7 +7,7 @@ import Answered from "./Answered.jsx";
 import { fetchQuestions, movetoAgenda, movetoAnswered, movetoirp } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 
 function Feedback() {
   const { comments } = Data();

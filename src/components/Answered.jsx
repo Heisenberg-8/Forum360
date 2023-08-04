@@ -7,7 +7,7 @@ import { getToken } from "./token";
 import Data from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 import Resources from "./resources.jsx";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 
 function Answered() {
     const { comments } = Data();

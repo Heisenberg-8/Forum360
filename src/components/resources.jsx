@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 import Feedback from "./questions.jsx";
 import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './CustomDatePicker.css'; 
 
 // assets
 import ai from './assets/ai.svg';
@@ -29,15 +30,17 @@ function Resources() {
   const [reviewInput, setReviewInput] = useState("");
   // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const token = getToken()
-  const userkey = getUserkey()
+  const token = getToken();
+  const userkey = getUserkey();
   const [expanded, setExpanded] = useState(false);
   const [links, setLinks] = useState([]);
-  const [fulfilment1, setFulfilment1] = useState([])
-  const [fulfilment2, setFulfilment2] = useState([])
-  const [usersData, setUsersData] = useState([])
-  const [fulfilmentuser, setFulfilmentuser] = useState([])
-  const [sharemeetinguser, setSharemeetinguser] = useState([])
+  const [fulfilment1, setFulfilment1] = useState([]);
+  const [fulfilment2, setFulfilment2] = useState([]);
+  const [usersData, setUsersData] = useState([]);
+  const [fulfilmentuser, setFulfilmentuser] = useState([]);
+  const [sharemeetinguser, setSharemeetinguser] = useState([]);
+  const [fulfilmentDate, setFulfilmentDate] = useState(null);
+
 
   const quickMessageOptions = [
     { value: "InvestorCenter", label: "Investor Center" },
@@ -53,6 +56,12 @@ function Resources() {
     { value: "ProductInformationPage", label: "Via a specialist intermediary" },
     { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
   ];
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setFulfilmentDate(date);
+  };
+  
 
   useEffect(() => {
     getproductlinks(token)
@@ -97,9 +106,6 @@ function Resources() {
     setSharemeetinguser(selectedOption)
   }
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -393,7 +399,7 @@ function Resources() {
             value={fulfilmentuser}
             onChange={handlefulfilmentuserselect}
           />
-          {/* <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
               options={quickMessageOptions1}
               onChange={handlefulfilment2select}
@@ -404,17 +410,17 @@ function Resources() {
               classNamePrefix="custom-select"
             />
           </div>
-          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+          <div className="datepick" >
+
             <DatePicker
+             className="custom-datepicker"
               selected={selectedDate}
               onChange={handleDateChange}
               placeholderText="Select Date"
               isClearable
               dateFormat="dd/MM/yyyy"
-              className="custom-select"
-              styles={customStyles}
             />
-          </div> */}
+            </div>
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
@@ -594,5 +600,27 @@ const customStyles = {
     fontSize: "13.948px",
   }),
 };
+
+const customStylesDate = {
+  datePicker: {
+    width: '100%',
+  },
+  input: {
+    background: 'linear-gradient(45deg, #FF9A8B, #FF6B8E)',  // Colorful gradient background
+    color: 'white',  // Text color
+    border: 'none',  // Remove border
+    borderRadius: '8px',  // Rounded corners
+    padding: '10px',  // Add some padding
+    // Add any other input styles you need
+  },
+  calendarContainer: {
+    // Add styles for the calendar container
+  },
+  clearButton: {
+    // Add styles for the clear button
+  },
+  // Add more custom styles as needed
+};
+
 
 export default Resources;

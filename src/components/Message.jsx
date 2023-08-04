@@ -4,7 +4,7 @@ import Feedback from "./questions.jsx";
 import Resources from "./resources.jsx";
 import "./App.css";
 import { getToken } from "./token";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 
 function Message() {
   const token = getToken();

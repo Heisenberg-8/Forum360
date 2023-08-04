@@ -6,7 +6,7 @@ import { fetchQuestions } from "./data.jsx";
 import Message from "./Message.jsx";
 import Resources from "./resources.jsx";
 import Questions from "./questions";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 
 function Comments() {
   const { comments } = Data();
