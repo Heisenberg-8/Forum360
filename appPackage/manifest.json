@@ -1,9 +1,8 @@
-
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
     "manifestVersion": "1.16",
     "version": "1.0.0",
-    "id": "1038ea7f-e88c-4c6b-978e-9f10fbfe9e78",
+    "id": "1a39b2fb-227f-4dc5-b030-24375320afdb",
     "packageName": "com.microsoft.teams.extension",
     "developer": {
         "name": "Veersa Tech",

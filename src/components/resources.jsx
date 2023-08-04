@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Analytics from "./Analytics.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers, sharemeetingdetails } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 import DatePicker from 'react-datepicker';
@@ -38,6 +38,7 @@ function Resources() {
   const [usersData, setUsersData] = useState([])
   const [fulfilmentuser, setFulfilmentuser] = useState([])
   const [sharemeetinguser, setSharemeetinguser] = useState([])
+  const [toall, setToAll] = useState(false);
 
   const quickMessageOptions = [
     { value: "InvestorCenter", label: "Investor Center" },
@@ -45,7 +46,7 @@ function Resources() {
     { value: "Announcements", label: "Announcements" },
     { value: "ResearchProviders", label: "Research Providers" },
     { value: "ProductSpecifications", label: "Product Specifications (eg PDS, IM)" },
-    { value: "ProductInformationPage", label: "Product Information page" },
+    { value: "ProductInformationPage", label: "Product Information Page" },
   ];
 
   const quickMessageOptions1 = [
@@ -71,12 +72,16 @@ function Resources() {
   }, []);
 
   const users = usersData.map((user) => ({
-    value: user.UserId,
+    value: user.UserName,
     label: user.UserName,
   }));
 
+  const handleCheckboxChange = (event) => {
+    setToAll(event.target.checked);
+  };
+
   async function handlefulfilment1select(selectedOption) {
-    const selectedMessage = selectedOption.value;
+    const selectedMessage = selectedOption.label;
     setFulfilment1(selectedOption);
     await submitfulfilment(token, userkey, selectedMessage)
     handleLinkButtonClick(links[selectedMessage])
@@ -90,11 +95,15 @@ function Resources() {
   }
 
   function handlefulfilmentuserselect(selectedOption) {
-    setFulfilmentuser(selectedOption)
+    setSharemeetinguser(selectedOption)
   }
 
   function handlesharemeetinguserselect(selectedOption) {
-    setSharemeetinguser(selectedOption)
+    setSharemeetinguser(selectedOption.value)
+  }
+
+  async function handlesharemeetingsend() {
+    await sharemeetingdetails(token, userkey, toall, sharemeetinguser)
   }
 
   const handleDateChange = (date) => {
@@ -393,7 +402,7 @@ function Resources() {
             value={fulfilmentuser}
             onChange={handlefulfilmentuserselect}
           />
-          {/* <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
               options={quickMessageOptions1}
               onChange={handlefulfilment2select}
@@ -414,7 +423,7 @@ function Resources() {
               className="custom-select"
               styles={customStyles}
             />
-          </div> */}
+          </div>
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
@@ -436,21 +445,34 @@ function Resources() {
 
       <div className="sharemeeting">
         <div className="share-head">Share Meeting Details</div>
-
         <div className="team">Individual Team Members</div>
 
-        <Select
-          options={users}
-          placeholder="Search for name"
-          isSearchable={true}
-          styles={customStyles}
-          classNamePrefix="custom-select"
-          value={sharemeetinguser}
-          onChange={handlesharemeetinguserselect}
-        />
+        <div className="typeable">
+          <Select
+            options={users}
+            placeholder="Search for name"
+            isSearchable={true}
+            styles={customStyles1}
+            classNamePrefix="custom-select"
+            value={sharemeetinguser}
+            onChange={handlesharemeetinguserselect}
+          />
+
+          <button className="tick-button" onClick={() => handlesharemeetingsend()} style={{ position: 'absolute', top: '8px', right: '-20px' }}>
+            <img src={require("./assets/tick.png")} className="tick-img" />
+          </button>
+        </div>
 
         <div className="d3-flex">
-          <input type="checkbox" id="team" name="team" value="all" className="check" />
+          <input
+            type="checkbox"
+            id="team"
+            name="team"
+            value="all"
+            className="check"
+            checked={toall}
+            onChange={handleCheckboxChange}
+          />
           <label htmlFor="team" className="team-members">
             All Team Members
           </label>
@@ -529,8 +551,6 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    // backgroundColor: "#3D4553",
-
     backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553",
     color: state.isSelected ? "white" : "white",
     fontSize: "12px",
@@ -547,19 +567,19 @@ const customStyles = {
     borderTop: "none",
     cursor: "default",
     outline: 'none',
-    overflow: 'hidden', // Remove horizontal and vertical scroll bars
+    overflow: 'hidden',
     '&::-webkit-scrollbar': {
-      width: '0.4em', // Set the width of the vertical scrollbar
-      height: '0.4em', // Set the height of the horizontal scrollbar
+      width: '0',
+      height: '0',
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#7C7C7C', // Set color of the scroll thumb
+      backgroundColor: 'transparent',
     },
   }),
 
   menuList: (provided) => ({
     ...provided,
-    padding: 0, // Remove padding to ensure no unnecessary space is shown
+    padding: 0,
   }),
   placeholder: (provided) => ({
     ...provided,
@@ -583,6 +603,92 @@ const customStyles = {
     "&:hover": {
       color: "#7f807f",
     },
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#7b7b7b",
+    fontSize: "13.948px",
+  }),
+};
+
+const customStyles1 = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: '#13161b',
+    borderBottom: 'solid 0.3px rgba(248, 248, 248, 0.60)',
+    borderTop: '#13161b',
+    borderLeft: '#13161b',
+    borderRight: '#13161b',
+    borderRadius: '0px',
+    outline: 'none',
+    width: '200px'
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "white",
+    readOnly: true,
+    outline: 'none',
+
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553",
+    color: state.isSelected ? "white" : "white",
+    fontSize: "12px",
+    display: "flex",
+    alignItems: "center",
+    cursor: "default",
+    outline: 'none',
+
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#3D4553",
+    maxWidth: "200px",
+    borderTop: "none",
+    cursor: "default",
+    outline: 'none',
+    overflow: 'hidden',
+    '&::-webkit-scrollbar': {
+      width: '0',
+      height: '0',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'transparent',
+    },
+  }),
+
+  menuList: (provided) => ({
+    ...provided,
+    padding: 0,
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: "13.948px",
+    marginLeft: '-5.2px',
+    outline: 'none',
+
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#white",
+    outline: 'none',
+
+  }),
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+    marginRight: '-7px',
+    transition: "transform 0.3s ease",
+    color: "#7f807f",
+    "&:hover": {
+      color: "#7f807f",
+    },
+    display: 'none'
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
