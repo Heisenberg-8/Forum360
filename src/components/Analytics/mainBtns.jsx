@@ -3,6 +3,7 @@ import Message from "../Message.jsx";
 import "../App.css";
 import Feedback from "../questions.jsx";
 import Resources from "../resources.jsx";
+import "./mainBtns.css";
 
 function MainBtns() {
     const [currentScreen, setCurrentScreen] = useState("");
@@ -32,7 +33,7 @@ function MainBtns() {
     }
 
     return (
-        <div className="main">
+        <div className="mbtn" >
    <div className="tab-background">
 <img src={require("../assets/logo.png")} alt="logo" className="logo" />
 <h1 className="h1">
@@ -94,6 +95,20 @@ function MainBtns() {
         </span>
     </button>
 </div>
+</div>
+<div className="header">
+    <text className="headingAnalytics">Analytics</text>
+    <div className="headerFlex">
+    <img
+            src={require("../assets/Group.png")}
+            alt="logo"
+            className="groupImg"
+        />
+        
+        <text className="analyticsHeaders" style={{marginLeft:"5px"}}>183 Current participants</text>
+        <text className="analyticsHeaders" style={{marginLeft:"30px"}}>View All</text>
+
+    </div>
 </div>
 </div>
     );
