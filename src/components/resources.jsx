@@ -78,8 +78,6 @@ function Resources() {
     label: `${item.name}, ${item.state_name}, ${item.country_name}`,
   }));
 
-  // console.log(cities);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -383,13 +381,13 @@ function Resources() {
           <div className="attendee" style={{ marginTop: "20px" }}>
             <div style={{ color: "white" }}>City Name </div>
             <div className="message-dropdown-container-res" style={{ width: '100%' }}>
-              {/* <Select
+              <Select
                 options={cities}
                 placeholder="Filter city name..."
                 isSearchable={false}
                 styles={customStyles}
                 classNamePrefix="custom-select"
-              /> */}
+              />
             </div>
           </div>
         </div>
