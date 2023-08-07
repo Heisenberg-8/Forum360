@@ -1,0 +1,17 @@
+.smallCard{
+    height:115px;
+    width:50%;
+    background-color: #13161b;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 10px;
+}
+.headingSmallCard{
+    color: white;
+    font-family: albert;
+    font-weight: 700;
+    font-size: 20px;
+    margin-left:10%;
+    margin-top:5%;
+}
+

@@ -1,0 +1,33 @@
+.header{
+    display: grid;
+}
+
+.headingAnalytics{
+    color: white;
+    font-family: albert;
+    font-weight: 700;
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+.headerFlex{
+    display: flex;
+    margin-top: 10px;
+}
+
+.groupImg{
+    height: 32%;
+    margin-left: 3px;
+}
+
+.analyticsHeaders{
+    color: white;
+    font-family: albert;
+    font-size: 13px;
+    color: #b1afaf;
+}
+
+.mbtn{
+    height: 58%;
+}
+
