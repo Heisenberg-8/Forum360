@@ -8,6 +8,12 @@ import Feedback from "../questions.jsx";
 import Resources from "../resources.jsx";
 import "./mainBtns.css";
 import Retention from "./Retention.jsx";
+import "./Retention.css"
+import FFU from "./F-FU"
+import QAR from "./QAR";
+import AA from "./ActiveAttendees.jsx";
+import FMTAR from "./FMTAR";
+import MAV from "./MAV";
 
 
 
@@ -106,10 +112,17 @@ function Analytics() {
 </div>
 
 </div>
-                <Sentiment />
-                <CSTS/>
-                {/* <Retention /> */}
-        </div>
+       <div style={{marginTop:'5%'}}><Sentiment /></div>
+       <CSTS/>
+       <div style={{marginTop:"0"}}>
+       <Retention />
+       </div>
+       <FFU/>
+       <QAR/>
+       <AA/>
+       <FMTAR/>
+       {/* <MAV/> */}
+       </div>
     );
 }
 

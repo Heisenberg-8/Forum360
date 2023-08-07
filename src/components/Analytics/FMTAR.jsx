@@ -2,19 +2,18 @@ import "./CS-TS.css";
 import pin from '../assets/pin.svg';
 
 
-function CSTS(){
+function FMTAR(){
 
 
 return(
     <div style={{display:"flex"}}>
         <div className="smallCard" >
             <div style={{display:"flex"}}>
-              <text className="headingSmallCard">Carbon Saved</text>
+              <text className="headingSmallCard">Front of Mind Time</text>
               <img src={pin} style={{marginLeft:"10%", marginRight:"3%" , marginTop:"-17%"}}/>
             </div>
             <div style={{display:"grid"}}>
-            <text style={{fontFamily: "albert" , fontSize: "12px",color: "#b1afaf", marginLeft:"10%"}}>In this meeting</text>
-            <text style={{marginTop:"10%",marginLeft:"12%",fontSize:"20px",fontWeight:700,color:'#2df09e'}}>16,200 lbs</text>
+            <text style={{marginTop:"10%",marginLeft:"12%",fontSize:"20px",fontWeight:700,color:'white'}}>12:31</text>
              </div>
         </div>
         <div className="smallCard" >
@@ -31,4 +30,4 @@ return(
 )
 
 }
-export default CSTS;
+export default FMTAR;
