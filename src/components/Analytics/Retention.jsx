@@ -1,7 +1,8 @@
 import "./Retention.css"
 function Retention(){
-    return(
+    return(<div className="main">
     <div className="bigContainer1"></div>
+    </div>
     );
 }
 export default Retention; 

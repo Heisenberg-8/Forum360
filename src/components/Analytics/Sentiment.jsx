@@ -4,7 +4,7 @@ function Sentiment() {
 
 return(
 
- <div className="bigContainer" style={{marginTop:"-68%"}}>
+ <div className="bigContainer" style={{marginTop:"0%"}}>
     
  </div>
 
