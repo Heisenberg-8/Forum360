@@ -7,7 +7,7 @@ import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import Resources from "./resources.jsx";
 import Data from "./data.jsx";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered } from "./data.jsx";
 
 function Agenda() {

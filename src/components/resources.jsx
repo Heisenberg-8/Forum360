@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
-import Analytics from "./Analytics.jsx"
+import Analytics from "./Analytics/Analytics.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers, sharemeetingdetails } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers, sharemeetingdetails, sendfollowupmail } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './CustomDatePicker.css';
 
 // assets
 import ai from './assets/ai.svg';
@@ -20,24 +21,26 @@ import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
+import citiesdata from './assets/cities.json';
 
 function Resources() {
+  const token = getToken();
+  const userkey = getUserkey();
   const [currentScreen, setCurrentScreen] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const token = getToken()
-  const userkey = getUserkey()
   const [expanded, setExpanded] = useState(false);
   const [links, setLinks] = useState([]);
-  const [fulfilment1, setFulfilment1] = useState([])
-  const [fulfilment2, setFulfilment2] = useState([])
-  const [usersData, setUsersData] = useState([])
-  const [fulfilmentuser, setFulfilmentuser] = useState([])
-  const [sharemeetinguser, setSharemeetinguser] = useState([])
+  const [fulfilment1, setFulfilment1] = useState([]);
+  const [fulfilment2, setFulfilment2] = useState([]);
+  const [usersData, setUsersData] = useState([]);
+  const [fulfilmentuser, setFulfilmentuser] = useState([]);
+  const [sharemeetinguser, setSharemeetinguser] = useState([]);
+  const [purposeofmeeting, setPurposeofmeeting] = useState([]);
+
   const [toall, setToAll] = useState(false);
 
   const quickMessageOptions = [
@@ -54,6 +57,32 @@ function Resources() {
     { value: "ProductInformationPage", label: "Via a specialist intermediary" },
     { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
   ];
+
+  const purpose = [
+    { value: "", label: "Select meeting alternatives" },
+    { value: "", label: "Prospecting" },
+    { value: "", label: "Qualification" },
+    { value: "", label: "C-level" },
+    { value: "", label: "Product Team Insights" },
+    { value: "", label: "Account Review" },
+    { value: "", label: "Demonstration" },
+    { value: "", label: "Training" },
+    { value: "", label: "Product Customization" },
+    { value: "", label: "Negotiating Terms" },
+    { value: "", label: "Procurement" },
+    { value: "", label: "Compliance" }
+  ]
+
+  const cities = citiesdata.map(item => ({
+    value: item.id,
+    label: `${item.name}, ${item.state_name}, ${item.country_name}`,
+  }));
+
+  // console.log(cities);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   useEffect(() => {
     getproductlinks(token)
@@ -72,7 +101,7 @@ function Resources() {
   }, []);
 
   const users = usersData.map((user) => ({
-    value: user.UserName,
+    value: user.UserKey,
     label: user.UserName,
   }));
 
@@ -94,21 +123,26 @@ function Resources() {
     handleLinkButtonClick(links[selectedMessage])
   }
 
+  function fuflilmentsendmail() {
+    sendfollowupmail(token, userkey, purposeofmeeting, selectedDate, fulfilmentuser)
+  }
+
+  function handlepurposeselect(selectedOption) {
+    setPurposeofmeeting(selectedOption.label)
+  }
+
   function handlefulfilmentuserselect(selectedOption) {
-    setSharemeetinguser(selectedOption)
+    setFulfilmentuser(selectedOption.value)
   }
 
   function handlesharemeetinguserselect(selectedOption) {
-    setSharemeetinguser(selectedOption.value)
+    setSharemeetinguser(selectedOption.label)
   }
 
   async function handlesharemeetingsend() {
     await sharemeetingdetails(token, userkey, toall, sharemeetinguser)
   }
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -337,13 +371,26 @@ function Resources() {
 
         <div className="count-resources">16,000 lbs</div>
         <div className="details">
-          <div className="attendee" style={{ marginTop: "10px" }}>
-            <div style={{ color: "white" }}>Attendee Name </div>
-            <input className="input" placeholder="Filter attendee name..." />
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+            <Select
+              options={users}
+              placeholder="Filter attendee name..."
+              isSearchable={false}
+              styles={customStyles}
+              classNamePrefix="custom-select"
+            />
           </div>
-          <div className="attendee" style={{ marginTop: "10px" }}>
+          <div className="attendee" style={{ marginTop: "20px" }}>
             <div style={{ color: "white" }}>City Name </div>
-            <input className="input" placeholder="Filter city name..." />
+            <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+              {/* <Select
+                options={cities}
+                placeholder="Filter city name..."
+                isSearchable={false}
+                styles={customStyles}
+                classNamePrefix="custom-select"
+              /> */}
+            </div>
           </div>
         </div>
         <div className="userlist">
@@ -404,26 +451,34 @@ function Resources() {
           />
           <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
-              options={quickMessageOptions1}
-              onChange={handlefulfilment2select}
-              value={fulfilment2}
+              options={purpose}
+              onChange={handlepurposeselect}
+              value={purposeofmeeting}
               placeholder="Purpose of the meeting"
               isSearchable={false}
               styles={customStyles}
               classNamePrefix="custom-select"
             />
           </div>
-          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+          <div className="datepick" >
+
             <DatePicker
+              className="custom-datepicker"
               selected={selectedDate}
               onChange={handleDateChange}
               placeholderText="Select Date"
               isClearable
               dateFormat="dd/MM/yyyy"
-              className="custom-select"
-              styles={customStyles}
             />
           </div>
+
+          <button
+            className="tick-button"
+            style={{ position: "relative", marginTop: "10px", marginLeft: "185px" }}
+            onClick={fuflilmentsendmail}
+          >
+            <img src={require("./assets/tick.png")} className="tick-img" />
+          </button>
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
@@ -454,7 +509,7 @@ function Resources() {
             isSearchable={true}
             styles={customStyles1}
             classNamePrefix="custom-select"
-            value={sharemeetinguser}
+            // value={sharemeetinguser}
             onChange={handlesharemeetinguserselect}
           />
 
@@ -527,7 +582,7 @@ function Resources() {
         </div>
       </div>
 
-    </div>
+    </div >
   );
 }
 
