@@ -112,7 +112,6 @@ function Analytics() {
 </div>
 
 </div>
-       <div style={{marginTop:'5%'}}><Sentiment /></div>
        <CSTS/>
        <div style={{marginTop:"0"}}>
        <Retention />
