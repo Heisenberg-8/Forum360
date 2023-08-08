@@ -14,7 +14,7 @@ function FFU() {
     getmetricanalytics(token)
       .then((analyticsdata) => {
         setTotalquestions(analyticsdata.MeetingQuestionAsk);
-        setRating(analyticsdata.MeetingFeedback)
+        setRating(analyticsdata.MeetingRating)
       });
   }, []);
 
