@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import Message from "./Message.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 import Feedback from "./questions.jsx";
-import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers } from "./data.jsx";
+import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers, sharemeetingdetails, sendfollowupmail } from "./data.jsx";
 import { getToken, getUserkey } from "./token.js";
 import './resources.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './CustomDatePicker.css'; 
+import './CustomDatePicker.css';
 
 // assets
 import ai from './assets/ai.svg';
@@ -21,17 +21,17 @@ import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
+import citiesdata from './assets/cities.json';
 
 function Resources() {
+  const token = getToken();
+  const userkey = getUserkey();
   const [currentScreen, setCurrentScreen] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  // const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const token = getToken();
-  const userkey = getUserkey();
   const [expanded, setExpanded] = useState(false);
   const [links, setLinks] = useState([]);
   const [fulfilment1, setFulfilment1] = useState([]);
@@ -39,8 +39,12 @@ function Resources() {
   const [usersData, setUsersData] = useState([]);
   const [fulfilmentuser, setFulfilmentuser] = useState([]);
   const [sharemeetinguser, setSharemeetinguser] = useState([]);
-  const [fulfilmentDate, setFulfilmentDate] = useState(null);
+  const [purposeofmeeting, setPurposeofmeeting] = useState([]);
+  const [purposeofmeetingDD, setPurposeofmeetingDD] = useState([]);
+  const [fulfilmentuserDD, setFulfilmentuserDD] = useState([]);
+  const [sharemeetinguserDD, setSharemeetinguserDD] = useState([]);
 
+  const [toall, setToAll] = useState(false);
 
   const quickMessageOptions = [
     { value: "InvestorCenter", label: "Investor Center" },
@@ -48,7 +52,7 @@ function Resources() {
     { value: "Announcements", label: "Announcements" },
     { value: "ResearchProviders", label: "Research Providers" },
     { value: "ProductSpecifications", label: "Product Specifications (eg PDS, IM)" },
-    { value: "ProductInformationPage", label: "Product Information page" },
+    { value: "ProductInformationPage", label: "Product Information Page" },
   ];
 
   const quickMessageOptions1 = [
@@ -57,11 +61,29 @@ function Resources() {
     { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
   ];
 
+  const purpose = [
+    { value: "Select meeting alternatives", label: "Select meeting alternatives" },
+    { value: "Prospecting", label: "Prospecting" },
+    { value: "3", label: "Qualification" },
+    { value: "Qualification", label: "C-level" },
+    { value: "Product Team Insights", label: "Product Team Insights" },
+    { value: "Account Review", label: "Account Review" },
+    { value: "Demonstration", label: "Demonstration" },
+    { value: "Training", label: "Training" },
+    { value: "Product Customization", label: "Product Customization" },
+    { value: "Negotiating Terms", label: "Negotiating Terms" },
+    { value: "Procurement", label: "Procurement" },
+    { value: "Compliance", label: "Compliance" }
+  ]
+
+  const cities = citiesdata.map(item => ({
+    value: item.id,
+    label: `${item.name}, ${item.state_name}, ${item.country_name}`,
+  }));
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setFulfilmentDate(date);
   };
-  
 
   useEffect(() => {
     getproductlinks(token)
@@ -80,12 +102,16 @@ function Resources() {
   }, []);
 
   const users = usersData.map((user) => ({
-    value: user.UserId,
+    value: user.UserKey,
     label: user.UserName,
   }));
 
+  const handleCheckboxChange = (event) => {
+    setToAll(event.target.checked);
+  };
+
   async function handlefulfilment1select(selectedOption) {
-    const selectedMessage = selectedOption.value;
+    const selectedMessage = selectedOption.label;
     setFulfilment1(selectedOption);
     await submitfulfilment(token, userkey, selectedMessage)
     handleLinkButtonClick(links[selectedMessage])
@@ -98,12 +124,31 @@ function Resources() {
     handleLinkButtonClick(links[selectedMessage])
   }
 
+  function fuflilmentsendmail() {
+    sendfollowupmail(token, userkey, purposeofmeeting, selectedDate, fulfilmentuser)
+    setPurposeofmeetingDD(null);
+    setSelectedDate(null);
+    setFulfilmentuserDD(null);
+  }
+
+  function handlepurposeselect(selectedOption) {
+    setPurposeofmeeting(selectedOption.label)
+    setPurposeofmeetingDD(selectedOption)
+
+  }
+
   function handlefulfilmentuserselect(selectedOption) {
-    setFulfilmentuser(selectedOption)
+    setFulfilmentuser(selectedOption.value)
+    setFulfilmentuserDD(selectedOption)
   }
 
   function handlesharemeetinguserselect(selectedOption) {
-    setSharemeetinguser(selectedOption)
+    setSharemeetinguser(selectedOption.label)
+    setSharemeetinguserDD(selectedOption)
+  }
+
+  async function handlesharemeetingsend() {
+    await sharemeetingdetails(token, userkey, toall, sharemeetinguser)
   }
 
 
@@ -334,13 +379,26 @@ function Resources() {
 
         <div className="count-resources">16,000 lbs</div>
         <div className="details">
-          <div className="attendee" style={{ marginTop: "10px" }}>
-            <div style={{ color: "white" }}>Attendee Name </div>
-            <input className="input" placeholder="Filter attendee name..." />
+          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+            <Select
+              options={users}
+              placeholder="Filter attendee name..."
+              isSearchable={false}
+              styles={customStyles}
+              classNamePrefix="custom-select"
+            />
           </div>
-          <div className="attendee" style={{ marginTop: "10px" }}>
+          <div className="attendee" style={{ marginTop: "20px" }}>
             <div style={{ color: "white" }}>City Name </div>
-            <input className="input" placeholder="Filter city name..." />
+            <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+              <Select
+                options={cities}
+                placeholder="Filter city name..."
+                isSearchable={false}
+                styles={customStyles}
+                classNamePrefix="custom-select"
+              />
+            </div>
           </div>
         </div>
         <div className="userlist">
@@ -396,31 +454,39 @@ function Resources() {
             isSearchable={true}
             styles={customStyles}
             classNamePrefix="custom-select"
-            value={fulfilmentuser}
+            value={fulfilmentuserDD}
             onChange={handlefulfilmentuserselect}
           />
           <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
-              options={quickMessageOptions1}
-              onChange={handlefulfilment2select}
-              value={fulfilment2}
+              options={purpose}
+              onChange={handlepurposeselect}
+              value={purposeofmeetingDD}
               placeholder="Purpose of the meeting"
               isSearchable={false}
               styles={customStyles}
               classNamePrefix="custom-select"
             />
           </div>
-          <div className="datepick" >
 
+          <div className="datepick" >
             <DatePicker
-             className="custom-datepicker"
+              className="custom-datepicker"
               selected={selectedDate}
               onChange={handleDateChange}
               placeholderText="Select Date"
               isClearable
               dateFormat="dd/MM/yyyy"
             />
-            </div>
+          </div>
+
+          <button
+            className="tick-button"
+            style={{ position: "relative", marginTop: "10px", marginLeft: "185px" }}
+            onClick={fuflilmentsendmail}
+          >
+            <img src={require("./assets/tick.png")} className="tick-img" />
+          </button>
         </div>
         <div className="question-form">
           <div>Should you decide, how will you invest in this product?</div>
@@ -442,21 +508,34 @@ function Resources() {
 
       <div className="sharemeeting">
         <div className="share-head">Share Meeting Details</div>
-
         <div className="team">Individual Team Members</div>
 
-        <Select
-          options={users}
-          placeholder="Search for name"
-          isSearchable={true}
-          styles={customStyles}
-          classNamePrefix="custom-select"
-          value={sharemeetinguser}
-          onChange={handlesharemeetinguserselect}
-        />
+        <div className="typeable">
+          <Select
+            options={users}
+            placeholder="Search for name"
+            isSearchable={true}
+            styles={customStyles1}
+            classNamePrefix="custom-select"
+            // value={sharemeetinguser}
+            onChange={handlesharemeetinguserselect}
+          />
+
+          <button className="tick-button" onClick={() => handlesharemeetingsend()} style={{ position: 'absolute', top: '8px', right: '-20px' }}>
+            <img src={require("./assets/tick.png")} className="tick-img" />
+          </button>
+        </div>
 
         <div className="d3-flex">
-          <input type="checkbox" id="team" name="team" value="all" className="check" />
+          <input
+            type="checkbox"
+            id="team"
+            name="team"
+            value="all"
+            className="check"
+            checked={toall}
+            onChange={handleCheckboxChange}
+          />
           <label htmlFor="team" className="team-members">
             All Team Members
           </label>
@@ -511,7 +590,7 @@ function Resources() {
         </div>
       </div>
 
-    </div>
+    </div >
   );
 }
 
@@ -535,8 +614,6 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    // backgroundColor: "#3D4553",
-
     backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553",
     color: state.isSelected ? "white" : "white",
     fontSize: "12px",
@@ -553,19 +630,19 @@ const customStyles = {
     borderTop: "none",
     cursor: "default",
     outline: 'none',
-    overflow: 'hidden', // Remove horizontal and vertical scroll bars
+    overflow: 'hidden',
     '&::-webkit-scrollbar': {
-      width: '0.4em', // Set the width of the vertical scrollbar
-      height: '0.4em', // Set the height of the horizontal scrollbar
+      width: '0',
+      height: '0',
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#7C7C7C', // Set color of the scroll thumb
+      backgroundColor: 'transparent',
     },
   }),
 
   menuList: (provided) => ({
     ...provided,
-    padding: 0, // Remove padding to ensure no unnecessary space is shown
+    padding: 0,
   }),
   placeholder: (provided) => ({
     ...provided,
@@ -601,26 +678,90 @@ const customStyles = {
   }),
 };
 
-const customStylesDate = {
-  datePicker: {
-    width: '100%',
-  },
-  input: {
-    background: 'linear-gradient(45deg, #FF9A8B, #FF6B8E)',  // Colorful gradient background
-    color: 'white',  // Text color
-    border: 'none',  // Remove border
-    borderRadius: '8px',  // Rounded corners
-    padding: '10px',  // Add some padding
-    // Add any other input styles you need
-  },
-  calendarContainer: {
-    // Add styles for the calendar container
-  },
-  clearButton: {
-    // Add styles for the clear button
-  },
-  // Add more custom styles as needed
-};
+const customStyles1 = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: '#13161b',
+    borderBottom: 'solid 0.3px rgba(248, 248, 248, 0.60)',
+    borderTop: '#13161b',
+    borderLeft: '#13161b',
+    borderRight: '#13161b',
+    borderRadius: '0px',
+    outline: 'none',
+    width: '200px'
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "white",
+    readOnly: true,
+    outline: 'none',
 
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? "#7C7C7C" : "#3D4553",
+    color: state.isSelected ? "white" : "white",
+    fontSize: "12px",
+    display: "flex",
+    alignItems: "center",
+    cursor: "default",
+    outline: 'none',
+
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#3D4553",
+    maxWidth: "200px",
+    borderTop: "none",
+    cursor: "default",
+    outline: 'none',
+    overflow: 'hidden',
+    '&::-webkit-scrollbar': {
+      width: '0',
+      height: '0',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'transparent',
+    },
+  }),
+
+  menuList: (provided) => ({
+    ...provided,
+    padding: 0,
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: "13.948px",
+    marginLeft: '-5.2px',
+    outline: 'none',
+
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#white",
+    outline: 'none',
+
+  }),
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+    marginRight: '-7px',
+    transition: "transform 0.3s ease",
+    color: "#7f807f",
+    "&:hover": {
+      color: "#7f807f",
+    },
+    display: 'none'
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#7b7b7b",
+    fontSize: "13.948px",
+  }),
+};
 
 export default Resources;

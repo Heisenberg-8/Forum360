@@ -1,39 +1,90 @@
 import React from 'react';
+import "./Sentiment.css"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import './Retention.css';
-import { Chart, LinearScale } from 'chart.js';
 
-// Register the "linear" scale
-Chart.register(LinearScale);
-const chartData = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      label: 'Sample Data',
-      data: [12, 19, 3, 5, 2, 3, 10],
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1,
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false
     },
-  ],
-};
-
-const chartOptions = {
+    title: {
+      display: false,
+      text: 'Percentage in-meeting now vs peak',
+      position: 'top'
+    },
+  },
   scales: {
+    x: {
+      display: true,
+      grid: {
+        display: false,
+      },
+      color: 'white', // Set x-axis color to white
+    },
     y: {
-      beginAtZero: true,
+      display: true,
+      grid: {
+        display: false,
+      },
+      color: 'white', // Set y-axis color to white
     },
   },
 };
 
-function Retention() {
+const labels = ['', '', '', ''];
+
+const dataset1Data = [300, 450, 100, 700];
+
+const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: dataset1Data,
+      borderColor: '#9747FF',
+      backgroundColor: (context) => {
+        const gradient = context.chart.ctx.createLinearGradient(0, 0, 1, 0);
+        gradient.addColorStop(0, 'rgba(0,0,0,0)');
+        gradient.addColorStop(1, '#9747FF');
+        return gradient;
+      },
+      tension: 0,
+      fill: true,
+      point: true, // Enable data points
+      pointRadius: 1,
+    },
+  ],
+};
+
+function RR() {
   return (
-    <div className="main">
-      <div className="bigContainer1">
-        <Line data={chartData} options={chartOptions} />
+    <div className="bigContainer">
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
+        <div style={{ width: "90%", marginLeft: "10px", marginTop: "10px" }}>
+          <Line options={options} data={data} />
+        </div>
       </div>
     </div>
   );
 }
 
-export default Retention;
+export default RR;

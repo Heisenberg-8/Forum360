@@ -3,7 +3,7 @@ import "./CS-TS.css";
 import pin from '../assets/pin.svg';
 
 function AA() {
-    const [progress, setProgress] = useState(70); 
+    const [progress, setProgress] = useState(20);
 
     return (
         <div>
@@ -16,8 +16,8 @@ function AA() {
                     <div style={{ display: "grid" }}>
                         <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "5%" }}>Viewers who are giving feedback, researching, etc</text>
                         <div style={{ display: "grid", alignItems: "center" }}>
-                        <text className="headingSmallCard" style={{ marginLeft: '45%',marginTop:"-0%"}}>{progress}%</text>
-                            <div style={{ marginLeft:"15%",width: '70%', height: '8px', backgroundColor: '#42424D' }}>
+                            <text className="headingSmallCard" style={{ marginLeft: '45%', marginTop: "-0%" }}>{progress}%</text>
+                            <div style={{ marginLeft: "15%", width: '70%', height: '8px', backgroundColor: '#42424D', marginTop: '3%' }}>
                                 <div style={{ width: `${progress}%`, height: '100%', backgroundColor: '#232cff' }}></div>
                             </div>
                         </div>

@@ -243,7 +243,7 @@ export function SubmitQuestion(token, userKey, message) {
             SessionId: `${sessionid}`,
             Question: `${message}`,
             UserKey: `${userKey}`,
-            Appid: '4'
+            Appid: '5'
         }),
     })
         .then(response => response.json())
@@ -371,12 +371,13 @@ export function submitfulfilment(token, userKey, pathname) {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
+            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'AppId': '6',
         },
         body: JSON.stringify({
             SessionId: `${sessionid}`,
             ReqUserKey: `${userKey}`,
-            Pathname: `${pathname}`,
-            EventUrl: null
+            Pathname: `${pathname}`
         }),
     })
         .then(response => response.json())
@@ -389,23 +390,88 @@ export function submitfulfilment(token, userKey, pathname) {
 
 export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
     const sessionid = getSessionId()
-    return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/HitVisitedFulfilment', {
+
+    // return fetch('https://mgmt-test.forum360.co/api/Email/GenerateShareMeetingDetailEmail', {
+    //     method: 'POST',
+    //     headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         "Content-Type": "application/x-www-form-urlencoded",
+    //         'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+    //         'AppId': '5',
+    //     },
+    //     body: JSON.stringify({
+    //         SessionId: `${sessionid}`,
+    //         ReqUserKey: `${ReqUserKey}`,
+    //         AllIRMangers: false,
+    //         CoHostUserKey: `${userKey}`,
+    //         MeetingPurpose: null,
+    //         OrgName: null,
+    //         RequestedData: null
+    //     }),
+    //     redirect: 'follow'
+    // })
+    //     .then(response => response.json())
+    //     .then(result => console.log(result))
+    //     .catch(error => {
+    //         console.error(error);
+    //         return [];
+    //     });
+    var myHeaders = new Headers();
+    myHeaders.append("OrgKey", "795D68B3-49A8-4747-BEFD-17ADDCDE0844");
+    myHeaders.append("AppId", "5");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Cookie", ".AspNet.Cookies=_mlJQvsY1W6uvMJ8ioX-fj1SlGl9WvxcksP3PV_34KJ6dekxayhLWKraY-lRdDWA867hgSBZWP96ocPe6ugaDYYw-sC7J5Dq8ugMk2LQcRNoFHyz2bFpT4S3k9MxcRgZeSrETEskPzr0sVgqXYNbYu5MQ7rOlhsHWrMA6jMmGPw98QC-elJRUkl9WJzQq3J9ElmqYdjxddGEDv0vp3Ab7nehhbpjjjjy4Z8VJxpKgdFs1VgLQmjzlLUfuC3uYssPoTnxbwOZcGdHkhsPldF5etKQiXAY_oRQXeZCZbWFfOU0EM-DNaBmnFbzRsZ7sCCFL8MD35eftydo_epW1ZW7YoJV9mD-LhfMVIwUeZyNhZJ1fVdiKmyrEI3DdRFmA9gHArXz0KOv0Y6q74lnzQzb4Q");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("AllIRMangers", `${toall}`);
+    urlencoded.append("CoHostUserKey", `${userKey}`);
+    // urlencoded.append("MeetingPurpose", "null");
+    urlencoded.append("OrgName", null);
+    urlencoded.append("ReqUserKey", `${ReqUserKey}`);
+    // urlencoded.append("RequestedDate", null);
+    urlencoded.append("SessionId", `${sessionid}`);
+
+    var requestOptions = {
         method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            SessionId: `${sessionid}`,
-            ReqUserKey: `${ReqUserKey}`,
-        }),
-    })
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => {
-            console.error(error);
-            return [];
-        });
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+    };
+    return fetch("https://mgmt-test.forum360.co/api/Email/GenerateShareMeetingDetailEmail", requestOptions)
+        .then(response => response.text())
+        .catch(error => console.log('error', error));
+}
+
+export function sendfollowupmail(token, userkey, purpose, date, requserkey) {
+    const sessionid = getSessionId()
+    var myHeaders = new Headers();
+    myHeaders.append("OrgKey", "795D68B3-49A8-4747-BEFD-17ADDCDE0844");
+    myHeaders.append("UserKey", `${userkey}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Cookie", ".AspNet.Cookies=L8_uaudPC8Yf5vLNFf2EsKGNUyPZdxIyvhizsPZ61h_2qkYJCCulm-OBlVE9CixMqHf1lwfiybToDxfwwTeyKmatxUXKGTcp19cqNLj8PdOBxWggkVyh0zMFR7dFfmG9iKkS2UPdHkLF4vA_ujHepzviUCFlCQBod3uva94gWpmDbRRLGuZCdhBY5g8juwesvucWQOzMRxpoUT91udLTM6twYXHR_YFwi_O2eTTasgFkL-R5DRT7WzxDYmUuVya1ChZ-nXsAWNp_5Se2Fkk7gYoNCTyasmAkYnfiwlg8CPnC8oB032MOnjRjqfgFN4ixWNDH1w_s_aY5Ht-M-QY4siZaLaAMkQwrQhyjO0v2wIVvXGebdCE4OMoKYbOztKhP");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("AllIRMangers", "false");
+    urlencoded.append("CoHostUserKey", `${userkey}`);
+    urlencoded.append("MeetingPurpose", `${purpose}`);
+    urlencoded.append("OrgName", "Veersa Tech");
+    urlencoded.append("ReqUserKey", `${requserkey}`);
+    urlencoded.append("RequestedDate", `${date}`);
+    urlencoded.append("SessionId", `${sessionid}`);
+    urlencoded.append("userKey", `${userkey}`);
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+    };
+
+    return fetch("https://mgmt-test.forum360.co/api/Email/GenerateMeetingReqEmail", requestOptions)
+        .then(response => response.text())
+        .catch(error => console.log('error', error));
 }
 
 export function getUsers(token) {
@@ -413,6 +479,30 @@ export function getUsers(token) {
         headers: {
             Authorization: `Bearer ${token}`,
         },
+    })
+        .then(response => response.json())
+        .then(json => json.Payload)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function getmetricanalytics(token) {
+    const eventkey = getEventKey()
+    const sessionid = getSessionId()
+    return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/MetricReport', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'AppId': '5',
+        },
+        body: JSON.stringify({
+            SessionId: `${sessionid}`,
+            EventKey: `${eventkey}`
+        }),
     })
         .then(response => response.json())
         .then(json => json.Payload)
