@@ -86,11 +86,12 @@ function RR() {
 
           <img src={pin} style={{ marginLeft: "5%", marginRight: "3%", marginTop: "1%" }} />
         </div>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
-        <div style={{ width: "90%", marginLeft: "10px", marginTop: "10px" }}>
-          <Line options={options} data={data} />
-        </div>
-      </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", marginTop: "-20px" }}>
+  <div style={{ width: "90%", marginLeft: "10px", marginTop: "10px" }}>
+    <Line options={options} data={data} />
+  </div>
+</div>
+
     </div>
   );
 }
