@@ -1,5 +1,7 @@
 import React from 'react';
 import "./Sentiment.css"
+import pin from '../assets/pin.svg';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,9 +29,9 @@ const options = {
       display: false
     },
     title: {
-      display: false,
+      display: true,
       text: 'Percentage in-meeting now vs peak',
-      position: 'top'
+      position: 'bottom'
     },
   },
   scales: {
@@ -78,6 +80,12 @@ const data = {
 function RR() {
   return (
     <div className="bigContainer">
+     <div style={{ display: "flex" }}>
+          <text className="headingSmallCard"  style={{ marginLeft: "6%", marginTop: "3%",whiteSpace: 'nowrap'  }}>Retention Rates</text>
+          <text className="headingSmallCard"  style={{ marginLeft: "14%", marginTop: "3%" }}>>90%</text>
+
+          <img src={pin} style={{ marginLeft: "5%", marginRight: "3%", marginTop: "1%" }} />
+        </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
         <div style={{ width: "90%", marginLeft: "10px", marginTop: "10px" }}>
           <Line options={options} data={data} />
@@ -86,5 +94,4 @@ function RR() {
     </div>
   );
 }
-
 export default RR;
