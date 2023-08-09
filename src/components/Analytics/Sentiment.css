@@ -5,3 +5,16 @@
         border-radius: 10px;
         margin-top: 5;
     }
+
+    /* Thicken x-axis line */
+.chartjs-render-monitor .chartjs-chart path {
+    stroke-width: 2px;
+    stroke: #FF5733;
+  }
+  
+  /* Thicken y-axis line */
+  .chartjs-render-monitor .chartjs-chart line {
+    stroke-width: 2px;
+    stroke: #FF5733;
+  }
+  
