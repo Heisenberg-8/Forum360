@@ -50,14 +50,17 @@ const RR = () => {
         display: false,
       },
       title: {
-        display: true,
+        display: false,
         text: 'Percentage in-meeting now vs peak',
         position: 'bottom',
       },
     },
     scales: {
       x: {
-        display: false,
+        display: true,
+        border: {
+          color: '#a1a2a5'
+        },
         grid: {
           display: false,
         },
@@ -65,6 +68,13 @@ const RR = () => {
       },
       y: {
         display: true,
+        border: {
+          color: '#a1a2a5'
+        },
+        ticks:{
+          color: '#a1a2a5'
+
+        },
         grid: {
           display: false, 
           color: 'white', 
@@ -75,7 +85,7 @@ const RR = () => {
   };
 
   useEffect(() => {
-    const animationDuration = 3000; // Adjust the animation duration as needed
+    const animationDuration = 3000; 
     let animationFrame;
     let frame = 0;
 
@@ -120,6 +130,10 @@ const RR = () => {
     <Line options={options} data={data} />
   </div>
 </div>
+<div style={{display:'flex', marginTop:"3px"}}>
+  <button style={{backgroundColor:"#9747FF",marginTop:'-50',height:12,width:7,borderRadius:"50%",border:"none",marginLeft:"25px"}}></button>
+   <text style={{color:"a1a2a5",whiteSpace: 'nowrap',marginTop:'-50', fontSize:'12px',marginLeft:"5px"}}>Percentage in-meeting now vs peek</text>
+  </div>
 
     </div>
   );
