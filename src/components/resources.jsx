@@ -40,6 +40,9 @@ function Resources() {
   const [fulfilmentuser, setFulfilmentuser] = useState([]);
   const [sharemeetinguser, setSharemeetinguser] = useState([]);
   const [purposeofmeeting, setPurposeofmeeting] = useState([]);
+  const [purposeofmeetingDD, setPurposeofmeetingDD] = useState([]);
+  const [fulfilmentuserDD, setFulfilmentuserDD] = useState([]);
+  const [sharemeetinguserDD, setSharemeetinguserDD] = useState([]);
 
   const [toall, setToAll] = useState(false);
 
@@ -59,18 +62,18 @@ function Resources() {
   ];
 
   const purpose = [
-    { value: "", label: "Select meeting alternatives" },
-    { value: "", label: "Prospecting" },
-    { value: "", label: "Qualification" },
-    { value: "", label: "C-level" },
-    { value: "", label: "Product Team Insights" },
-    { value: "", label: "Account Review" },
-    { value: "", label: "Demonstration" },
-    { value: "", label: "Training" },
-    { value: "", label: "Product Customization" },
-    { value: "", label: "Negotiating Terms" },
-    { value: "", label: "Procurement" },
-    { value: "", label: "Compliance" }
+    { value: "Select meeting alternatives", label: "Select meeting alternatives" },
+    { value: "Prospecting", label: "Prospecting" },
+    { value: "3", label: "Qualification" },
+    { value: "Qualification", label: "C-level" },
+    { value: "Product Team Insights", label: "Product Team Insights" },
+    { value: "Account Review", label: "Account Review" },
+    { value: "Demonstration", label: "Demonstration" },
+    { value: "Training", label: "Training" },
+    { value: "Product Customization", label: "Product Customization" },
+    { value: "Negotiating Terms", label: "Negotiating Terms" },
+    { value: "Procurement", label: "Procurement" },
+    { value: "Compliance", label: "Compliance" }
   ]
 
   const cities = citiesdata.map(item => ({
@@ -123,18 +126,25 @@ function Resources() {
 
   function fuflilmentsendmail() {
     sendfollowupmail(token, userkey, purposeofmeeting, selectedDate, fulfilmentuser)
+    setPurposeofmeetingDD(null);
+    setSelectedDate(null);
+    setFulfilmentuserDD(null);
   }
 
   function handlepurposeselect(selectedOption) {
     setPurposeofmeeting(selectedOption.label)
+    setPurposeofmeetingDD(selectedOption)
+
   }
 
   function handlefulfilmentuserselect(selectedOption) {
     setFulfilmentuser(selectedOption.value)
+    setFulfilmentuserDD(selectedOption)
   }
 
   function handlesharemeetinguserselect(selectedOption) {
     setSharemeetinguser(selectedOption.label)
+    setSharemeetinguserDD(selectedOption)
   }
 
   async function handlesharemeetingsend() {
@@ -444,14 +454,14 @@ function Resources() {
             isSearchable={true}
             styles={customStyles}
             classNamePrefix="custom-select"
-            value={fulfilmentuser}
+            value={fulfilmentuserDD}
             onChange={handlefulfilmentuserselect}
           />
           <div className="message-dropdown-container-res" style={{ width: '100%' }}>
             <Select
               options={purpose}
               onChange={handlepurposeselect}
-              value={purposeofmeeting}
+              value={purposeofmeetingDD}
               placeholder="Purpose of the meeting"
               isSearchable={false}
               styles={customStyles}
