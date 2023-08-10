@@ -458,8 +458,8 @@ function Resources() {
               classNamePrefix="custom-select"
             />
           </div>
-
           <div className="datepick" >
+
             <DatePicker
               className="custom-datepicker"
               selected={selectedDate}

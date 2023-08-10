@@ -2,20 +2,19 @@ import React, { useState, useEffect } from "react";
 import { getToken } from "./token";
 import "./App.css";
 import Data from "./data.jsx";
-import { fetchQuestions } from "./data.jsx";
+import { fetchQuestions, getcomments } from "./data.jsx";
 import Message from "./Message.jsx";
 import Resources from "./resources.jsx";
 import Questions from "./questions";
 import Analytics from "./Analytics/Analytics.jsx"
 
 function Comments() {
-  const { comments } = Data();
   const token = getToken();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [commentsList, setCommentsList] = useState(comments);
 
   useEffect(() => {
     fetchQuestions(token)
@@ -25,33 +24,17 @@ function Comments() {
       });
   }, []);
 
-  const messageCount = questions.length;
-  const commentCount = commentsList.length;
-
-  const handleDragStart = (event, index) => {
-    event.dataTransfer.setData("text/plain", index.toString());
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event, dropIndex) => {
-    const dragIndex = parseInt(event.dataTransfer.getData("text/plain"));
-    if (dragIndex !== dropIndex) {
-      const updatedCommentsList = [...commentsList];
-      const draggedComment = updatedCommentsList[dragIndex];
-      updatedCommentsList.splice(dragIndex, 1);
-      updatedCommentsList.splice(dropIndex, 0, draggedComment);
-
-      updatedCommentsList.forEach((comment, index) => {
-        comment.priority = index + 1;
+  useEffect(() => {
+    getcomments(token)
+      .then((commentsdata) => {
+        setComments(commentsdata);
+        console.log(commentsdata)
+        setIsLoading(false);
       });
+  }, []);
 
-      setCommentsList(updatedCommentsList);
-      setFadeContainerVisible(true);
-    }
-  };
+  const messageCount = questions.length;
+  const commentCount = comments.length;
 
   const handleMessagingClick = () => {
     setCurrentScreen("messaging");
@@ -176,18 +159,17 @@ function Comments() {
       </div>
       <div className="main-cont">
         <div className="comments-container">
-          {commentsList.map((comment, index) => (
+          {comments?.map((comment, index) => (
             <div
               className="question"
               key={index}
-
             >
               <text className="question-username">
-                {comment.username}
-                <span className="time">{comment.time}</span>
+                {comment.UserName}
+                <span className="time">{comment.createDate}</span>
               </text>
               <div className="question-text">
-                <text>{comment.text}</text>
+                <text>{comment.comment}</text>
               </div>
             </div>
           ))}

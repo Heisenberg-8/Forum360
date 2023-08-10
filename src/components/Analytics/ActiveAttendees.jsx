@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CS-TS.css";
 import pin from '../assets/pin.svg';
+import { getmetricanalytics } from "../data";
+import { getToken } from "../token";
 
 function AA() {
-    const [progress, setProgress] = useState(20);
+    const token = getToken()
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        getmetricanalytics(token)
+            .then((analyticsdata) => {
+                setProgress(analyticsdata.MeetingFeedback);
+            });
+    }, []);
+
 
     return (
         <div>
