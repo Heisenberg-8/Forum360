@@ -280,6 +280,7 @@ function Resources() {
             <div className="sessionnotes">Enter session notes</div>
           </div>
         </div>
+
         <div className="formdata">
           <div className="labels">Comment</div>
 
