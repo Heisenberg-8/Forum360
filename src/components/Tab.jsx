@@ -49,7 +49,7 @@ function Login() {
           className="login-input"
         />
         <button type="submit" className="login-button">
-          Login
+          Sign in
         </button>
       </form>
     </div>
