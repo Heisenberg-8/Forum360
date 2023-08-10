@@ -290,7 +290,14 @@ function Resources() {
               value={commentInput}
               onChange={(x) => setCommentInput(x.target.value)}
               style={{ width: '85%' }} />
-            <button className="tick-button" onClick={() => handleSubmitComment(commentInput)}>
+            <button
+              className="tick-button"
+              onClick={() => {
+                if (commentInput.trim() !== '') {
+                  handleSubmitComment(commentInput);
+                }
+              }}
+            >
               <img src={require("./assets/tick.png")} className="tick-img" />
             </button>
           </div>

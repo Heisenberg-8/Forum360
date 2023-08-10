@@ -16,6 +16,14 @@ function Comments() {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const formatTime = (dateTimeStr) => {
+    const dateObj = new Date(dateTimeStr);
+    const hours = dateObj.getHours().toString().padStart(2, '0');
+    const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+    const seconds = dateObj.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
   useEffect(() => {
     fetchQuestions(token)
       .then((questionsData) => {
@@ -166,7 +174,7 @@ function Comments() {
             >
               <text className="question-username">
                 {comment.UserName}
-                <span className="time">{comment.createDate}</span>
+                <span className="time">{formatTime(comment.createDate)}</span>
               </text>
               <div className="question-text">
                 <text>{comment.comment}</text>
