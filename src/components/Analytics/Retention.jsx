@@ -17,7 +17,7 @@ ChartJS.register(
 
 const RR = () => {
   const labels = ['', '', '', '', ''];
-  const dataset1Data = [20, 40, 30, 35, 30];
+  const dataset1Data = [0, 10, 6, 3, 8];
   const lastPointIndex = dataset1Data.length - 1;
 
   const initialData = {
