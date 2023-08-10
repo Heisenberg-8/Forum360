@@ -8,8 +8,7 @@ import './resources.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './CustomDatePicker.css';
-
-// assets
+import { format } from 'date-fns';
 import ai from './assets/ai.svg';
 import addComment from './assets/addComment.svg';
 import thumbdislike from './assets/thumbdislike.svg';
@@ -43,7 +42,7 @@ function Resources() {
   const [purposeofmeetingDD, setPurposeofmeetingDD] = useState([]);
   const [fulfilmentuserDD, setFulfilmentuserDD] = useState([]);
   const [sharemeetinguserDD, setSharemeetinguserDD] = useState([]);
-
+  const [searchPlaceholder, setSearchPlaceholder] = useState("Search for name");
   const [toall, setToAll] = useState(false);
 
   const quickMessageOptions = [
@@ -82,6 +81,8 @@ function Resources() {
   }));
 
   const handleDateChange = (date) => {
+    setSelectedDate(date);
+    date.setHours(0, 0, 0, 0);
     setSelectedDate(date);
   };
 
@@ -125,7 +126,9 @@ function Resources() {
   }
 
   function fuflilmentsendmail() {
-    sendfollowupmail(token, userkey, purposeofmeeting, selectedDate, fulfilmentuser)
+    const formattedDate = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : null;
+
+    sendfollowupmail(token, userkey, purposeofmeeting, formattedDate, fulfilmentuser)
     setPurposeofmeetingDD(null);
     setSelectedDate(null);
     setFulfilmentuserDD(null);
@@ -144,11 +147,12 @@ function Resources() {
 
   function handlesharemeetinguserselect(selectedOption) {
     setSharemeetinguser(selectedOption.label)
-    setSharemeetinguserDD(selectedOption)
+    setSearchPlaceholder(selectedOption)
   }
 
   async function handlesharemeetingsend() {
     await sharemeetingdetails(token, userkey, toall, sharemeetinguser)
+    setSearchPlaceholder("Search for name");
   }
 
 
@@ -405,9 +409,9 @@ function Resources() {
           <div className="user-info">
             <div className="d-flex">
               <img src={user1} className="avatar" />
-              <div className="username">Zain Philips</div>
+              <div className="username">Zain </div>
             </div>
-            <div className="place">
+            <div className="place" style={{marginLeft:"27px"}}>
               <div className="location">NSW Australia</div>
               <img src={edit} className="edit" />
             </div>
@@ -477,6 +481,7 @@ function Resources() {
               placeholderText="Select Date"
               isClearable
               dateFormat="dd/MM/yyyy"
+              showTimeSelect={false} 
             />
           </div>
 
@@ -517,7 +522,7 @@ function Resources() {
             isSearchable={true}
             styles={customStyles1}
             classNamePrefix="custom-select"
-            // value={sharemeetinguser}
+             value={searchPlaceholder}
             onChange={handlesharemeetinguserselect}
           />
 
@@ -526,7 +531,7 @@ function Resources() {
           </button>
         </div>
 
-        <div className="d3-flex">
+        <div className="d3-flex" style={{marginTop:"15px"}}>
           <input
             type="checkbox"
             id="team"
@@ -536,7 +541,7 @@ function Resources() {
             checked={toall}
             onChange={handleCheckboxChange}
           />
-          <label htmlFor="team" className="team-members">
+          <label htmlFor="team" className="team-members" >
             All Team Members
           </label>
           <br />
@@ -546,8 +551,8 @@ function Resources() {
       {/* research */}
 
       <div className="research">
-        <div className="research-head">Research Key Links</div>
-        <div className="links">
+        <div className="research-head" style={{fontFamily:"albert"}}>Research Key Links</div>
+        <div className="links"style={{marginTop:"15px"}}>
           <button className="link-button" onClick={() => handleLinkButtonClick(links["InvestorCentre"])}>
             <img className="link-image" src={link} />
             <span className="link-text">Information Center</span>
