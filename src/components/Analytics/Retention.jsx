@@ -30,7 +30,7 @@ const RR = () => {
         backgroundColor: 'rgba(151, 71, 255, 0.5)',
         fill: {
           target: 'origin',
-          above: 'rgba(151, 71, 255, 0.15)',
+          above: 'rgba(151, 71, 255, 0.1)', 
         },
         point: true,
         pointRadius: dataset1Data.map((_, index) => (index === lastPointIndex ? 5 : 0)),
@@ -40,6 +40,7 @@ const RR = () => {
       },
     ],
   };
+  
 
   const [data, setData] = useState(initialData);
 
@@ -80,6 +81,16 @@ const RR = () => {
           color: 'white', 
         },
         color: 'white',
+        ticks: {
+          color: '#a1a2a5',
+          callback: function (value, index, values) {
+            // Display only the first and last tick labels
+            if (index === 0 || index === values.length - 2) {
+              return value;
+            }
+            return ''; // Hide other tick labels
+          },
+        },
       },
     },
   };
