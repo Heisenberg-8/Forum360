@@ -20,7 +20,7 @@ import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
-import citiesdata from './assets/cities.json';
+// import citiesdata from './assets/cities.json';
 
 function Resources() {
   const token = getToken();
@@ -75,10 +75,10 @@ function Resources() {
     { value: "Compliance", label: "Compliance" }
   ]
 
-  const cities = citiesdata.map(item => ({
-    value: item.id,
-    label: `${item.name}, ${item.state_name}, ${item.country_name}`,
-  }));
+  // const cities = citiesdata.map(item => ({
+  //   value: item.id,
+  //   label: `${item.name}, ${item.state_name}, ${item.country_name}`,
+  // }));
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -404,7 +404,7 @@ function Resources() {
             <div style={{ color: "white" }}>City Name </div>
             <div className="message-dropdown-container-res" style={{ width: '100%' }}>
               <Select
-                options={cities}
+                // options={cities}
                 placeholder="Filter city name..."
                 isSearchable={false}
                 styles={customStyles}
