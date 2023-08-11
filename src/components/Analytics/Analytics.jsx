@@ -111,17 +111,17 @@ function Analytics() {
                     </div>
                 </div>
 
-</div>
-       <CSTS/>
-       <div style={{marginTop:"0"}}>
-       <RR />
-       </div>
-       <FFU/>
-       <QAR/>
-       <AA/>
-       {/* <FMTAR/> */}
-       {/* <MAV/> */}
-       </div>
+            </div>
+            <CSTS />
+            <div style={{ marginTop: "0" }}>
+                <RR />
+            </div>
+            <FFU />
+            <QAR />
+            <AA />
+            {/* <FMTAR/> */}
+            {/* <MAV/> */}
+        </div>
     );
 }
 

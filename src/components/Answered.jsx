@@ -264,14 +264,17 @@ function Answered() {
                                 </button>
                             )}
                         </div>
-                        <div className="control control-checkbox">
-                            <input
-                                type="checkbox"
-                                id={`myCheckbox${index}`}
-                                onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
-                                defaultChecked={agendaItem.QuestionStatus !== 909} />
-                            <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
-                        </div>
+                        {agendaItem.QuestionStatus !== 909 && (
+                            <div className="control control-checkbox">
+                                <input
+                                    type="checkbox"
+                                    id={`myCheckbox${index}`}
+                                    onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
+                                    defaultChecked={agendaItem.QuestionStatus !== 909} />
+                                <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
+                            </div>
+                        )}
+
                     </div>
                 ))}
             </div>
