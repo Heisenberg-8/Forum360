@@ -8,12 +8,12 @@ import { ColorRing } from "react-loader-spinner";
 function AA() {
     const token = getToken();
     const [progress, setProgress] = useState(0);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         getmetricanalytics(token)
             .then((analyticsdata) => {
                 setProgress(analyticsdata.MeetingFeedback);
-                setLoading(false); 
+                setLoading(false);
             });
     }, []);
 
@@ -28,7 +28,7 @@ function AA() {
                     <div style={{ display: "grid" }}>
                         <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "5%" }}>Viewers who are giving feedback, researching, etc</text>
                         {loading ? (
-                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px",marginTop:"-30px" }}>
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px", marginTop: "-30px" }}>
                                 <ColorRing
                                     visible={true}
                                     height="50"
@@ -36,7 +36,7 @@ function AA() {
                                     ariaLabel="blocks-loading"
                                     wrapperStyle={{}}
                                     wrapperClass="blocks-wrapper"
-                                    colors={['#232cff','#232cff','#232cff','#232cff','#232cff']}
+                                    colors={['#232cff', '#232cff', '#232cff', '#232cff', '#232cff']}
                                 />
                             </div>
                         ) : (

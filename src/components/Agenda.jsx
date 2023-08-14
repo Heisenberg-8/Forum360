@@ -6,17 +6,16 @@ import Questions from "./questions";
 import Answered from "./Answered.jsx";
 import { getToken } from "./token";
 import Resources from "./resources.jsx";
-import Data from "./data.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
-import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered } from "./data.jsx";
+import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments } from "./data.jsx";
 
 function Agenda() {
-  const { comments } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
   const token = getToken();
   const [isLoading, setIsLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [comments, setComments] = useState([])
   const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
@@ -42,6 +41,14 @@ function Agenda() {
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    getcomments(token)
+      .then((questionsData) => {
+        setComments(questionsData);
         setIsLoading(false);
       });
   }, []);

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import Message from "./Message.jsx";
 import { generatetoken } from "./data";
-import { setToken, setUserkey } from "./token";
+import { setToken, setUserkey, RoleComponent, setRole } from "./token";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [currentScreen, setCurrentScreen] = useState("login");
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -19,11 +20,28 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    generatetoken().then((tokendata) => {
-      setToken(tokendata.access_token);
-      setUserkey(tokendata.userKey);
-      setCurrentScreen("messaging");
-    });
+    setErrorMessage("")
+    generatetoken(username, password)
+      .then((tokendata) => {
+        if (tokendata.access_token && tokendata.userKey) {
+          setToken(tokendata.access_token);
+          setUserkey(tokendata.userKey);
+          setCurrentScreen("messaging");
+          setErrorMessage("");
+          // const role = RoleComponent()
+          // console.log(role + "this is the role")
+        } else {
+          setErrorMessage("Username or password is incorrect");
+        }
+      })
+      .catch((error) => {
+        console.error("Login error:", error);
+        if (error.response && error.response.data) {
+          setErrorMessage(error.response.data.error_description);
+        } else {
+          setErrorMessage("Username or password is incorrect");
+        }
+      });
   }
 
   if (currentScreen === "messaging") {
@@ -48,6 +66,7 @@ function Login() {
           placeholder="Password"
           className="login-input"
         />
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit" className="login-button">
           Login
         </button>

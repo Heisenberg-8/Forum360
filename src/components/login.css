@@ -7,6 +7,13 @@
     background-color: #1F1F1F;
 }
 
+.error-message {
+    font-family: albert;
+    color: #D50D55;
+    font-size: 14px;
+    margin-top: 0px;
+}
+
 .login-heading {
     color: azure;
     font-size: 24px;
@@ -38,6 +45,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .login-button:hover {

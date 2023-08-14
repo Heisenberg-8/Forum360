@@ -4,13 +4,12 @@ import Comments from "./comments";
 import Questions from "./questions"
 import Agenda from "./Agenda.jsx";
 import { getToken } from "./token";
-import Data from "./data.jsx";
+import Data, { getcomments } from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 import Resources from "./resources.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 
 function Answered() {
-    const { comments } = Data();
     const [questions, setQuestions] = useState([]);
     const token = getToken();
     const [currentScreen, setCurrentScreen] = useState("");
@@ -18,6 +17,7 @@ function Answered() {
     const [isLoading, setIsLoading] = useState(true);
     const [agenda, setAgenda] = useState([]);
     const [answered, setAnswered] = useState([]);
+    const [comments, setComments] = useState([])
 
     useEffect(() => {
         fetchAnswered(token)
@@ -41,6 +41,14 @@ function Answered() {
                 setQuestions(agendaData);
                 setIsLoading(false);
             })
+    }, []);
+
+    useEffect(() => {
+        getcomments(token)
+            .then((questionsData) => {
+                setComments(questionsData);
+                setIsLoading(false);
+            });
     }, []);
 
     const commentCount = comments.length;

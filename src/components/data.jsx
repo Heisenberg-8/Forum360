@@ -330,7 +330,7 @@ export function SubmitThumbsDown(token, userKey) {
         });
 }
 
-export function generatetoken() {
+export function generatetoken(username, password) {
     return fetch('https://mgmt-test.forum360.co/api/Token', {
         method: 'POST',
         headers: {
@@ -338,8 +338,8 @@ export function generatetoken() {
             'Appid': '4'
         },
         body: qs.stringify({
-            username: 'sidak@veersatech.com',
-            password: 'Sidak@123',
+            username: `${username}`,
+            password: `${password}`,
             grant_type: 'password'
         })
     })
@@ -535,6 +535,20 @@ export function getcomments(token) {
         });
 }
 
-
+export function sessiondetails(token) {
+    const sessionid = getSessionId();
+    return fetch('https://mgmt-test.forum360.co/api/Session/Detail/' + sessionid), {
+        methond: 'get',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+        .then(response => response.json())
+        .then(json => json)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
 
 export default Data;

@@ -4,17 +4,17 @@ import Comments from "./comments";
 import Agenda from "./Agenda.jsx";
 import Resources from "./resources.jsx";
 import Answered from "./Answered.jsx";
-import { fetchQuestions, movetoAgenda, movetoAnswered, movetoirp } from "./data.jsx";
+import { fetchQuestions, getcomments, movetoAgenda, movetoirp } from "./data.jsx";
 import Data from "./data.jsx";
 import { getToken } from "./token";
 import Analytics from "./Analytics/Analytics.jsx"
 
 function Feedback() {
-  const { comments } = Data();
   const token = getToken();
   const [currentScreen, setCurrentScreen] = useState("");
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [expandedItems, setExpandedItems] = useState([]);
 
@@ -25,6 +25,14 @@ function Feedback() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    getcomments(token)
+      .then((commentsdata) => {
+        setComments(commentsdata);
         setIsLoading(false);
       });
   }, []);
