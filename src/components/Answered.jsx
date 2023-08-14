@@ -8,6 +8,7 @@ import Data from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 import Resources from "./resources.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
+import { ColorRing } from "react-loader-spinner";
 
 function Answered() {
     const { comments } = Data();
@@ -18,12 +19,14 @@ function Answered() {
     const [isLoading, setIsLoading] = useState(true);
     const [agenda, setAgenda] = useState([]);
     const [answered, setAnswered] = useState([]);
+    const [loading, setLoading] = useState(true); 
+
 
     useEffect(() => {
         fetchAnswered(token)
             .then((agendaData) => {
                 setAnswered(agendaData);
-                setIsLoading(false);
+                setLoading(false); 
             })
     }, []);
 
@@ -31,7 +34,7 @@ function Answered() {
         fetchAgenda(token)
             .then((agendaData) => {
                 setAgenda(agendaData);
-                setIsLoading(false);
+                setLoading(false); 
             })
     }, []);
 
@@ -39,7 +42,7 @@ function Answered() {
         fetchQuestions(token)
             .then((agendaData) => {
                 setQuestions(agendaData);
-                setIsLoading(false);
+                setLoading(false); 
             })
     }, []);
 
@@ -54,12 +57,12 @@ function Answered() {
         fetchAnswered(token)
             .then((agendaData) => {
                 setAnswered(agendaData);
-                setIsLoading(false);
+                setLoading(false); 
             })
         fetchAgenda(token)
             .then((agendaData) => {
                 setAgenda(agendaData);
-                setIsLoading(false);
+                setLoading(false); 
             })
     }
 
@@ -91,9 +94,6 @@ function Answered() {
         return <Analytics />
     }
 
-    if (isLoading) {
-        return <div className="loading-spinner"></div>;
-    }
 
     if (currentScreen === "messaging") {
         return <Message />;
@@ -232,7 +232,20 @@ function Answered() {
                     </div>
                 </button>
             </div>
-            <div className="agenda-container">
+            {loading ? (
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%",marginTop:"30px" }}>
+                                <ColorRing
+                                    visible={true}
+                                    height="100"
+                                    width="100"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                    colors={['#232cff','#232cff','#232cff','#232cff','#232cff']}
+                                />
+                            </div>
+                        ) : (
+                            <div className="agenda-container">
                 {answered.map((agendaItem, index) => (
                     <div key={index} className="agenda-questions">
                         <div className="agenda-text">
@@ -278,6 +291,8 @@ function Answered() {
                     </div>
                 ))}
             </div>
+                        )}
+            
 
         </div>
     );

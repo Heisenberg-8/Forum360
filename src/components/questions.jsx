@@ -8,6 +8,8 @@ import { fetchQuestions, movetoAgenda, movetoAnswered, movetoirp } from "./data.
 import Data from "./data.jsx";
 import { getToken } from "./token";
 import Analytics from "./Analytics/Analytics.jsx"
+import { ColorRing } from "react-loader-spinner";
+
 
 function Feedback() {
   const { comments } = Data();
@@ -17,6 +19,8 @@ function Feedback() {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [expandedItems, setExpandedItems] = useState([]);
+  const [loading, setLoading] = useState(true); 
+
 
 
   const commentCount = comments.length;
@@ -25,7 +29,7 @@ function Feedback() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -74,7 +78,7 @@ function Feedback() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }
 
@@ -83,11 +87,7 @@ function Feedback() {
     return <Analytics />
   }
 
-  if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
-  }
+
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -211,7 +211,20 @@ function Feedback() {
         </button>
       </div>
       <div className="main-cont">
-        <div className="questions-container">
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%",marginTop:"90px" }}>
+                                <ColorRing
+                                    visible={true}
+                                    height="100"
+                                    width="100"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                    colors={['#232cff','#232cff','#232cff','#232cff','#232cff']}
+                                />
+                            </div>
+                        ) : (
+                          <div className="questions-container">
           {questions?.map((question, index) => (
             <div className="question" key={index}>
               <text className="question-username">
@@ -260,8 +273,10 @@ function Feedback() {
             </div>
           ))}
         </div>
+                        )}
+        
         {fadeContainerVisible && (
-          <div className="fade">
+          <div className="fade" >
             <button className="viewAll-button" onClick={handleViewAllClick}>
               View All
             </button>

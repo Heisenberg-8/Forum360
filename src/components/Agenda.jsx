@@ -9,6 +9,8 @@ import Resources from "./resources.jsx";
 import Data from "./data.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered } from "./data.jsx";
+import { ColorRing } from "react-loader-spinner";
+
 
 function Agenda() {
   const { comments } = Data();
@@ -21,12 +23,14 @@ function Agenda() {
   const [expandedItems, setExpandedItems] = useState([]);
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
   const agendaCount = agenda.length;
+  const [loading, setLoading] = useState(true); 
+
 
   useEffect(() => {
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -34,7 +38,7 @@ function Agenda() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, [token]);
 
@@ -42,7 +46,7 @@ function Agenda() {
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -52,12 +56,12 @@ function Agenda() {
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
-        setIsLoading(false);
+        setLoading(false); 
       })
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
 
   }
@@ -123,9 +127,7 @@ function Agenda() {
     return <Resources />;
   }
 
-  if (isLoading) {
-    return <div className="loading-spinner"></div>;
-  }
+ 
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -252,7 +254,20 @@ function Agenda() {
           </div>
         </button>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%",marginTop:"30px" }}>
+                                <ColorRing
+                                    visible={true}
+                                    height="100"
+                                    width="100"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                    colors={['#232cff','#232cff','#232cff','#232cff','#232cff']}
+                                />
+                            </div>
+                        ) : (
+                          <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="agenda">
           {(provided) => (
             <div
@@ -323,6 +338,8 @@ function Agenda() {
           )}
         </Droppable >
       </DragDropContext >
+                        )}
+      
     </div >
   );
 }

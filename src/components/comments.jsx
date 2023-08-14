@@ -7,6 +7,8 @@ import Message from "./Message.jsx";
 import Resources from "./resources.jsx";
 import Questions from "./questions";
 import Analytics from "./Analytics/Analytics.jsx"
+import { ColorRing } from "react-loader-spinner";
+
 
 function Comments() {
   const token = getToken();
@@ -15,6 +17,8 @@ function Comments() {
   const [questions, setQuestions] = useState([]);
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
+
 
   const formatTime = (dateTimeStr) => {
     const dateObj = new Date(dateTimeStr);
@@ -28,7 +32,7 @@ function Comments() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -37,7 +41,7 @@ function Comments() {
       .then((commentsdata) => {
         setComments(commentsdata);
         console.log(commentsdata)
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -56,11 +60,7 @@ function Comments() {
     setFadeContainerVisible(false);
   };
 
-  if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
-  }
+
 
   function handleAnalyticsClick() {
     setCurrentScreen("analytics");
@@ -166,7 +166,20 @@ function Comments() {
         </button>
       </div>
       <div className="main-cont">
-        <div className="comments-container">
+      {loading ? (
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40%",marginTop:"90px" }}>
+                                <ColorRing
+                                    visible={true}
+                                    height="100"
+                                    width="100"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                    colors={['#232cff','#232cff','#232cff','#232cff','#232cff']}
+                                />
+                            </div>
+                        ) : (
+                          <div className="comments-container">
           {comments?.map((comment, index) => (
             <div
               className="question"
@@ -182,6 +195,8 @@ function Comments() {
             </div>
           ))}
         </div>
+                        )}
+      
         {fadeContainerVisible && (
           <div className="fade-comments">
             <button className="loadmore-button" onClick={handleViewAllClick}>
