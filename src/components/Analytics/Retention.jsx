@@ -3,6 +3,8 @@ import "./Sentiment.css"
 import pin from '../assets/pin.svg';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend, PointElement, Filler } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { getmetricanalytics } from "../data";
+import { getToken } from "../token";
 
 ChartJS.register(
   CategoryScale,
@@ -15,10 +17,25 @@ ChartJS.register(
   Filler,
 );
 
+
+
+
+
 const RR = () => {
+  const token = getToken();
+const [regUser, setregUser] = useState(0);
+const [attendUser, setattendUser] = useState(0);
   const labels = ['', '', '', '', ''];
   const dataset1Data = [0, 10, 6, 3, 8];
   const lastPointIndex = dataset1Data.length - 1;
+
+  useEffect(() => {
+    getmetricanalytics(token)
+        .then((analyticsdata) => {
+          setregUser(analyticsdata.RegUser);
+          setattendUser(analyticsdata.AttendUser);
+        });
+}, []);
 
   const initialData = {
     labels,
@@ -135,7 +152,7 @@ const RR = () => {
           <text className="headingSmallCard"  style={{ marginLeft: "14%", marginTop: "3%" }}>&gt;90%</text>
           <img src={pin} style={{ marginLeft: "5%", marginRight: "3%", marginTop: "1%" }} />
         </div>
-        <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "6%" }}>98 of 163 Registered</text>
+        <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "6%" }}>{attendUser} of {regUser}</text>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", marginTop: "-20px" }}>
   <div style={{ width: "90%", marginLeft: "0px", marginTop: "10px" }}>
     <Line options={options} data={data} />

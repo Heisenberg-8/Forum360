@@ -212,7 +212,7 @@ function Feedback() {
       </div>
       <div className="main-cont">
       {loading ? (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%",marginTop:"90px" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%",marginTop:"35%" }}>
                                 <ColorRing
                                     visible={true}
                                     height="100"
@@ -283,7 +283,7 @@ function Feedback() {
           </div>
         )}
       </div>
-      <div className="footer">
+      <div className="footer" >
         <button className="text-btn" onClick={handleAgendaClick}>
           Agenda
         </button>
