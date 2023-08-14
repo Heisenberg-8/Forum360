@@ -21,6 +21,7 @@ import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
 import citiesdata from './assets/cities.json';
+import { ColorRing } from "react-loader-spinner";
 
 function Resources() {
   const token = getToken();
@@ -30,7 +31,7 @@ function Resources() {
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
   const [links, setLinks] = useState([]);
   const [fulfilment1, setFulfilment1] = useState([]);
@@ -90,7 +91,7 @@ function Resources() {
     getproductlinks(token)
       .then((questionsData) => {
         setLinks(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -98,7 +99,7 @@ function Resources() {
     getUsers(token)
       .then((questionsData) => {
         setUsersData(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -195,11 +196,7 @@ function Resources() {
     return <Analytics />
   }
 
-  if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
-  }
+
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -274,334 +271,352 @@ function Resources() {
         </div>
       </div>
 
-      {/* CustomerExperienceForm */}
-
-      <div className="customerexperience">
-        <div className="d-flex">
-          <img src={addComment} style={{ marginTop: "0px" }} />
-          <div className="gri">
-            <div className="customer">Customer Experience</div>
-            <div className="sessionnotes">Enter session notes</div>
-          </div>
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80%", marginTop: "0%" }}>
+          <ColorRing
+            visible={true}
+            height="50"
+            width="50"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#232cff', '#232cff', '#232cff', '#232cff', '#232cff']}
+          />
         </div>
+      ) : (
+        <div>
 
-        <div className="formdata">
-          <div className="labels">Comment</div>
+          {/* CustomerExperienceForm */}
 
-          <div className="typeable">
-            <input
-              className="input"
-              placeholder="Start typing..."
-              value={commentInput}
-              onChange={(x) => setCommentInput(x.target.value)}
-              style={{ width: '85%' }} />
-            <button
-              className="tick-button"
-              onClick={() => {
-                if (commentInput.trim() !== '') {
-                  handleSubmitComment(commentInput);
-                }
-              }}
-            >
-              <img src={require("./assets/tick.png")} className="tick-img" />
-            </button>
-          </div>
-          <div className="labels">Question</div>
-          <div className="typeable">
-            <input
-              className="input"
-              placeholder="Start typing..."
-              value={questionInput}
-              onChange={(x) => setQuestionInput(x.target.value)}
-              style={{ width: '85%' }} />
-            <button className="tick-button" onClick={() => handleSubmitQuestion(questionInput)} >
-              <img src={require("./assets/tick.png")} className="tick-img" />
-            </button>
-          </div>
-          <div className="labels">Review</div>
-          <div className="typeable">
-            <input
-              className="input"
-              placeholder="Start typing..."
-              value={reviewInput}
-              onChange={(x) => setReviewInput(x.target.value)}
-              style={{ width: '85%' }} />
-            <button className="tick-button" onClick={() => handleSubmitReview(reviewInput)} >
-              <img src={require("./assets/tick.png")} className="tick-img" />
-            </button>
-          </div>
-          <div className="d-flex justify-content-space-between like">
-            <btn className="tu" onClick={SubmitThumbsUp}>
-              <img src={thumbdislike} />
-            </btn>
-            <btn className="td" onClick={SubmitThumbsDown}>
-              <img src={thumblike} />
-            </btn>
-          </div>
-        </div>
-      </div>
+          <div className="customerexperience">
+            <div className="d-flex">
+              <img src={addComment} style={{ marginTop: "0px" }} />
+              <div className="gri">
+                <div className="customer">Customer Experience</div>
+                <div className="sessionnotes">Enter session notes</div>
+              </div>
+            </div>
 
-      {/* keypoints */}
+            <div className="formdata">
+              <div className="labels">Comment</div>
 
-      <div className={`keypoints ${expanded ? "expandable" : ""}`}>
-        <div className="keypoints-head">
-          <div className="d1-flex">
-            <img src={ai} className="ai" alt="AI" />
-            <div className="points" >KeyPoints </div>
-            <div onClick={handleExpandClick}>
-              <img src={expand} className="expand" />
+              <div className="typeable">
+                <input
+                  className="input"
+                  placeholder="Start typing..."
+                  value={commentInput}
+                  onChange={(x) => setCommentInput(x.target.value)}
+                  style={{ width: '85%' }} />
+                <button
+                  className="tick-button"
+                  onClick={() => {
+                    if (commentInput.trim() !== '') {
+                      handleSubmitComment(commentInput);
+                    }
+                  }}
+                >
+                  <img src={require("./assets/tick.png")} className="tick-img" />
+                </button>
+              </div>
+              <div className="labels">Question</div>
+              <div className="typeable">
+                <input
+                  className="input"
+                  placeholder="Start typing..."
+                  value={questionInput}
+                  onChange={(x) => setQuestionInput(x.target.value)}
+                  style={{ width: '85%' }} />
+                <button className="tick-button" onClick={() => handleSubmitQuestion(questionInput)} >
+                  <img src={require("./assets/tick.png")} className="tick-img" />
+                </button>
+              </div>
+              <div className="labels">Review</div>
+              <div className="typeable">
+                <input
+                  className="input"
+                  placeholder="Start typing..."
+                  value={reviewInput}
+                  onChange={(x) => setReviewInput(x.target.value)}
+                  style={{ width: '85%' }} />
+                <button className="tick-button" onClick={() => handleSubmitReview(reviewInput)} >
+                  <img src={require("./assets/tick.png")} className="tick-img" />
+                </button>
+              </div>
+              <div className="d-flex justify-content-space-between like">
+                <btn className="tu" onClick={SubmitThumbsUp}>
+                  <img src={thumbdislike} />
+                </btn>
+                <btn className="td" onClick={SubmitThumbsDown}>
+                  <img src={thumblike} />
+                </btn>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="keypoints-text">
-          <ul>
-            <li>
-              Ensuring a well-diversified portfolio to minimize risk-consistent dividend payouts and
-              strong growth potential
-            </li>
-          </ul>
-        </div>
-      </div>
 
-      {/* transcription */}
+          {/* keypoints */}
 
-      <div className="transcription-container">
-        <div className="script">
-          <div className="d2-flex">
-            <img src={ai} className="ai" />
-            <div className="transcription" style={{ color: "white" }}>Transcription</div>
-            <div className="expand1">
-              <img src={expand} />
+          <div className={`keypoints ${expanded ? "expandable" : ""}`}>
+            <div className="keypoints-head">
+              <div className="d1-flex">
+                <img src={ai} className="ai" alt="AI" />
+                <div className="points" >KeyPoints </div>
+                <div onClick={handleExpandClick}>
+                  <img src={expand} className="expand" />
+                </div>
+              </div>
+            </div>
+            <div className="keypoints-text">
+              <ul>
+                <li>
+                  Ensuring a well-diversified portfolio to minimize risk-consistent dividend payouts and
+                  strong growth potential
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* carbon */}
+          {/* transcription */}
 
-      <div className="carbon">
-        <div className="save">
-          <div className="carbon-head">Calculate your Carbon saving</div>
-          <div className="carbon-head-icon">
-            <img src={expand} />
-            <img src={pin} />
+          <div className="transcription-container">
+            <div className="script">
+              <div className="d2-flex">
+                <img src={ai} className="ai" />
+                <div className="transcription" style={{ color: "white" }}>Transcription</div>
+                <div className="expand1">
+                  <img src={expand} />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="cities-head" style={{ marginTop: '10px' }}>Confirm the cities where attendees are joining this meeting </div>
 
-        <div className="count-resources">16,000 lbs</div>
-        <div className="details">
-          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
-            <Select
-              options={users}
-              placeholder="Filter attendee name..."
-              isSearchable={false}
-              styles={customStyles}
-              classNamePrefix="custom-select"
-            />
+          {/* carbon */}
+
+          <div className="carbon">
+            <div className="save">
+              <div className="carbon-head">Calculate your Carbon saving</div>
+              <div className="carbon-head-icon">
+                <img src={expand} />
+                <img src={pin} />
+              </div>
+            </div>
+            <div className="cities-head" style={{ marginTop: '10px' }}>Confirm the cities where attendees are joining this meeting </div>
+
+            <div className="count-resources">16,000 lbs</div>
+            <div className="details">
+              <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+                <Select
+                  options={users}
+                  placeholder="Filter attendee name..."
+                  isSearchable={false}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                />
+              </div>
+              <div className="attendee" style={{ marginTop: "20px" }}>
+                <div style={{ color: "white" }}>City Name </div>
+                <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+                  <Select
+                    options={cities}
+                    placeholder="Filter city name..."
+                    isSearchable={false}
+                    styles={customStyles}
+                    classNamePrefix="custom-select"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="userlist">
+              <div className="user-info">
+                <div className="d-flex">
+                  <img src={user1} className="avatar" />
+                  <div className="username">Zain </div>
+                </div>
+                <div className="place" style={{ marginLeft: "27px" }}>
+                  <div className="location">NSW Australia</div>
+                  <img src={edit} className="edit" />
+                </div>
+              </div>
+              <div className="user-info">
+                <div className="d-flex">
+                  <img src={user2} className="avatar" />
+                  <div className="username">Madelyn</div>
+                </div>
+                <div className="place">
+                  <div className="location">NY USA</div>
+                  <img src={edit} className="edit" />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="attendee" style={{ marginTop: "20px" }}>
-            <div style={{ color: "white" }}>City Name </div>
-            <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+
+          {/* fulfilment */}
+
+          <div className="fulfilment">
+            <div className="form">Fulfilment</div>
+
+            <div className="question-form">
+              <div>Would you like to research the product further?</div>
+              <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+                <Select
+                  options={quickMessageOptions}
+                  onChange={handlefulfilment1select}
+                  value={fulfilment1}
+                  placeholder="Quick Message"
+                  isSearchable={false}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                />
+              </div>
+            </div>
+            <div className="question-form">
+              <div>
+                Would you like a follow up meeting with another product expert?If so, with whom?
+              </div>
               <Select
-                options={cities}
-                placeholder="Filter city name..."
-                isSearchable={false}
+                options={users}
+                placeholder="Search for name"
+                isSearchable={true}
                 styles={customStyles}
                 classNamePrefix="custom-select"
+                value={fulfilmentuserDD}
+                onChange={handlefulfilmentuserselect}
               />
+              <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+                <Select
+                  options={purpose}
+                  onChange={handlepurposeselect}
+                  value={purposeofmeetingDD}
+                  placeholder="Purpose of the meeting"
+                  isSearchable={false}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                />
+              </div>
+              <div className="datepick" >
+
+                <DatePicker
+                  className="custom-datepicker"
+                  selected={selectedDate}
+                  onChange={handleDateChange}
+                  placeholderText="Select Date"
+                  isClearable
+                  dateFormat="dd/MM/yyyy"
+                  showTimeSelect={false}
+                />
+              </div>
+
+              <button
+                className="tick-button"
+                style={{ position: "relative", marginTop: "10px", marginLeft: "185px" }}
+                onClick={fuflilmentsendmail}
+              >
+                <img src={require("./assets/tick.png")} className="tick-img" />
+              </button>
+            </div>
+            <div className="question-form">
+              <div>Should you decide, how will you invest in this product?</div>
+              <div className="message-dropdown-container-res" style={{ width: '100%' }}>
+                <Select
+                  options={quickMessageOptions1}
+                  onChange={handlefulfilment2select}
+                  value={fulfilment2}
+                  placeholder="List fullfilment pathways"
+                  isSearchable={false}
+                  styles={customStyles}
+                  classNamePrefix="custom-select"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* meeting-details */}
+
+          <div className="sharemeeting">
+            <div className="share-head">Share Meeting Details</div>
+            <div className="team">Individual Team Members</div>
+
+            <div className="typeable">
+              <Select
+                options={users}
+                placeholder="Search for name"
+                isSearchable={true}
+                styles={customStyles1}
+                classNamePrefix="custom-select"
+                value={searchPlaceholder}
+                onChange={handlesharemeetinguserselect}
+              />
+
+              <button className="tick-button" onClick={() => handlesharemeetingsend()} style={{ position: 'absolute', top: '8px', right: '-20px' }}>
+                <img src={require("./assets/tick.png")} className="tick-img" />
+              </button>
+            </div>
+
+            <div className="d3-flex" style={{ marginTop: "15px" }}>
+              <input
+                type="checkbox"
+                id="team"
+                name="team"
+                value="all"
+                className="check"
+                checked={toall}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor="team" className="team-members" >
+                All Team Members
+              </label>
+              <br />
+            </div>
+          </div>
+
+          {/* research */}
+
+          <div className="research">
+            <div className="research-head" style={{ fontFamily: "albert" }}>Research Key Links</div>
+            <div className="links" style={{ marginTop: "15px" }}>
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["InvestorCentre"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Information Center</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["Announcements"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Announcements</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Product Performence</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["CompanyWebsite"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Company Website</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["ResearchProviders"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Research Providers</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Product Providers</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductSpecifications"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Product Specifications</span>
+              </button>
+
+              <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
+                <img className="link-image" src={link} />
+                <span className="link-text">Product Information Page</span>
+              </button>
             </div>
           </div>
         </div>
-        <div className="userlist">
-          <div className="user-info">
-            <div className="d-flex">
-              <img src={user1} className="avatar" />
-              <div className="username">Zain </div>
-            </div>
-            <div className="place" style={{marginLeft:"27px"}}>
-              <div className="location">NSW Australia</div>
-              <img src={edit} className="edit" />
-            </div>
-          </div>
-          <div className="user-info">
-            <div className="d-flex">
-              <img src={user2} className="avatar" />
-              <div className="username">Madelyn</div>
-            </div>
-            <div className="place">
-              <div className="location">NY USA</div>
-              <img src={edit} className="edit" />
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
 
-      {/* fulfilment */}
-
-      <div className="fulfilment">
-        <div className="form">Fulfilment</div>
-
-        <div className="question-form">
-          <div>Would you like to research the product further?</div>
-          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
-            <Select
-              options={quickMessageOptions}
-              onChange={handlefulfilment1select}
-              value={fulfilment1}
-              placeholder="Quick Message"
-              isSearchable={false}
-              styles={customStyles}
-              classNamePrefix="custom-select"
-            />
-          </div>
-        </div>
-        <div className="question-form">
-          <div>
-            Would you like a follow up meeting with another product expert?If so, with whom?
-          </div>
-          <Select
-            options={users}
-            placeholder="Search for name"
-            isSearchable={true}
-            styles={customStyles}
-            classNamePrefix="custom-select"
-            value={fulfilmentuserDD}
-            onChange={handlefulfilmentuserselect}
-          />
-          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
-            <Select
-              options={purpose}
-              onChange={handlepurposeselect}
-              value={purposeofmeetingDD}
-              placeholder="Purpose of the meeting"
-              isSearchable={false}
-              styles={customStyles}
-              classNamePrefix="custom-select"
-            />
-          </div>
-          <div className="datepick" >
-
-            <DatePicker
-              className="custom-datepicker"
-              selected={selectedDate}
-              onChange={handleDateChange}
-              placeholderText="Select Date"
-              isClearable
-              dateFormat="dd/MM/yyyy"
-              showTimeSelect={false} 
-            />
-          </div>
-
-          <button
-            className="tick-button"
-            style={{ position: "relative", marginTop: "10px", marginLeft: "185px" }}
-            onClick={fuflilmentsendmail}
-          >
-            <img src={require("./assets/tick.png")} className="tick-img" />
-          </button>
-        </div>
-        <div className="question-form">
-          <div>Should you decide, how will you invest in this product?</div>
-          <div className="message-dropdown-container-res" style={{ width: '100%' }}>
-            <Select
-              options={quickMessageOptions1}
-              onChange={handlefulfilment2select}
-              value={fulfilment2}
-              placeholder="List fullfilment pathways"
-              isSearchable={false}
-              styles={customStyles}
-              classNamePrefix="custom-select"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* meeting-details */}
-
-      <div className="sharemeeting">
-        <div className="share-head">Share Meeting Details</div>
-        <div className="team">Individual Team Members</div>
-
-        <div className="typeable">
-          <Select
-            options={users}
-            placeholder="Search for name"
-            isSearchable={true}
-            styles={customStyles1}
-            classNamePrefix="custom-select"
-             value={searchPlaceholder}
-            onChange={handlesharemeetinguserselect}
-          />
-
-          <button className="tick-button" onClick={() => handlesharemeetingsend()} style={{ position: 'absolute', top: '8px', right: '-20px' }}>
-            <img src={require("./assets/tick.png")} className="tick-img" />
-          </button>
-        </div>
-
-        <div className="d3-flex" style={{marginTop:"15px"}}>
-          <input
-            type="checkbox"
-            id="team"
-            name="team"
-            value="all"
-            className="check"
-            checked={toall}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="team" className="team-members" >
-            All Team Members
-          </label>
-          <br />
-        </div>
-      </div>
-
-      {/* research */}
-
-      <div className="research">
-        <div className="research-head" style={{fontFamily:"albert"}}>Research Key Links</div>
-        <div className="links"style={{marginTop:"15px"}}>
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["InvestorCentre"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Information Center</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["Announcements"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Announcements</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Product Performence</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["CompanyWebsite"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Company Website</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["ResearchProviders"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Research Providers</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Product Providers</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductSpecifications"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Product Specifications</span>
-          </button>
-
-          <button className="link-button" onClick={() => handleLinkButtonClick(links["ProductInformationPage"])}>
-            <img className="link-image" src={link} />
-            <span className="link-text">Product Information Page</span>
-          </button>
-        </div>
-      </div>
 
     </div >
   );

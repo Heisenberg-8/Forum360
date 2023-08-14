@@ -8,11 +8,13 @@ import { getToken } from "./token";
 import Resources from "./resources.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments } from "./data.jsx";
+import { ColorRing } from "react-loader-spinner";
+
 
 function Agenda() {
   const [currentScreen, setCurrentScreen] = useState("");
   const token = getToken();
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [comments, setComments] = useState([])
@@ -21,11 +23,12 @@ function Agenda() {
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
   const agendaCount = agenda.length;
 
+
   useEffect(() => {
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -33,7 +36,7 @@ function Agenda() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, [token]);
 
@@ -41,7 +44,7 @@ function Agenda() {
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -49,22 +52,22 @@ function Agenda() {
     getcomments(token)
       .then((questionsData) => {
         setComments(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
   async function handleMoveToAnsweredClick(questionid) {
     await movetoAnswered(token, questionid);
-    setIsLoading(true);
+    setLoading(true);
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
-        setIsLoading(false);
+        setLoading(false);
       })
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
 
   }
@@ -130,9 +133,7 @@ function Agenda() {
     return <Resources />;
   }
 
-  if (isLoading) {
-    return <div className="loading-spinner"></div>;
-  }
+
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -259,77 +260,92 @@ function Agenda() {
           </div>
         </button>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="agenda">
-          {(provided) => (
-            <div
-              className="agenda-container"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {agenda.map((agendaItem, index) => (
-                <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      className={`agenda-questions ${draggedQuestionIndex === index ? "dragged" : ""}`}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={{
-                        border: snapshot.isDragging ? "2px solid #232cff " : "none",
-                        ...provided.draggableProps.style,
-                      }}
-                    >
-                      <img
-                        src={require("./assets/drag.png")}
-                        alt="drag"
-                        className="dragicon"
-                      />
-                      <div className="agenda-text">
-                        <text className="question-username">{agendaItem.FullName}</text>
-                        <div className="question-text">
-                          {expandedItems[index] ? (
-                            <text>{agendaItem.Question}</text>
-                          ) : (
-                            <>
-                              <text>{agendaItem.Question.substring(0, 30)}</text>
-                              {agendaItem.Question.length > 30 && (
-                                <button
-                                  className="read-more-button"
-                                  onClick={() => toggleExpand(index)}
-                                >
-                                  ... <span className="read-more-text">View More</span>
-                                </button>
-                              )}
-                            </>
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%", marginTop: "30px" }}>
+          <ColorRing
+            visible={true}
+            height="50"
+            width="50"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#232cff', '#232cff', '#232cff', '#232cff', '#232cff']}
+          />
+        </div>
+      ) : (
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="agenda">
+            {(provided) => (
+              <div
+                className="agenda-container"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {agenda.map((agendaItem, index) => (
+                  <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        className={`agenda-questions ${draggedQuestionIndex === index ? "dragged" : ""}`}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                          border: snapshot.isDragging ? "2px solid #232cff " : "none",
+                          ...provided.draggableProps.style,
+                        }}
+                      >
+                        <img
+                          src={require("./assets/drag.png")}
+                          alt="drag"
+                          className="dragicon"
+                        />
+                        <div className="agenda-text">
+                          <text className="question-username">{agendaItem.FullName}</text>
+                          <div className="question-text">
+                            {expandedItems[index] ? (
+                              <text>{agendaItem.Question}</text>
+                            ) : (
+                              <>
+                                <text>{agendaItem.Question.substring(0, 30)}</text>
+                                {agendaItem.Question.length > 30 && (
+                                  <button
+                                    className="read-more-button"
+                                    onClick={() => toggleExpand(index)}
+                                  >
+                                    ... <span className="read-more-text">View More</span>
+                                  </button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                          {expandedItems[index] && (
+                            <button
+                              className="read-more-button"
+                              onClick={() => toggleExpand(index)}
+                            >
+                              <span className="read-more-text">View Less</span>
+                            </button>
                           )}
                         </div>
-                        {expandedItems[index] && (
-                          <button
-                            className="read-more-button"
-                            onClick={() => toggleExpand(index)}
-                          >
-                            <span className="read-more-text">View Less</span>
-                          </button>
-                        )}
-                      </div>
-                      <div className="control control-checkbox">
-                        <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handleMoveToAnsweredClick(agendaItem.QuestionId)} />
-                        <label
-                          htmlFor={`myCheckbox${index}`}
-                          className="control_indicator"
-                        ></label>
+                        <div className="control control-checkbox">
+                          <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handleMoveToAnsweredClick(agendaItem.QuestionId)} />
+                          <label
+                            htmlFor={`myCheckbox${index}`}
+                            className="control_indicator"
+                          ></label>
+                        </div >
                       </div >
-                    </div >
-                  )
-                  }
-                </Draggable >
-              ))}
-              {provided.placeholder}
-            </div >
-          )}
-        </Droppable >
-      </DragDropContext >
+                    )
+                    }
+                  </Draggable >
+                ))}
+                {provided.placeholder}
+              </div >
+            )}
+          </Droppable >
+        </DragDropContext >
+      )}
+
     </div >
   );
 }

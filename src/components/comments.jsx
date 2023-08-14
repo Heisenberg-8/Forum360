@@ -7,6 +7,8 @@ import Message from "./Message.jsx";
 import Resources from "./resources.jsx";
 import Questions from "./questions";
 import Analytics from "./Analytics/Analytics.jsx"
+import { ColorRing } from "react-loader-spinner";
+
 
 function Comments() {
   const token = getToken();
@@ -14,7 +16,7 @@ function Comments() {
   const [fadeContainerVisible, setFadeContainerVisible] = useState(true);
   const [questions, setQuestions] = useState([]);
   const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const formatTime = (dateTimeStr) => {
     const dateObj = new Date(dateTimeStr);
@@ -28,7 +30,7 @@ function Comments() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -37,7 +39,7 @@ function Comments() {
       .then((commentsdata) => {
         setComments(commentsdata);
         console.log(commentsdata)
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -56,11 +58,6 @@ function Comments() {
     setFadeContainerVisible(false);
   };
 
-  if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
-  }
 
   function handleAnalyticsClick() {
     setCurrentScreen("analytics");
@@ -166,22 +163,37 @@ function Comments() {
         </button>
       </div>
       <div className="main-cont">
-        <div className="comments-container">
-          {comments?.map((comment, index) => (
-            <div
-              className="question"
-              key={index}
-            >
-              <text className="question-username">
-                {comment.UserName}
-                <span className="time">{formatTime(comment.createDate)}</span>
-              </text>
-              <div className="question-text">
-                <text>{comment.comment}</text>
+        {loading ? (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40%", marginTop: "90px" }}>
+            <ColorRing
+              visible={true}
+              height="50"
+              width="50"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={['#232cff', '#232cff', '#232cff', '#232cff', '#232cff']}
+            />
+          </div>
+        ) : (
+          <div className="comments-container">
+            {comments?.map((comment, index) => (
+              <div
+                className="question"
+                key={index}
+              >
+                <text className="question-username">
+                  {comment.UserName}
+                  <span className="time">{formatTime(comment.createDate)}</span>
+                </text>
+                <div className="question-text">
+                  <text>{comment.comment}</text>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
         {fadeContainerVisible && (
           <div className="fade-comments">
             <button className="loadmore-button" onClick={handleViewAllClick}>

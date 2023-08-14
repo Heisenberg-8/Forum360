@@ -22,7 +22,7 @@ function Message() {
     { value: "rate", label: "Rate & Review", icon: require("./assets/info.png") },
     { value: "tech", label: "Technical Issues", icon: require("./assets/sad.png") },
     { value: "delay", label: "Meeting Delay", icon: require("./assets/forward.png") },
-    // { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
+    { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
   ];
 
   function sendWelcome(token) {
