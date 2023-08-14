@@ -21,6 +21,8 @@ import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
 import citiesdata from './assets/cities.json';
+import { ColorRing } from "react-loader-spinner";
+
 
 function Resources() {
   const token = getToken();
@@ -30,7 +32,7 @@ function Resources() {
   const [commentInput, setCommentInput] = useState("");
   const [questionInput, setQuestionInput] = useState("");
   const [reviewInput, setReviewInput] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [expanded, setExpanded] = useState(false);
   const [links, setLinks] = useState([]);
   const [fulfilment1, setFulfilment1] = useState([]);
@@ -90,7 +92,7 @@ function Resources() {
     getproductlinks(token)
       .then((questionsData) => {
         setLinks(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -98,7 +100,7 @@ function Resources() {
     getUsers(token)
       .then((questionsData) => {
         setUsersData(questionsData);
-        setIsLoading(false);
+        setLoading(false); 
       });
   }, []);
 
@@ -195,11 +197,7 @@ function Resources() {
     return <Analytics />
   }
 
-  if (isLoading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
-  }
+
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -274,6 +272,20 @@ function Resources() {
         </div>
       </div>
 
+      {loading ? (
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80%",marginTop:"0%" }}>
+                                <ColorRing
+                                    visible={true}
+                                    height="100"
+                                    width="100"
+                                    ariaLabel="blocks-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass="blocks-wrapper"
+                                    colors={['#232cff','#232cff','#232cff','#232cff','#232cff']}
+                                />
+                            </div>
+                        ) : (
+                          <div>
       {/* CustomerExperienceForm */}
 
       <div className="customerexperience">
@@ -602,6 +614,9 @@ function Resources() {
           </button>
         </div>
       </div>
+      </div>
+                        )}
+
 
     </div >
   );
