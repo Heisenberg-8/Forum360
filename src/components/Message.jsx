@@ -215,8 +215,7 @@ Team [Org Name]`);
         />
       </div>
       <div>
-        <div className="mainbuttons" style={{ marginTop: "25px" }}>
-          <div className="buttonsquestions">
+        <div className="mainbuttons" style={{ display:"flex",flexWrap:"wrap",marginTop: "25px", }}>
             <button
               type="button"
               name="messaging"
@@ -247,8 +246,7 @@ Team [Org Name]`);
               />
               <span className="button-text">Feedback</span>
             </button>
-          </div>
-          <div className="buttons1">
+          
             <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
               <img
                 src={require("./assets/chart.png")}
@@ -267,7 +265,8 @@ Team [Org Name]`);
                 Resources
               </span>
             </button>
-          </div>
+            </div>
+        
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>
@@ -317,7 +316,6 @@ Team [Org Name]`);
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

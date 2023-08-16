@@ -220,8 +220,7 @@ function Resources() {
           className="menu"
         />
       </div>
-      <div className="mainbuttons">
-        <div className="buttons">
+      <div className="mainbuttons"  style={{display:"flex",flexWrap:"wrap"}}>
           <button
             type="button"
             name="messaging"
@@ -248,8 +247,7 @@ function Resources() {
             />
             <span className="button-text">Feedback</span>
           </button>
-        </div>
-        <div className="buttons1">
+      
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -269,7 +267,6 @@ function Resources() {
               Resources
             </span>
           </button>
-        </div>
       </div>
 
       {loading ? (

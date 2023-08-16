@@ -99,8 +99,7 @@ function Comments() {
           className="menu"
         />
       </div>
-      <div className="mainbuttons">
-        <div className="buttons">
+      <div className="mainbuttons"  style={{display:"flex",flexWrap:"wrap"}}>
           <button
             type="button"
             name="messaging"
@@ -127,8 +126,6 @@ function Comments() {
             />
             <span className="button-text">Feedback</span>
           </button>
-        </div>
-        <div className="buttons1">
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -147,7 +144,6 @@ function Comments() {
               Resources
             </span>
           </button>
-        </div>
       </div>
       <div className="feedback-container">
         <button name="questions"

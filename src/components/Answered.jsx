@@ -132,8 +132,7 @@ function Answered() {
                 </h1>
                 <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
             </div>
-            <div className="mainbuttons">
-                <div className="buttons">
+            <div className="mainbuttons"  style={{display:"flex",flexWrap:"wrap"}}>
                     <button
                         type="button"
                         name="messaging"
@@ -164,8 +163,6 @@ function Answered() {
                         />
                         <span className="button-text">Feedback</span>
                     </button>
-                </div>
-                <div className="buttons1">
                     <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
                         <img
                             src={require("./assets/chart.png")}
@@ -184,7 +181,6 @@ function Answered() {
                             Resources
                         </span>
                     </button>
-                </div>
             </div>
             <div className="feedback-container">
                 <button

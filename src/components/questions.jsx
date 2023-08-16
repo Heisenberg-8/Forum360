@@ -136,7 +136,6 @@ function Feedback() {
         />
       </div>
       <div className="mainbuttons">
-        <div className="buttons">
           <button
             type="button"
             name="messaging"
@@ -163,8 +162,6 @@ function Feedback() {
             />
             <span className="button-text">Feedback</span>
           </button>
-        </div>
-        <div className="buttons1">
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -189,7 +186,6 @@ function Feedback() {
               Resources
             </span>
           </button>
-        </div>
       </div>
       <div className="feedback-container">
         <button name="questions" className="feedback-button">
