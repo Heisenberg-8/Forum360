@@ -119,8 +119,8 @@ function Analytics() {
             <FFU />
             <QAR />
             <AA />
-            {/* <FMTAR/> */}
-            {/* <MAV/> */}
+            <FMTAR />
+            {/* <MAV /> */}
         </div>
     );
 }

@@ -537,18 +537,67 @@ export function getcomments(token) {
 
 export function sessiondetails(token) {
     const sessionid = getSessionId();
-    return fetch('https://mgmt-test.forum360.co/api/Session/Detail/' + sessionid), {
-        methond: 'get',
+    return fetch('https://mgmt-test.forum360.co/api/Session/Detail/' + sessionid, {
+        method: 'get',
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }
+    })
         .then(response => response.json())
-        .then(json => json)
+        .then(json => json.Payload);
+}
+
+
+export async function RoleComponent(token, userKey) {
+    let session = null;
+    const result = await sessiondetails(token);
+    session = result;
+
+    function getRole() {
+        if (session.DProducer.UserKey === userKey) {
+            return 'host';
+        }
+
+        if (session.CoHosts !== undefined) {
+            for (const cohost of session.CoHosts) {
+                if (cohost.UserKey === userKey) {
+                    return 'cohost';
+                }
+            }
+        }
+
+        if (session.Speaker.UserKey === userKey) {
+            return 'cohost';
+        }
+        return 'moderator';
+    }
+
+    const role = getRole();
+    return role;
+}
+
+export function getsavings(token) {
+    const eventkey = getEventKey();
+    const sessionid = getSessionId();
+    return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/metric', {
+        method: 'post',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+        },
+        body: JSON.stringify({
+            SessionId: sessionid,
+            EventKey: eventkey
+        })
+    })
+        .then(response => response.json())
+        .then(json => json.Payload.CostofSalesSavings)
         .catch(error => {
             console.error(error);
             return [];
         });
 }
+
 
 export default Data;

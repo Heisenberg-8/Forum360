@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Message from "./Message.jsx";
-import { generatetoken } from "./data";
-import { setToken, setUserkey, RoleComponent, setRole } from "./token";
+import Feedback from "./questions.jsx";
+import { generatetoken, RoleComponent } from "./data";
+import { setToken, setUserkey } from "./token";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -22,14 +23,18 @@ function Login() {
     event.preventDefault();
     setErrorMessage("")
     generatetoken(username, password)
-      .then((tokendata) => {
-        if (tokendata.access_token && tokendata.userKey) {
+      .then(async (tokendata) => {
+        if (tokendata.access_token) {
           setToken(tokendata.access_token);
           setUserkey(tokendata.userKey);
-          setCurrentScreen("messaging");
+          const role = await RoleComponent(tokendata.access_token, tokendata.userKey)
+          if (role === 'cohost') {
+            setCurrentScreen("feedback")
+          }
+          else {
+            setCurrentScreen("messaging");
+          }
           setErrorMessage("");
-          // const role = RoleComponent()
-          // console.log(role + "this is the role")
         } else {
           setErrorMessage("Username or password is incorrect");
         }
@@ -46,6 +51,10 @@ function Login() {
 
   if (currentScreen === "messaging") {
     return <Message />;
+  }
+
+  if (currentScreen === "feedback") {
+    return <Feedback />
   }
 
   return (

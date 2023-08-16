@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { sessiondetails } from "./data";
-
 let token = null;
 let userKey = null;
 let role = null;
@@ -37,41 +34,4 @@ export function getrole() {
 
 export function setRole(newrole) {
     role = newrole
-}
-
-export function RoleComponent() {
-    // const [session, setSession] = useState([]);
-    const userKey = getUserkey();
-    const token = getToken();
-    let session = null;
-
-    if (token) {
-        sessiondetails(token)
-            .then(result => {
-                session = result;
-            });
-    }
-
-    function getRole() {
-        console.log(session)
-        if (session.DProducer.UserKey === userKey) {
-            return 'host';
-        }
-
-        if (session.CoHosts !== undefined) {
-            for (const cohost of session.CoHosts) {
-                if (cohost.UserKey === userKey) {
-                    return 'cohost';
-                }
-            }
-        }
-
-        if (session.Speaker.UserKey === userKey) {
-            return 'cohost';
-        }
-        return 'moderator';
-    }
-
-    const role = getRole();
-    return role
 }

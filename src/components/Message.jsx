@@ -3,12 +3,15 @@ import Select from "react-select";
 import Feedback from "./questions.jsx";
 import Resources from "./resources.jsx";
 import "./App.css";
-import { getToken, getSessionId, RoleComponent } from "./token";
+import { getToken, getSessionId, getUserkey } from "./token";
+import { RoleComponent } from "./data.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 
 function Message() {
   const token = getToken();
   const sessionid = getSessionId();
+  const userkey = getUserkey()
+  let role = RoleComponent(token, userkey);
   const [userName, setUserName] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -207,8 +210,6 @@ Team [Org Name]`);
     return <Resources />;
   }
 
-  // const role = RoleComponent()
-
   return (
     <div className="main">
       <div className="tab-background">
@@ -224,39 +225,41 @@ Team [Org Name]`);
       </div>
       <div>
         <div className="mainbuttons" style={{ marginTop: "25px" }}>
-          <div className="buttonsquestions">
-            <button
-              type="button"
-              name="messaging"
-              className="button center-content"
-              style={{
-                backgroundColor: "#232cff",
-                color: "#ffffff",
-                border: "1px solid white",
-              }}
-            >
-              <img
-                src={require("./assets/whitemessage.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Messaging</span>
-            </button>
-            <button
-              type="button"
-              name="feedback"
-              onClick={handleFeedbackClick}
-              className="button"
-            >
-              <img
-                src={require("./assets/feedback.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Feedback</span>
-            </button>
-          </div>
-          <div className="buttons1">
+          {role === "host" && (
+            < div className="buttonsquestions">
+              <button
+                type="button"
+                name="messaging"
+                className="button center-content"
+                style={{
+                  backgroundColor: "#232cff",
+                  color: "#ffffff",
+                  border: "1px solid white",
+                }}
+              >
+                <img
+                  src={require("./assets/whitemessage.png")}
+                  alt="logo"
+                  className="message"
+                />
+                <span className="button-text">Messaging</span>
+              </button>
+              <button
+                type="button"
+                name="feedback"
+                onClick={handleFeedbackClick}
+                className="button"
+              >
+                <img
+                  src={require("./assets/feedback.png")}
+                  alt="logo"
+                  className="message"
+                />
+                <span className="button-text">Feedback</span>
+              </button>
+            </div>
+          )}
+          < div className="buttons1">
             <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
               <img
                 src={require("./assets/chart.png")}
@@ -325,7 +328,7 @@ Team [Org Name]`);
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

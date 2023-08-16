@@ -18,8 +18,6 @@ function FFU() {
         setFulfilment(Math.floor(analyticsdata.MeetingInvest));
         setFollowup(Math.floor(analyticsdata.MeetingAction));
         setLoading(false);
-
-
       });
   }, []);
 

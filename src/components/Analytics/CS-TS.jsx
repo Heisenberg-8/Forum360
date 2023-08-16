@@ -1,11 +1,22 @@
 import "./CS-TS.css";
 import pin from '../assets/pin.svg';
-import { getmetricanalytics } from "../data";
+import { getsavings } from "../data";
 import { useEffect, useState } from "react";
 import { getToken } from "../token";
 
 
 function CSTS() {
+  const token = getToken()
+  const [carbonsave, setCarbonsave] = useState(0);;
+  const [timesaved, setTimesaved] = useState(0);
+
+  useEffect(() => {
+    getsavings(token)
+      .then((analyticsdata) => {
+        setCarbonsave(Math.floor(analyticsdata.CarbonSaved));
+        setTimesaved(Math.floor(analyticsdata.TransportationTimeSaved));
+      });
+  }, []);
 
   return (
     <div style={{ display: "flex", marginTop: "10px" }}>
@@ -16,7 +27,7 @@ function CSTS() {
         </div>
         <div style={{ display: "grid" }}>
           <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "10%" }}>In this meeting</text>
-          <text style={{ marginTop: "10%", marginLeft: "12%", fontSize: "20px", fontWeight: 700, color: '#2df09e' }}>16,200 lbs</text>
+          <text style={{ marginTop: "10%", marginLeft: "12%", fontSize: "20px", fontWeight: 700, color: '#2df09e' }}>{carbonsave} lbs</text>
         </div>
       </div>
       <div className="smallCard" >
@@ -26,7 +37,7 @@ function CSTS() {
         </div>
         <div style={{ display: "grid" }}>
           <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "10%" }}>vs travelling</text>
-          <text style={{ marginTop: "10%", marginLeft: "21%", fontSize: "20px", fontWeight: 700, color: 'white' }}>158 hrs</text>
+          <text style={{ marginTop: "10%", marginLeft: "21%", fontSize: "20px", fontWeight: 700, color: 'white' }}>{timesaved} hrs</text>
         </div>
       </div>
     </div>
