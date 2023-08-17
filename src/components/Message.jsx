@@ -225,40 +225,36 @@ Team [Org Name]`);
       </div>
       <div>
         <div className="mainbuttons" style={{ marginTop: "25px" }}>
-          {role === "host" && (
-            < div className="buttonsquestions">
-              <button
-                type="button"
-                name="messaging"
-                className="button center-content"
-                style={{
-                  backgroundColor: "#232cff",
-                  color: "#ffffff",
-                  border: "1px solid white",
-                }}
-              >
-                <img
-                  src={require("./assets/whitemessage.png")}
-                  alt="logo"
-                  className="message"
-                />
-                <span className="button-text">Messaging</span>
-              </button>
-              <button
-                type="button"
-                name="feedback"
-                onClick={handleFeedbackClick}
-                className="button"
-              >
-                <img
-                  src={require("./assets/feedback.png")}
-                  alt="logo"
-                  className="message"
-                />
-                <span className="button-text">Feedback</span>
-              </button>
-            </div>
-          )}
+          <button
+            type="button"
+            name="messaging"
+            className="button center-content"
+            style={{
+              backgroundColor: "#232cff",
+              color: "#ffffff",
+              border: "1px solid white",
+            }}
+          >
+            <img
+              src={require("./assets/whitemessage.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Messaging</span>
+          </button>
+          <button
+            type="button"
+            name="feedback"
+            onClick={handleFeedbackClick}
+            className="button"
+          >
+            <img
+              src={require("./assets/feedback.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Feedback</span>
+          </button>
           < div className="buttons1">
             <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
               <img
