@@ -224,7 +224,7 @@ Team [Org Name]`);
         />
       </div>
       <div>
-        <div className="mainbuttons" style={{ marginTop: "25px" }}>
+        <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
           <button
             type="button"
             name="messaging"
@@ -255,26 +255,24 @@ Team [Org Name]`);
             />
             <span className="button-text">Feedback</span>
           </button>
-          < div className="buttons1">
-            <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
-              <img
-                src={require("./assets/chart.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Analytics</span>
-            </button>
-            <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
-              <img
-                src={require("./assets/file.png")}
-                alt="logo"
-                className="file"
-              />
-              <span className="button-text" style={{ marginLeft: "10px" }}>
-                Resources
-              </span>
-            </button>
-          </div>
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
+            <img
+              src={require("./assets/chart.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Analytics</span>
+          </button>
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+            <img
+              src={require("./assets/file.png")}
+              alt="logo"
+              className="file"
+            />
+            <span className="button-text" style={{ marginLeft: "10px" }}>
+              Resources
+            </span>
+          </button>
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>

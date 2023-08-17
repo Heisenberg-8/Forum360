@@ -3,7 +3,7 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions"
 import Agenda from "./Agenda.jsx";
-import { getToken } from "./token";
+import { getToken, getRole, getUserkey } from "./token";
 import Data, { getcomments } from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 import Resources from "./resources.jsx";
@@ -12,8 +12,9 @@ import { ColorRing } from "react-loader-spinner";
 
 
 function Answered() {
-    const [questions, setQuestions] = useState([]);
     const token = getToken();
+    const role = getRole()
+    const [questions, setQuestions] = useState([]);
     const [currentScreen, setCurrentScreen] = useState("");
     const [expandedItems, setExpandedItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -140,8 +141,8 @@ function Answered() {
                 </h1>
                 <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
             </div>
-            <div className="mainbuttons">
-                <div className="buttons">
+            <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+                {role === 'host' && (
                     <button
                         type="button"
                         name="messaging"
@@ -155,25 +156,26 @@ function Answered() {
                         />
                         <span className="button-text">Messaging</span>
                     </button>
-                    <button
-                        type="button"
-                        name="feedback"
-                        className="button"
-                        style={{
-                            backgroundColor: "#232cff",
-                            color: "#ffffff",
-                            border: "1px solid white",
-                        }}
-                    >
-                        <img
-                            src={require("./assets/whitefeedback.png")}
-                            alt="logo"
-                            className="message"
-                        />
-                        <span className="button-text">Feedback</span>
-                    </button>
-                </div>
-                <div className="buttons1">
+                )}
+
+                <button
+                    type="button"
+                    name="feedback"
+                    className="button"
+                    style={{
+                        backgroundColor: "#232cff",
+                        color: "#ffffff",
+                        border: "1px solid white",
+                    }}
+                >
+                    <img
+                        src={require("./assets/whitefeedback.png")}
+                        alt="logo"
+                        className="message"
+                    />
+                    <span className="button-text">Feedback</span>
+                </button>
+                {role === 'host' && (
                     <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
                         <img
                             src={require("./assets/chart.png")}
@@ -182,42 +184,44 @@ function Answered() {
                         />
                         <span className="button-text">Analytics</span>
                     </button>
-                    <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
-                        <img
-                            src={require("./assets/file.png")}
-                            alt="logo"
-                            className="file"
-                        />
-                        <span className="button-text" style={{ marginLeft: "10px" }}>
-                            Resources
-                        </span>
+                )}
+                <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+                    <img
+                        src={require("./assets/file.png")}
+                        alt="logo"
+                        className="file"
+                    />
+                    <span className="button-text" style={{ marginLeft: "10px" }}>
+                        Resources
+                    </span>
+                </button>
+            </div>
+            {role === 'host' && (
+                <div className="feedback-container">
+                    <button
+                        name="questions"
+                        className="feedback-button"
+                        style={{ border: "none" }}
+                        onClick={handleQuestionsClick}
+                    >
+                        <span className="h4">Questions</span>
+                        <div className="message-count" style={{ marginLeft: "10px" }}>
+                            <span className="count">{questioncount}</span>
+                        </div>
+                    </button>
+                    <button
+                        name="comments"
+                        className="feedback-button"
+                        style={{ border: "none" }}
+                        onClick={handleCommentsClick}
+                    >
+                        <span className="h4">Comments</span>
+                        <div className="message-count" style={{ marginLeft: "5px" }}>
+                            <span className="count">{commentCount}</span>
+                        </div>
                     </button>
                 </div>
-            </div>
-            <div className="feedback-container">
-                <button
-                    name="questions"
-                    className="feedback-button"
-                    style={{ border: "none" }}
-                    onClick={handleQuestionsClick}
-                >
-                    <span className="h4">Questions</span>
-                    <div className="message-count" style={{ marginLeft: "10px" }}>
-                        <span className="count">{questioncount}</span>
-                    </div>
-                </button>
-                <button
-                    name="comments"
-                    className="feedback-button"
-                    style={{ border: "none" }}
-                    onClick={handleCommentsClick}
-                >
-                    <span className="h4">Comments</span>
-                    <div className="message-count" style={{ marginLeft: "5px" }}>
-                        <span className="count">{commentCount}</span>
-                    </div>
-                </button>
-            </div>
+            )}
             <div className="feedback-container1">
                 <button
                     name="questions"

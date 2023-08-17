@@ -45,7 +45,7 @@ function FFU() {
                 />
               </div>
             ) : (
-              <text style={{ marginTop: "10%", marginLeft: "40%", fontSize: "20px", fontWeight: 700, color: 'white' }}>{totalquestions}</text>
+              <text style={{ marginTop: "10%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{totalquestions}</text>
 
             )}
           </div>
@@ -70,7 +70,7 @@ function FFU() {
                 />
               </div>
             ) : (
-              <text style={{ marginTop: "28%", marginLeft: "40%", fontSize: "20px", fontWeight: 700, color: 'white' }}>{rating}</text>
+              <text style={{ marginTop: "28%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{rating}</text>
 
             )}
           </div>

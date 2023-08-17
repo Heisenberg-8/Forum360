@@ -141,61 +141,57 @@ function Feedback() {
           className="menu"
         />
       </div>
-      <div className="mainbuttons">
-        <div className="buttons">
-          <button
-            type="button"
-            name="messaging"
-            onClick={handleMessagingClick}
-            className="button"
-          >
-            <img
-              src={require("./assets/messaging.png")}
-              alt="logo"
-              className="message"
-            />
-            <span className="button-text">Messaging</span>
-          </button>
-          <button
-            type="button"
-            name="feedback"
-            className="button"
-            style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
-          >
-            <img
-              src={require("./assets/whitefeedback.png")}
-              alt="logo"
-              className="message"
-            />
-            <span className="button-text">Feedback</span>
-          </button>
-        </div>
-        <div className="buttons1">
-          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
-            <img
-              src={require("./assets/chart.png")}
-              alt="logo"
-              className="message"
-            />
-            <span className="button-text">Analytics</span>
-          </button>
-          <button
-            type="button"
-            name="resources"
-            className="button"
-            onClick={handleResourcesClick}>
-            <img
-              src={require("./assets/file.png")}
-              alt="logo"
-              className="file"
-            />
-            <span
-              className="button-text"
-              style={{ marginLeft: "10px" }}>
-              Resources
-            </span>
-          </button>
-        </div>
+      <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+        <button
+          type="button"
+          name="messaging"
+          onClick={handleMessagingClick}
+          className="button"
+        >
+          <img
+            src={require("./assets/messaging.png")}
+            alt="logo"
+            className="message"
+          />
+          <span className="button-text">Messaging</span>
+        </button>
+        <button
+          type="button"
+          name="feedback"
+          className="button"
+          style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
+        >
+          <img
+            src={require("./assets/whitefeedback.png")}
+            alt="logo"
+            className="message"
+          />
+          <span className="button-text">Feedback</span>
+        </button>
+        <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
+          <img
+            src={require("./assets/chart.png")}
+            alt="logo"
+            className="message"
+          />
+          <span className="button-text">Analytics</span>
+        </button>
+        <button
+          type="button"
+          name="resources"
+          className="button"
+          onClick={handleResourcesClick}>
+          <img
+            src={require("./assets/file.png")}
+            alt="logo"
+            className="file"
+          />
+          <span
+            className="button-text"
+            style={{ marginLeft: "10px" }}>
+            Resources
+          </span>
+        </button>
       </div>
       <div className="feedback-container">
         <button name="questions" className="feedback-button">

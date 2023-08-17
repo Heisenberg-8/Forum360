@@ -28,7 +28,7 @@ export function getEventKey() {
     return eventkey
 }
 
-export function getrole() {
+export function getRole() {
     return role
 }
 

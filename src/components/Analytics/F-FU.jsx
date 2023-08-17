@@ -44,7 +44,7 @@ function FFU() {
                 />
               </div>
             ) : (
-              <text style={{ marginTop: "20%", marginLeft: "40%", fontSize: "20px", fontWeight: 700, color: 'white' }}>{fulfilment}</text>
+              <text style={{ marginTop: "20%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{fulfilment}</text>
 
             )}
           </div>
@@ -69,7 +69,7 @@ function FFU() {
                 />
               </div>
             ) : (
-              <text style={{ marginTop: "20%", marginLeft: "40%", fontSize: "20px", fontWeight: 700, color: 'white' }}>{followup}</text>
+              <text style={{ marginTop: "20%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{followup}</text>
 
             )}
           </div>
