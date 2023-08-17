@@ -59,8 +59,7 @@ function Analytics() {
                         className="menu"
                     />
                 </div>
-                <div className="mainbuttons">
-                    <div className="buttons">
+                <div className="mainbuttons"  style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
                         <button
                             type="button"
                             name="messaging"
@@ -87,8 +86,7 @@ function Analytics() {
                             />
                             <span className="button-text">Feedback</span>
                         </button>
-                    </div>
-                    <div className="buttons1">
+                  
                         <button type="button" name="analytics" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}>
                             <img
                                 src={require("../assets/WhiteChart.png")}
@@ -109,7 +107,6 @@ function Analytics() {
                             </span>
                         </button>
                     </div>
-                </div>
 
             </div>
             <CSTS />

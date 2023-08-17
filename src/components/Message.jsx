@@ -224,9 +224,7 @@ Team [Org Name]`);
         />
       </div>
       <div>
-        <div className="mainbuttons" style={{ marginTop: "25px" }}>
-          {role === "host" && (
-            < div className="buttonsquestions">
+        <div className="mainbuttons" style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
               <button
                 type="button"
                 name="messaging"
@@ -257,9 +255,6 @@ Team [Org Name]`);
                 />
                 <span className="button-text">Feedback</span>
               </button>
-            </div>
-          )}
-          < div className="buttons1">
             <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
               <img
                 src={require("./assets/chart.png")}
@@ -278,7 +273,6 @@ Team [Org Name]`);
                 Resources
               </span>
             </button>
-          </div>
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>

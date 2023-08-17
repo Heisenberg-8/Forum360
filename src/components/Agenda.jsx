@@ -163,8 +163,7 @@ function Agenda() {
           className="menu"
         />
       </div>
-      <div className="mainbuttons">
-        <div className="buttons">
+      <div className="mainbuttons"  style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
           <button
             type="button"
             name="messaging"
@@ -195,8 +194,7 @@ function Agenda() {
             />
             <span className="button-text">Feedback</span>
           </button>
-        </div>
-        <div className="buttons1">
+      
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -216,7 +214,6 @@ function Agenda() {
             </span>
           </button>
         </div>
-      </div>
       <div className="feedback-container">
         <button
           name="questions"

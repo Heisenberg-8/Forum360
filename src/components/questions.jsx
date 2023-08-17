@@ -141,8 +141,7 @@ function Feedback() {
           className="menu"
         />
       </div>
-      <div className="mainbuttons">
-        <div className="buttons">
+      <div className="mainbuttons"  style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
           <button
             type="button"
             name="messaging"
@@ -169,8 +168,6 @@ function Feedback() {
             />
             <span className="button-text">Feedback</span>
           </button>
-        </div>
-        <div className="buttons1">
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -196,7 +193,6 @@ function Feedback() {
             </span>
           </button>
         </div>
-      </div>
       <div className="feedback-container">
         <button name="questions" className="feedback-button">
           <span className="h3" style={{ marginLeft: "-5px" }}>Questions</span>
