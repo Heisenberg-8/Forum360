@@ -20,7 +20,6 @@ import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
-import citiesdata from './assets/cities.json';
 import { ColorRing } from "react-loader-spinner";
 import Agenda from "./Agenda.jsx";
 
@@ -77,10 +76,17 @@ function Resources() {
     { value: "Compliance", label: "Compliance" }
   ]
 
-  const cities = citiesdata.map(item => ({
-    value: item.id,
-    label: `${item.name}, ${item.state_name}, ${item.country_name}`,
-  }));
+  // const cities = citiesdata.map(item => ({
+  //   value: item.id,
+  //   label: `${item.name}, ${item.state_name}, ${item.country_name}`,
+  // }));
+
+  const cities = [
+    { value: "ProductInformationPage", label: "Direct to product issuer" },
+    { value: "ProductInformationPage", label: "Via a specialist intermediary" },
+    { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
+  ];
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
