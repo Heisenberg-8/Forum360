@@ -4,29 +4,34 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions";
 import Answered from "./Answered.jsx";
-import { getToken } from "./token";
+import { getRole, getToken, getUserkey } from "./token";
 import Resources from "./resources.jsx";
-import Data from "./data.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
-import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered } from "./data.jsx";
+import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments, RoleComponent } from "./data.jsx";
+import { ColorRing } from "react-loader-spinner";
+
 
 function Agenda() {
-  const { comments } = Data();
   const [currentScreen, setCurrentScreen] = useState("");
   const token = getToken();
-  const [isLoading, setIsLoading] = useState(true);
+  const userkey = getUserkey();
+  const role = getRole()
+  console.log(role)
+  const [loading, setLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [comments, setComments] = useState([])
   const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
   const agendaCount = agenda.length;
 
+
   useEffect(() => {
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -34,7 +39,7 @@ function Agenda() {
     fetchQuestions(token)
       .then((questionsData) => {
         setQuestions(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
   }, [token]);
 
@@ -42,22 +47,30 @@ function Agenda() {
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
-        setIsLoading(false);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    getcomments(token)
+      .then((questionsData) => {
+        setComments(questionsData);
+        setLoading(false);
       });
   }, []);
 
   async function handleMoveToAnsweredClick(questionid) {
     await movetoAnswered(token, questionid);
-    setIsLoading(true);
+    setLoading(true);
     fetchAgenda(token)
       .then((agendaData) => {
         setAgenda(agendaData);
-        setIsLoading(false);
+        setLoading(false);
       })
     fetchAnswered(token)
       .then((questionsData) => {
         setAnswered(questionsData);
-        setIsLoading(false);
+        setLoading(false);
       });
 
   }
@@ -123,9 +136,7 @@ function Agenda() {
     return <Resources />;
   }
 
-  if (isLoading) {
-    return <div className="loading-spinner"></div>;
-  }
+
 
   if (currentScreen === "messaging") {
     return <Message />;
@@ -155,8 +166,8 @@ function Agenda() {
           className="menu"
         />
       </div>
-      <div className="mainbuttons">
-        <div className="buttons">
+      <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+        {role === 'host' && (
           <button
             type="button"
             name="messaging"
@@ -170,25 +181,26 @@ function Agenda() {
             />
             <span className="button-text">Messaging</span>
           </button>
-          <button
-            type="button"
-            name="feedback"
-            className="button"
-            style={{
-              backgroundColor: "#232cff",
-              color: "#ffffff",
-              border: "1px solid white",
-            }}
-          >
-            <img
-              src={require("./assets/whitefeedback.png")}
-              alt="logo"
-              className="message"
-            />
-            <span className="button-text">Feedback</span>
-          </button>
-        </div>
-        <div className="buttons1">
+        )}
+        <button
+          type="button"
+          name="feedback"
+          className="button"
+          style={{
+            backgroundColor: "#232cff",
+            color: "#ffffff",
+            border: "1px solid white",
+          }}
+        >
+          <img
+            src={require("./assets/whitefeedback.png")}
+            alt="logo"
+            className="message"
+          />
+          <span className="button-text">Feedback</span>
+        </button>
+
+        {role === 'host' && (
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -197,43 +209,48 @@ function Agenda() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
-            <img
-              src={require("./assets/file.png")}
-              alt="logo"
-              className="file"
-            />
-            <span className="button-text" style={{ marginLeft: "10px" }}>
-              Resources
-            </span>
+        )}
+
+        <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+          <img
+            src={require("./assets/file.png")}
+            alt="logo"
+            className="file"
+          />
+          <span className="button-text" style={{ marginLeft: "10px" }}>
+            Resources
+          </span>
+        </button>
+      </div>
+
+      {role === 'host' && (
+        <div className="feedback-container">
+          <button
+            name="questions"
+            className="feedback-button"
+            style={{ border: "none" }}
+            onClick={handleQuestionsClick}
+          >
+            <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
+            <div className="message-count" style={{ marginLeft: "10px" }}>
+              <span className="count">{messageCount}</span>
+            </div>
+          </button>
+          <button
+            name="comments"
+            className="feedback-button"
+            style={{ border: "none", marginLeft: "-5px" }}
+            onClick={handleCommentsClick}
+          >
+            <span className="h4">Comments</span>
+            <div className="message-count" style={{ marginLeft: "10px" }}>
+              <span className="count">{commentCount}</span>
+            </div>
           </button>
         </div>
-      </div>
-      <div className="feedback-container">
-        <button
-          name="questions"
-          className="feedback-button"
-          style={{ border: "none" }}
-          onClick={handleQuestionsClick}
-        >
-          <span className="h4" style={{ marginLeft: "-5px" }}>Questions</span>
-          <div className="message-count" style={{ marginLeft: "10px" }}>
-            <span className="count">{messageCount}</span>
-          </div>
-        </button>
-        <button
-          name="comments"
-          className="feedback-button"
-          style={{ border: "none", marginLeft: "-5px" }}
-          onClick={handleCommentsClick}
-        >
-          <span className="h4">Comments</span>
-          <div className="message-count" style={{ marginLeft: "10px" }}>
-            <span className="count">{commentCount}</span>
-          </div>
-        </button>
-      </div>
-      <div className="feedback-container1">
+      )}
+
+      <div className="feedback-container1" >
         <button name="questions" className="feedback-button">
           <span className="h3">Agenda</span>
           <div className="message-count" style={{ marginLeft: "10px" }}>
@@ -252,77 +269,92 @@ function Agenda() {
           </div>
         </button>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="agenda">
-          {(provided) => (
-            <div
-              className="agenda-container"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {agenda.map((agendaItem, index) => (
-                <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      className={`agenda-questions ${draggedQuestionIndex === index ? "dragged" : ""}`}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={{
-                        border: snapshot.isDragging ? "2px solid #232cff " : "none",
-                        ...provided.draggableProps.style,
-                      }}
-                    >
-                      <img
-                        src={require("./assets/drag.png")}
-                        alt="drag"
-                        className="dragicon"
-                      />
-                      <div className="agenda-text">
-                        <text className="question-username">{agendaItem.FullName}</text>
-                        <div className="question-text">
-                          {expandedItems[index] ? (
-                            <text>{agendaItem.Question}</text>
-                          ) : (
-                            <>
-                              <text>{agendaItem.Question.substring(0, 30)}</text>
-                              {agendaItem.Question.length > 30 && (
-                                <button
-                                  className="read-more-button"
-                                  onClick={() => toggleExpand(index)}
-                                >
-                                  ... <span className="read-more-text">View More</span>
-                                </button>
-                              )}
-                            </>
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%", marginTop: "30px" }}>
+          <ColorRing
+            visible={true}
+            height="50"
+            width="50"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#232cff', '#232cff', '#232cff', '#232cff', '#232cff']}
+          />
+        </div>
+      ) : (
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="agenda">
+            {(provided) => (
+              <div
+                className="agenda-container"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {agenda.map((agendaItem, index) => (
+                  <Draggable key={index} draggableId={`agendaItem_${index}`} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        className={`agenda-questions ${draggedQuestionIndex === index ? "dragged" : ""}`}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                          border: snapshot.isDragging ? "2px solid #232cff " : "none",
+                          ...provided.draggableProps.style,
+                        }}
+                      >
+                        <img
+                          src={require("./assets/drag.png")}
+                          alt="drag"
+                          className="dragicon"
+                        />
+                        <div className="agenda-text">
+                          <text className="question-username">{agendaItem.FullName}</text>
+                          <div className="question-text">
+                            {expandedItems[index] ? (
+                              <text>{agendaItem.Question}</text>
+                            ) : (
+                              <>
+                                <text>{agendaItem.Question.substring(0, 30)}</text>
+                                {agendaItem.Question.length > 30 && (
+                                  <button
+                                    className="read-more-button"
+                                    onClick={() => toggleExpand(index)}
+                                  >
+                                    ... <span className="read-more-text">View More</span>
+                                  </button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                          {expandedItems[index] && (
+                            <button
+                              className="read-more-button"
+                              onClick={() => toggleExpand(index)}
+                            >
+                              <span className="read-more-text">View Less</span>
+                            </button>
                           )}
                         </div>
-                        {expandedItems[index] && (
-                          <button
-                            className="read-more-button"
-                            onClick={() => toggleExpand(index)}
-                          >
-                            <span className="read-more-text">View Less</span>
-                          </button>
-                        )}
-                      </div>
-                      <div className="control control-checkbox">
-                        <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handleMoveToAnsweredClick(agendaItem.QuestionId)} />
-                        <label
-                          htmlFor={`myCheckbox${index}`}
-                          className="control_indicator"
-                        ></label>
+                        <div className="control control-checkbox">
+                          <input type="checkbox" id={`myCheckbox${index}`} onClick={() => handleMoveToAnsweredClick(agendaItem.QuestionId)} />
+                          <label
+                            htmlFor={`myCheckbox${index}`}
+                            className="control_indicator"
+                          ></label>
+                        </div >
                       </div >
-                    </div >
-                  )
-                  }
-                </Draggable >
-              ))}
-              {provided.placeholder}
-            </div >
-          )}
-        </Droppable >
-      </DragDropContext >
+                    )
+                    }
+                  </Draggable >
+                ))}
+                {provided.placeholder}
+              </div >
+            )}
+          </Droppable >
+        </DragDropContext >
+      )}
+
     </div >
   );
 }

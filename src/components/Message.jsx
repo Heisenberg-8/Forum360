@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import Feedback from "./questions.jsx";
 import Resources from "./resources.jsx";
 import "./App.css";
-import { getToken } from "./token";
+import { getToken, getSessionId, getUserkey } from "./token";
+import { RoleComponent } from "./data.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 
 function Message() {
   const token = getToken();
+  const sessionid = getSessionId();
+  const userkey = getUserkey()
+  let role = RoleComponent(token, userkey);
   const [userName, setUserName] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -16,21 +20,12 @@ function Message() {
   const [selectedQuickMessage, setSelectedQuickMessage] = useState(null);
   const [isQuickMessageSelected, setIsQuickMessageSelected] = useState(false);
 
-
-  // const optionList = [
-  //   { value: "red", label: "Send to all" },
-  //   { value: "green", label: "Bob Vance" },
-  //   { value: "yellow", label: "Michael Scott" },
-  //   { value: "blue", label: "Jim Halpert" },
-  //   { value: "To all", label: "Dwight Shrute" },
-  // ];
-
   const quickMessageOptions = [
     { value: "welcome", label: "Welcome", icon: require("./assets/welcome.png") },
     { value: "rate", label: "Rate & Review", icon: require("./assets/info.png") },
     { value: "tech", label: "Technical Issues", icon: require("./assets/sad.png") },
     { value: "delay", label: "Meeting Delay", icon: require("./assets/forward.png") },
-    // { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
+    { value: "custom", label: "Custom", icon: require("./assets/custom.png") },
   ];
 
   function sendWelcome(token) {
@@ -41,7 +36,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2591'
+        SessionId: `${sessionid}`
       })
     })
       .then(response => response.json())
@@ -60,7 +55,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2591'
+        SessionId: `${sessionid}`
       })
     })
       .then(response => response.json())
@@ -79,7 +74,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2591'
+        SessionId: `${sessionid}`
       })
     })
       .then(response => response.json())
@@ -98,7 +93,7 @@ function Message() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        SessionId: '2591'
+        SessionId: `${sessionid}`
       })
     })
       .then(response => response.json())
@@ -118,7 +113,6 @@ function Message() {
       setMessage(`Hello [First Name],
   
 This is a reminder that your meeting with [Presenter Full Name] from [Product Name] is due to start on [Event Date, Start Time, Time Zone].`);
-      sendWelcome(token);
     } else if (selectedMessage === "rate") {
       setSubject("[Org Name] Meeting Follow Up");
       setMessage(`Hello [First Name],
@@ -128,7 +122,6 @@ How did the meeting go? Click on the link below to share your feedback if you ha
 Rate and Review
   
 Can we be of further assistance with your enquiries? Please visit us at [Product Link] for more information or contact us at google@google.com.`);
-      sendRate(token);
     } else if (selectedMessage === "delay") {
       setSubject("[Org Name] - Attention - [Meeting Name] has been delayed ");
       setMessage(`Hello [First Name],
@@ -137,11 +130,9 @@ We would like to inform you that [Event Name - Meeting Name] has been delayed. P
   
 Kind Regards,
 Team [Org Name]`);
-      sendTech(token);
     } else if (selectedMessage === "tech") {
       setSubject("[Org Name] Alert: Technical Difficulties");
       setMessage(`We are currently experiencing technical difficulties. We are working to resolve this as quickly as possible and will provide an update shortly.`);
-      sendDelay(token);
     } else {
       setSubject("");
       setMessage("");
@@ -160,9 +151,9 @@ Team [Org Name]`);
 
   function handleSendMessage() {
     if (!isQuickMessageSelected) {
-      return; 
+      return;
     }
-  
+
     if (message.trim() !== "") {
       const newMessage = {
         sender: userName,
@@ -172,10 +163,28 @@ Team [Org Name]`);
       setChatMessages([...chatMessages, newMessage]);
       setMessage("");
       setSubject("");
-      setSelectedQuickMessage(null); 
-      setIsQuickMessageSelected(false); 
+      setSelectedQuickMessage(null);
+      setIsQuickMessageSelected(false);
+
+      switch (selectedQuickMessage?.value) {
+        case "welcome":
+          sendWelcome(token);
+          break;
+        case "rate":
+          sendRate(token);
+          break;
+        case "tech":
+          sendTech(token);
+          break;
+        case "delay":
+          sendDelay(token);
+          break;
+        default:
+          break;
+      }
     }
   }
+
 
   function handleFeedbackClick() {
     setCurrentScreen("feedback");
@@ -215,59 +224,55 @@ Team [Org Name]`);
         />
       </div>
       <div>
-        <div className="mainbuttons" style={{ marginTop: "25px" }}>
-          <div className="buttonsquestions">
-            <button
-              type="button"
-              name="messaging"
-              className="button center-content"
-              style={{
-                backgroundColor: "#232cff",
-                color: "#ffffff",
-                border: "1px solid white",
-              }}
-            >
-              <img
-                src={require("./assets/whitemessage.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Messaging</span>
-            </button>
-            <button
-              type="button"
-              name="feedback"
-              onClick={handleFeedbackClick}
-              className="button"
-            >
-              <img
-                src={require("./assets/feedback.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Feedback</span>
-            </button>
-          </div>
-          <div className="buttons1">
-            <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
-              <img
-                src={require("./assets/chart.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Analytics</span>
-            </button>
-            <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
-              <img
-                src={require("./assets/file.png")}
-                alt="logo"
-                className="file"
-              />
-              <span className="button-text" style={{ marginLeft: "10px" }}>
-                Resources
-              </span>
-            </button>
-          </div>
+        <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+          <button
+            type="button"
+            name="messaging"
+            className="button center-content"
+            style={{
+              backgroundColor: "#232cff",
+              color: "#ffffff",
+              border: "1px solid white",
+            }}
+          >
+            <img
+              src={require("./assets/whitemessage.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Messaging</span>
+          </button>
+          <button
+            type="button"
+            name="feedback"
+            onClick={handleFeedbackClick}
+            className="button"
+          >
+            <img
+              src={require("./assets/feedback.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Feedback</span>
+          </button>
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
+            <img
+              src={require("./assets/chart.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Analytics</span>
+          </button>
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+            <img
+              src={require("./assets/file.png")}
+              alt="logo"
+              className="file"
+            />
+            <span className="button-text" style={{ marginLeft: "10px" }}>
+              Resources
+            </span>
+          </button>
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>
@@ -307,17 +312,17 @@ Team [Org Name]`);
               className="email-box"
               rows={16}
             />
-                <button
-                 onClick={handleSendMessage}
-                 className={`send-button ${!isQuickMessageSelected ? 'disabled-button' : ''}`}
-                disabled={!isQuickMessageSelected}
-              >             Send Message
-           </button>
+            <button
+              onClick={handleSendMessage}
+              className={`send-button ${!isQuickMessageSelected ? 'disabled-button' : ''}`}
+              disabled={!isQuickMessageSelected}
+            >             Send Message
+            </button>
 
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

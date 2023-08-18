@@ -3,27 +3,30 @@ import Message from "./Message.jsx";
 import Comments from "./comments";
 import Questions from "./questions"
 import Agenda from "./Agenda.jsx";
-import { getToken } from "./token";
-import Data from "./data.jsx";
+import { getToken, getRole, getUserkey } from "./token";
+import Data, { getcomments } from "./data.jsx";
 import { fetchAgenda, fetchQuestions, fetchAnswered, movebacktoAgenda } from "./data.jsx";
 import Resources from "./resources.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
+import { ColorRing } from "react-loader-spinner";
+
 
 function Answered() {
-    const { comments } = Data();
-    const [questions, setQuestions] = useState([]);
     const token = getToken();
+    const role = getRole()
+    const [questions, setQuestions] = useState([]);
     const [currentScreen, setCurrentScreen] = useState("");
     const [expandedItems, setExpandedItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [agenda, setAgenda] = useState([]);
     const [answered, setAnswered] = useState([]);
+    const [comments, setComments] = useState([])
 
     useEffect(() => {
         fetchAnswered(token)
             .then((agendaData) => {
                 setAnswered(agendaData);
-                setIsLoading(false);
+                setLoading(false);
             })
     }, []);
 
@@ -31,7 +34,7 @@ function Answered() {
         fetchAgenda(token)
             .then((agendaData) => {
                 setAgenda(agendaData);
-                setIsLoading(false);
+                setLoading(false);
             })
     }, []);
 
@@ -39,8 +42,16 @@ function Answered() {
         fetchQuestions(token)
             .then((agendaData) => {
                 setQuestions(agendaData);
-                setIsLoading(false);
+                setLoading(false);
             })
+    }, []);
+
+    useEffect(() => {
+        getcomments(token)
+            .then((questionsData) => {
+                setComments(questionsData);
+                setLoading(false);
+            });
     }, []);
 
     const commentCount = comments.length;
@@ -50,16 +61,16 @@ function Answered() {
 
     async function handlemovebacktoagendaclick(questionid) {
         await movebacktoAgenda(token, questionid);
-        setIsLoading(true)
+        setLoading(true)
         fetchAnswered(token)
             .then((agendaData) => {
                 setAnswered(agendaData);
-                setIsLoading(false);
+                setLoading(false);
             })
         fetchAgenda(token)
             .then((agendaData) => {
                 setAgenda(agendaData);
-                setIsLoading(false);
+                setLoading(false);
             })
     }
 
@@ -91,9 +102,7 @@ function Answered() {
         return <Analytics />
     }
 
-    if (isLoading) {
-        return <div className="loading-spinner"></div>;
-    }
+
 
     if (currentScreen === "messaging") {
         return <Message />;
@@ -132,8 +141,8 @@ function Answered() {
                 </h1>
                 <img src={require("./assets/menu (2).png")} alt="logo" className="menu" />
             </div>
-            <div className="mainbuttons">
-                <div className="buttons">
+            <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+                {role === 'host' && (
                     <button
                         type="button"
                         name="messaging"
@@ -147,25 +156,26 @@ function Answered() {
                         />
                         <span className="button-text">Messaging</span>
                     </button>
-                    <button
-                        type="button"
-                        name="feedback"
-                        className="button"
-                        style={{
-                            backgroundColor: "#232cff",
-                            color: "#ffffff",
-                            border: "1px solid white",
-                        }}
-                    >
-                        <img
-                            src={require("./assets/whitefeedback.png")}
-                            alt="logo"
-                            className="message"
-                        />
-                        <span className="button-text">Feedback</span>
-                    </button>
-                </div>
-                <div className="buttons1">
+                )}
+
+                <button
+                    type="button"
+                    name="feedback"
+                    className="button"
+                    style={{
+                        backgroundColor: "#232cff",
+                        color: "#ffffff",
+                        border: "1px solid white",
+                    }}
+                >
+                    <img
+                        src={require("./assets/whitefeedback.png")}
+                        alt="logo"
+                        className="message"
+                    />
+                    <span className="button-text">Feedback</span>
+                </button>
+                {role === 'host' && (
                     <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
                         <img
                             src={require("./assets/chart.png")}
@@ -174,42 +184,44 @@ function Answered() {
                         />
                         <span className="button-text">Analytics</span>
                     </button>
-                    <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
-                        <img
-                            src={require("./assets/file.png")}
-                            alt="logo"
-                            className="file"
-                        />
-                        <span className="button-text" style={{ marginLeft: "10px" }}>
-                            Resources
-                        </span>
+                )}
+                <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+                    <img
+                        src={require("./assets/file.png")}
+                        alt="logo"
+                        className="file"
+                    />
+                    <span className="button-text" style={{ marginLeft: "10px" }}>
+                        Resources
+                    </span>
+                </button>
+            </div>
+            {role === 'host' && (
+                <div className="feedback-container">
+                    <button
+                        name="questions"
+                        className="feedback-button"
+                        style={{ border: "none" }}
+                        onClick={handleQuestionsClick}
+                    >
+                        <span className="h4">Questions</span>
+                        <div className="message-count" style={{ marginLeft: "10px" }}>
+                            <span className="count">{questioncount}</span>
+                        </div>
+                    </button>
+                    <button
+                        name="comments"
+                        className="feedback-button"
+                        style={{ border: "none" }}
+                        onClick={handleCommentsClick}
+                    >
+                        <span className="h4">Comments</span>
+                        <div className="message-count" style={{ marginLeft: "5px" }}>
+                            <span className="count">{commentCount}</span>
+                        </div>
                     </button>
                 </div>
-            </div>
-            <div className="feedback-container">
-                <button
-                    name="questions"
-                    className="feedback-button"
-                    style={{ border: "none" }}
-                    onClick={handleQuestionsClick}
-                >
-                    <span className="h4">Questions</span>
-                    <div className="message-count" style={{ marginLeft: "10px" }}>
-                        <span className="count">{questioncount}</span>
-                    </div>
-                </button>
-                <button
-                    name="comments"
-                    className="feedback-button"
-                    style={{ border: "none" }}
-                    onClick={handleCommentsClick}
-                >
-                    <span className="h4">Comments</span>
-                    <div className="message-count" style={{ marginLeft: "5px" }}>
-                        <span className="count">{commentCount}</span>
-                    </div>
-                </button>
-            </div>
+            )}
             <div className="feedback-container1">
                 <button
                     name="questions"
@@ -232,49 +244,67 @@ function Answered() {
                     </div>
                 </button>
             </div>
-            <div className="agenda-container">
-                {answered.map((agendaItem, index) => (
-                    <div key={index} className="agenda-questions">
-                        <div className="agenda-text">
-                            <div style={{ display: "flex" }}>
-                                <text className="question-username">{agendaItem.FullName}</text>
-                                {agendaItem.QuestionStatus === 909 && (
-                                    <div className="irp-text">
-                                        <text>IRP</text>
-                                    </div>
+            {loading ? (
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50%", marginTop: "30px" }}>
+                    <ColorRing
+                        visible={true}
+                        height="50"
+                        width="50"
+                        ariaLabel="blocks-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="blocks-wrapper"
+                        colors={['#232cff', '#232cff', '#232cff', '#232cff', '#232cff']}
+                    />
+                </div>
+            ) : (
+                <div className="agenda-container">
+                    {answered.map((agendaItem, index) => (
+                        <div key={index} className="agenda-questions">
+                            <div className="agenda-text">
+                                <div style={{ display: "flex" }}>
+                                    <text className="question-username">{agendaItem.FullName}</text>
+                                    {agendaItem.QuestionStatus === 909 && (
+                                        <div className="irp-text">
+                                            <text>IRP</text>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="question-text">
+                                    {expandedItems[index] ? (
+                                        <text>{agendaItem.Question}</text>
+                                    ) : (
+                                        <>
+                                            <text>{agendaItem.Question.substring(0, 30)}</text>
+                                            {agendaItem.Question.length > 30 && (
+                                                <button className="read-more-button" onClick={() => toggleExpand(index)}>
+                                                    ... <span className="read-more-text">View More</span>
+                                                </button>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                                {expandedItems[index] && (
+                                    <button className="read-more-button" onClick={() => toggleExpand(index)}>
+                                        <span className="read-more-text">View Less</span>
+                                    </button>
                                 )}
                             </div>
-                            <div className="question-text">
-                                {expandedItems[index] ? (
-                                    <text>{agendaItem.Question}</text>
-                                ) : (
-                                    <>
-                                        <text>{agendaItem.Question.substring(0, 30)}</text>
-                                        {agendaItem.Question.length > 30 && (
-                                            <button className="read-more-button" onClick={() => toggleExpand(index)}>
-                                                ... <span className="read-more-text">View More</span>
-                                            </button>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-                            {expandedItems[index] && (
-                                <button className="read-more-button" onClick={() => toggleExpand(index)}>
-                                    <span className="read-more-text">View Less</span>
-                                </button>
+                            {agendaItem.QuestionStatus !== 909 && (
+                                <div className="control control-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id={`myCheckbox${index}`}
+                                        onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
+                                        defaultChecked={agendaItem.QuestionStatus !== 909} />
+                                    <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
+                                </div>
                             )}
+
                         </div>
-                        <div className="control control-checkbox">
-                            <input
-                                type="checkbox"
-                                id={`myCheckbox${index}`}
-                                onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
-                                defaultChecked={agendaItem.QuestionStatus !== 909} />
-                            <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
+
 
         </div>
     );
