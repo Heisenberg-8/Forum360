@@ -261,7 +261,7 @@ function Answered() {
                                   <div style={{display:"flex"}}>
                                   
                                     {agendaItem.QuestionStatus === 909 && (
-                                        <div className="irp-text" style={{height:"fit-content",width:"fit-content",marginLeft:"50%"}} >
+                                        <div className="irp-text" style={{height:"fit-content",width:"fit-content",marginLeft:"30%"}} >
                                             <text style={{whiteSpace: 'nowrap'}}>Sent To IRP</text>
                                         </div>
                                     )}
