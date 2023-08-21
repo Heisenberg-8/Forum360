@@ -31,6 +31,7 @@ function Agenda() {
         setLoading(false);
       });
   }, []);
+  
 
   useEffect(() => {
     fetchQuestions(token)
@@ -293,7 +294,8 @@ function Agenda() {
                           className="dragicon"
                         />
                         <div className="agenda-text">
-                          <text className="question-username">{agendaItem.FullName}</text>
+                          <text className="question-username">{agendaItem.FullName}
+                          <span className="time">{agendaItem.QuestionTime}</span></text>
                           <div className="question-text">
                             {expandedItems[index] ? (
                               <text>{agendaItem.Question}</text>
