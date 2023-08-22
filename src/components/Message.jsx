@@ -217,11 +217,7 @@ Team [Org Name]`);
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        <img
-          src={require("./assets/menu (2).png")}
-          alt="logo"
-          className="menu"
-        />
+       
       </div>
       <div>
         <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>

@@ -34,6 +34,7 @@ function Agenda() {
         setLoading(false);
       });
   }, []);
+  
 
   useEffect(() => {
     fetchQuestions(token)
@@ -160,11 +161,7 @@ function Agenda() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        <img
-          src={require("./assets/menu (2).png")}
-          alt="logo"
-          className="menu"
-        />
+        
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         {role === 'host' && (
@@ -309,7 +306,8 @@ function Agenda() {
                           className="dragicon"
                         />
                         <div className="agenda-text">
-                          <text className="question-username">{agendaItem.FullName}</text>
+                          <text className="question-username">{agendaItem.FullName}
+                          <span className="time">{agendaItem.QuestionTime}</span></text>
                           <div className="question-text">
                             {expandedItems[index] ? (
                               <text>{agendaItem.Question}</text>

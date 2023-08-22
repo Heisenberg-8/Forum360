@@ -18,15 +18,15 @@ function AA() {
     }, []);
 
     return (
-        <div>
+        <div style={{fontFamily:"albert"}}>
             <div style={{ display: "flex" }}>
                 <div className="smallCard" style={{ width: "100%" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <text className="headingSmallCard" style={{ marginLeft: "5%", whiteSpace: 'nowrap' }}>Active attendees</text>
+                        <text className="headingSmallCard" style={{ marginLeft: "5%", whiteSpace: 'nowrap' ,fontFamily:"albert"}}>Active attendees</text>
                         <img src={pin} style={{ marginLeft: "32%", marginRight: "3%", marginTop: "-3%" }} alt="Pin Icon" />
                     </div>
                     <div style={{ display: "grid" }}>
-                        <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "5%" }}>Viewers who are giving feedback, researching, etc</text>
+                        <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "5%",fontFamily:"albert" }}>Viewers who are giving feedback, researching, etc</text>
                         {loading ? (
                             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px", marginTop: "-30px" }}>
                                 <ColorRing
