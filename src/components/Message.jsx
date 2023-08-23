@@ -220,55 +220,55 @@ Team [Org Name]`);
        
       </div>
       <div>
-        <div className="mainbuttons" style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
-              <button
-                type="button"
-                name="messaging"
-                className="button center-content"
-                style={{
-                  backgroundColor: "#232cff",
-                  color: "#ffffff",
-                  border: "1px solid white",
-                }}
-              >
-                <img
-                  src={require("./assets/whitemessage.png")}
-                  alt="logo"
-                  className="message"
-                />
-                <span className="button-text">Messaging</span>
-              </button>
-              <button
-                type="button"
-                name="feedback"
-                onClick={handleFeedbackClick}
-                className="button"
-              >
-                <img
-                  src={require("./assets/feedback.png")}
-                  alt="logo"
-                  className="message"
-                />
-                <span className="button-text">Feedback</span>
-              </button>
-            <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
-              <img
-                src={require("./assets/chart.png")}
-                alt="logo"
-                className="message"
-              />
-              <span className="button-text">Analytics</span>
-            </button>
-            <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
-              <img
-                src={require("./assets/file.png")}
-                alt="logo"
-                className="file"
-              />
-              <span className="button-text" style={{ marginLeft: "10px" }}>
-                Resources
-              </span>
-            </button>
+        <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+          <button
+            type="button"
+            name="messaging"
+            className="button center-content"
+            style={{
+              backgroundColor: "#232cff",
+              color: "#ffffff",
+              border: "1px solid white",
+            }}
+          >
+            <img
+              src={require("./assets/whitemessage.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Messaging</span>
+          </button>
+          <button
+            type="button"
+            name="feedback"
+            onClick={handleFeedbackClick}
+            className="button"
+          >
+            <img
+              src={require("./assets/feedback.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Feedback</span>
+          </button>
+          <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
+            <img
+              src={require("./assets/chart.png")}
+              alt="logo"
+              className="message"
+            />
+            <span className="button-text">Analytics</span>
+          </button>
+          <button type="button" name="resources" className="button" onClick={handleResourcesClick}>
+            <img
+              src={require("./assets/file.png")}
+              alt="logo"
+              className="file"
+            />
+            <span className="button-text" style={{ marginLeft: "10px" }}>
+              Resources
+            </span>
+          </button>
         </div>
         <div className="body">
           <h3 className="mh3">Event Messaging</h3>

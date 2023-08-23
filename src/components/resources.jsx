@@ -3,7 +3,7 @@ import Message from "./Message.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
 import Feedback from "./questions.jsx";
 import { SubmitComment, SubmitQuestion, SubmitReview, SubmitThumbsDown, SubmitThumbsUp, getproductlinks, submitfulfilment, getUsers, sharemeetingdetails, sendfollowupmail } from "./data.jsx";
-import { getToken, getUserkey } from "./token.js";
+import { getRole, getToken, getUserkey } from "./token.js";
 import './resources.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,12 +20,13 @@ import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
-import citiesdata from './assets/cities.json';
 import { ColorRing } from "react-loader-spinner";
+import Agenda from "./Agenda.jsx";
 
 function Resources() {
   const token = getToken();
   const userkey = getUserkey();
+  const role = getRole()
   const [currentScreen, setCurrentScreen] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [commentInput, setCommentInput] = useState("");
@@ -42,7 +43,6 @@ function Resources() {
   const [purposeofmeeting, setPurposeofmeeting] = useState([]);
   const [purposeofmeetingDD, setPurposeofmeetingDD] = useState([]);
   const [fulfilmentuserDD, setFulfilmentuserDD] = useState([]);
-  const [sharemeetinguserDD, setSharemeetinguserDD] = useState([]);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search for name");
   const [toall, setToAll] = useState(false);
 
@@ -76,10 +76,17 @@ function Resources() {
     { value: "Compliance", label: "Compliance" }
   ]
 
-  const cities = citiesdata.map(item => ({
-    value: item.id,
-    label: `${item.name}, ${item.state_name}, ${item.country_name}`,
-  }));
+  // const cities = citiesdata.map(item => ({
+  //   value: item.id,
+  //   label: `${item.name}, ${item.state_name}, ${item.country_name}`,
+  // }));
+
+  const cities = [
+    { value: "ProductInformationPage", label: "Direct to product issuer" },
+    { value: "ProductInformationPage", label: "Via a specialist intermediary" },
+    { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
+  ];
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -196,14 +203,17 @@ function Resources() {
     return <Analytics />
   }
 
-
-
   if (currentScreen === "messaging") {
     return <Message />;
   }
 
   if (currentScreen === "feedback") {
-    return <Feedback />;
+    if (role === 'cohost') {
+      return <Agenda />
+    }
+    else {
+      return <Feedback />
+    }
   }
 
   return (
@@ -215,7 +225,8 @@ function Resources() {
         </h1>
         
       </div>
-      <div className="mainbuttons"  style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
+      <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
+        {role === 'host' && (
           <button
             type="button"
             name="messaging"
@@ -229,20 +240,22 @@ function Resources() {
             />
             <span className="button-text">Messaging</span>
           </button>
-          <button
-            type="button"
-            name="feedback"
-            className="button"
-            onClick={handleFeedbackClick}
-          >
-            <img
-              src={require("./assets/feedback.png")}
-              alt="logo"
-              className="message"
-            />
-            <span className="button-text">Feedback</span>
-          </button>
-       
+        )}
+        <button
+          type="button"
+          name="feedback"
+          className="button"
+          onClick={handleFeedbackClick}
+        >
+          <img
+            src={require("./assets/feedback.png")}
+            alt="logo"
+            className="message"
+          />
+          <span className="button-text">Feedback</span>
+        </button>
+
+        {role === 'host' && (
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -251,17 +264,19 @@ function Resources() {
             />
             <span className="button-text">Analytics</span>
           </button>
-          <button type="button" name="resources" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
-          >
-            <img
-              src={require("./assets/whitefile.png")}
-              alt="logo"
-              className="file"
-            />
-            <span className="button-text" >
-              Resources
-            </span>
-          </button>
+        )}
+
+        <button type="button" name="resources" className="button" style={{ backgroundColor: "#232cff", color: "#ffffff", border: "1px solid white", }}
+        >
+          <img
+            src={require("./assets/whitefile.png")}
+            alt="logo"
+            className="file"
+          />
+          <span className="button-text" >
+            Resources
+          </span>
+        </button>
       </div>
 
       {loading ? (

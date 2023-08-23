@@ -251,6 +251,7 @@
 }
 
 .feedback-container1 {
+  margin-top: 10px;
   display: flex;
   text-align: center;
 }

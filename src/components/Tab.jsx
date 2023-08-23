@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Message from "./Message.jsx";
-import Feedback from "./questions.jsx";
+import Agenda from "./Agenda.jsx";
 import { generatetoken, RoleComponent } from "./data";
-import { setToken, setUserkey } from "./token";
+import { setToken, setUserkey, setRole, getRole } from "./token";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -28,8 +28,10 @@ function Login() {
           setToken(tokendata.access_token);
           setUserkey(tokendata.userKey);
           const role = await RoleComponent(tokendata.access_token, tokendata.userKey)
+          setRole(role)
+
           if (role === 'cohost') {
-            setCurrentScreen("feedback")
+            setCurrentScreen("agenda")
           }
           else {
             setCurrentScreen("messaging");
@@ -53,8 +55,8 @@ function Login() {
     return <Message />;
   }
 
-  if (currentScreen === "feedback") {
-    return <Feedback />
+  if (currentScreen === "agenda") {
+    return <Agenda />;
   }
 
   return (
