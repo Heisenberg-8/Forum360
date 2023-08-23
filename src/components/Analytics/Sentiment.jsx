@@ -22,7 +22,7 @@ const Sentiment = () => {
   const [regUser, setregUser] = useState(0);
   const [attendUser, setattendUser] = useState(0);
   const labels = ['', '', '', '', ''];
-  const dataset1Data = [0, 0.2, -0.3, 0.5, 1];
+  const dataset1Data = [0, 0.2, -0.3, 0.2, 0.-0.4];
   const dataset2Data = [0, -0.4, 0.2, -0.7, 0.3];
   const lastPointIndex = dataset1Data.length - 1;
 
@@ -124,7 +124,7 @@ const Sentiment = () => {
   };
 
   return (
-    <div className="bigContainer" style={{marginTop:8}}>
+    <div className="bigContainer" style={{marginTop:12}}>
       <div style={{ display: "flex" }}>
         <text className="headingSmallCard" style={{ marginLeft: "6%", marginTop: "3%", whiteSpace: 'nowrap' }}>Sentiment</text>
         <text className="headingSmallCard" style={{ marginLeft: "27%", marginTop: "3%" }}>Neutral</text>
