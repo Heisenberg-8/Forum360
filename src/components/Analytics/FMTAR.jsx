@@ -18,12 +18,12 @@ function FMTAR() {
       </div>
       <div className="smallCard" >
         <div style={{ display: "flex" }}>
-          <text className="headingSmallCard">Time Saved</text>
+          <text className="headingSmallCard">Attentive Rates</text>
           <img src={pin} style={{ marginLeft: "10%", marginRight: "3%", marginTop: "-17%" }} />
         </div>
         <div style={{ display: "grid" }}>
-          <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "10%" }}>vs travelling</text>
-          <text style={{ marginTop: "10%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>158 hrs</text>
+          <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "10%" }}>Watching Now</text>
+          <text style={{ marginTop: "10%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>90%</text>
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@ function CSTS() {
   }, []);
 
   return (
-    <div style={{ display: "flex", marginTop: "10px" }}>
+    <div style={{ display: "flex", marginTop: "8" }}>
       <div className="smallCard" >
         <div style={{ display: "flex" }}>
           <text className="headingSmallCard">Carbon Saved</text>
