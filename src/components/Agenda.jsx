@@ -24,6 +24,8 @@ function Agenda() {
   const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
+  const [questionOrder, setQuestionOrder] = useState([]);
+
   const agendaCount = agenda.length;
 
 
@@ -82,20 +84,32 @@ function Agenda() {
 
   function handleDragEnd(result) {
     if (!result.destination) return;
-
+  
     const { source, destination } = result;
-
+  
     if (source.index !== destination.index) {
       const updatedAgendaList = [...agenda];
       const [draggedItem] = updatedAgendaList.splice(source.index, 1);
       updatedAgendaList.splice(destination.index, 0, draggedItem);
-
+  
       setAgenda(updatedAgendaList);
       setDraggedQuestionIndex(null);
-
+  
+      const newQuestionOrder = updatedAgendaList.map(item => ({
+        QuestionId: item.QuestionId,
+        Position: updatedAgendaList.indexOf(item)+1,
+      }));
+      setQuestionOrder(newQuestionOrder);
+  
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
     }
   }
+  
+
+  useEffect(() => {
+    console.log("Question Order:", questionOrder);
+  }, [questionOrder]);
+  
 
   function handleResourcesClick() {
     setCurrentScreen("resources");

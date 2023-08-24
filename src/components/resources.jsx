@@ -548,6 +548,7 @@ function Resources() {
                 options={users}
                 placeholder="Search for name"
                 isSearchable={true}
+                isMulti={true}
                 styles={customStyles1}
                 classNamePrefix="custom-select"
                 value={searchPlaceholder}
