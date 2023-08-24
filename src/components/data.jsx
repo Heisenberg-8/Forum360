@@ -599,5 +599,28 @@ export function getsavings(token) {
         });
 }
 
+export function gettotalquestions(token) {
+    const eventkey = getEventKey();
+    const sessionid = getSessionId();
+    return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/metric', {
+        method: 'post',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+        },
+        body: JSON.stringify({
+            SessionId: sessionid,
+            EventKey: eventkey
+        })
+    })
+        .then(response => response.json())
+        .then(json => json.Payload.EventQA)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
 
 export default Data;
