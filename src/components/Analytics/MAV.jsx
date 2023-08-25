@@ -16,19 +16,20 @@ return(
               <img src={expand} style={{marginLeft:"17%", marginRight:"3%" , marginTop:"3%"}}/>
     </div>
             <div className="userlist" style={{marginLeft:"5%"}}>
+            
           <div className="user-info">
             <div className="d-flex">
               <img src={user1} className="avatar" />
-              <div >Zain Philips</div>
-              <div style={{ alignItems: "center",backgroundColor:"red"}}>NSW Australia</div>
+              <div style={{ slign: "center"}}>Zain Philips</div>
+              <div style={{ alignItems: "center"}}>NSW Australia</div>
               <img src={edit} className="edit" />
             </div>
           </div>
           <div className="user-info">
             <div className="d-flex">
               <img src={user2}  />
-              <div >Madelyn</div>
-              <div  style={{ alignItems: "center",backgroundColor:"red"}}>NY USA</div>
+              <div style={{ alignItems: "center"}}>Madelyn</div>
+              <div  style={{ alignItems: "center"}}>NY USA</div>
               <img src={edit} />
             </div>
             

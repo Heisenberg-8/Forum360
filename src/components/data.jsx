@@ -390,32 +390,6 @@ export function submitfulfilment(token, userKey, pathname) {
 
 export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
     const sessionid = getSessionId()
-
-    // return fetch('https://mgmt-test.forum360.co/api/Email/GenerateShareMeetingDetailEmail', {
-    //     method: 'POST',
-    //     headers: {
-    //         Authorization: `Bearer ${token}`,
-    //         "Content-Type": "application/x-www-form-urlencoded",
-    //         'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
-    //         'AppId': '5',
-    //     },
-    //     body: JSON.stringify({
-    //         SessionId: `${sessionid}`,
-    //         ReqUserKey: `${ReqUserKey}`,
-    //         AllIRMangers: false,
-    //         CoHostUserKey: `${userKey}`,
-    //         MeetingPurpose: null,
-    //         OrgName: null,
-    //         RequestedData: null
-    //     }),
-    //     redirect: 'follow'
-    // })
-    //     .then(response => response.json())
-    //     .then(result => console.log(result))
-    //     .catch(error => {
-    //         console.error(error);
-    //         return [];
-    //     });
     var myHeaders = new Headers();
     myHeaders.append("OrgKey", "795D68B3-49A8-4747-BEFD-17ADDCDE0844");
     myHeaders.append("AppId", "5");
@@ -616,6 +590,33 @@ export function gettotalquestions(token) {
     })
         .then(response => response.json())
         .then(json => json.Payload.EventQA)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export function changeOrder(token, questionOrder) {
+    const eventkey = getEventKey();
+    const sessionid = getSessionId();
+    return fetch('https://mgmt-test.forum360.co/api/IR_Event/MeetingSetting', {
+        method: 'post',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'OrgId': '795D68B3-49A8-4747-BEFD-17ADDCDE0844'
+        },
+        body: JSON.stringify({
+            EventKey: eventkey,
+            MeetingQuestions: [
+                {
+                    "SessionId": sessionid,
+                    "QuestionIds": `${questionOrder}`
+                }]
+        })
+    })
+        .then(response => response.json())
+        .then(json => json)
         .catch(error => {
             console.error(error);
             return [];

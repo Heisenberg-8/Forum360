@@ -20,7 +20,6 @@ import user2 from './assets/user2.png';
 import edit from './assets/edit.png';
 import link from './assets/link.svg';
 import Select from "react-select";
-import citiesdata from './assets/cities.json';
 import { ColorRing } from "react-loader-spinner";
 import Agenda from "./Agenda.jsx";
 
@@ -77,10 +76,17 @@ function Resources() {
     { value: "Compliance", label: "Compliance" }
   ]
 
-  const cities = citiesdata.map(item => ({
-    value: item.id,
-    label: `${item.name}, ${item.state_name}, ${item.country_name}`,
-  }));
+  // const cities = citiesdata.map(item => ({
+  //   value: item.id,
+  //   label: `${item.name}, ${item.state_name}, ${item.country_name}`,
+  // }));
+
+  const cities = [
+    { value: "ProductInformationPage", label: "Direct to product issuer" },
+    { value: "ProductInformationPage", label: "Via a specialist intermediary" },
+    { value: "ProductInformationPage", label: "Via a marketplace or investment platform" },
+  ];
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -126,6 +132,35 @@ function Resources() {
     await submitfulfilment(token, userkey, selectedMessage)
     handleLinkButtonClick(links[selectedMessage])
   }
+
+  function SubmitThumbsUpResouces() {
+    SubmitThumbsUp(token, userkey)
+    const thumbsUpButton = document.querySelector('.tu');
+    const thumbsUpImage = thumbsUpButton.querySelector('img');
+
+    // Change the image source
+    thumbsUpImage.src = './assets/clickedTU.svg';
+
+    // Reset the image source after 2 seconds
+    setTimeout(() => {
+      thumbsUpImage.src = 'thumbdislike.png'; // Replace with original source
+    }, 2000); // 2000 milliseconds = 2 seconds
+  }
+
+  function SubmitThumbsDownResouces() {
+    SubmitThumbsDown(token, userkey)
+    const thumbsDownButton = document.querySelector('.td');
+    const thumbsDownImage = thumbsDownButton.querySelector('img');
+
+    // Change the image source
+    thumbsDownImage.src = './assets/clickedTD.svg';
+
+    // Reset the image source after 2 seconds
+    setTimeout(() => {
+      thumbsDownImage.src = 'thumblike.svg'; // Replace with original source
+    }, 2000); // 2000 milliseconds = 2 seconds
+  }
+
 
   function fuflilmentsendmail() {
     const formattedDate = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : null;
@@ -217,7 +252,7 @@ function Resources() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        
+
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         {role === 'host' && (
@@ -345,10 +380,10 @@ function Resources() {
                 </button>
               </div>
               <div className="d-flex justify-content-space-between like">
-                <btn className="tu" onClick={SubmitThumbsUp}>
+                <btn className="tu" onClick={SubmitThumbsUpResouces}>
                   <img src={thumbdislike} />
                 </btn>
-                <btn className="td" onClick={SubmitThumbsDown}>
+                <btn className="td" onClick={SubmitThumbsDownResouces}>
                   <img src={thumblike} />
                 </btn>
               </div>
@@ -542,6 +577,7 @@ function Resources() {
                 options={users}
                 placeholder="Search for name"
                 isSearchable={true}
+                isMulti={true}
                 styles={customStyles1}
                 classNamePrefix="custom-select"
                 value={searchPlaceholder}

@@ -17,7 +17,6 @@ import MAV from "./MAV";
 
 
 
-
 function Analytics() {
 
     const [currentScreen, setCurrentScreen] = useState("");
@@ -105,8 +104,10 @@ function Analytics() {
                     </div>
 
             </div>
+            <div>
+            <Sentiment/>
             <CSTS />
-            <div style={{ marginTop: "0" }}>
+            {/* <div style={{ marginTop: "0" }}> */}
                 <RR />
             </div>
             <FFU />
