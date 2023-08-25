@@ -25,6 +25,7 @@ function Agenda() {
   const [expandedItems, setExpandedItems] = useState([]);
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
   const [questionOrder, setQuestionOrder] = useState([]);
+  const [dragged, setDragged] = useState(false);
 
   const agendaCount = agenda.length;
 
@@ -102,13 +103,15 @@ function Agenda() {
       setQuestionOrder(newQuestionOrder);
   
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
+      
     }
   }
-  
 
   useEffect(() => {
-    console.log("Question Order:", questionOrder);
+    console.log( questionOrder);
   }, [questionOrder]);
+
+
   
 
   function handleResourcesClick() {
