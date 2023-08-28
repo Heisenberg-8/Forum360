@@ -5,7 +5,7 @@
     "id": "1a39b2fb-227f-4dc5-b030-24375320afdb",
     "packageName": "com.microsoft.teams.extension",
     "developer": {
-        "name": "Veersa Tech",
+        "name": "Forum Care Limited",
         "websiteUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/tab",
         "privacyUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/privacy",
         "termsOfUseUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/termsofuse"
@@ -15,11 +15,11 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "Forum360",
-        "full": "Forum360"
+        "short": "Forum 360",
+        "full": "Forum 360"
     },
     "description": {
-        "short": "Short description",
+        "short": "The systematic method to improve sales outcomes.",
         "full": "Full description"
     },
     "accentColor": "#FFFFFF",
