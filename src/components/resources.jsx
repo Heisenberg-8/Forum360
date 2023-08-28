@@ -133,6 +133,35 @@ function Resources() {
     handleLinkButtonClick(links[selectedMessage])
   }
 
+  function SubmitThumbsUpResouces() {
+    SubmitThumbsUp(token, userkey)
+    const thumbsUpButton = document.querySelector('.tu');
+    const thumbsUpImage = thumbsUpButton.querySelector('img');
+
+    // Change the image source
+    thumbsUpImage.src = './assets/clickedTU.svg';
+
+    // Reset the image source after 2 seconds
+    setTimeout(() => {
+      thumbsUpImage.src = 'thumbdislike.png'; // Replace with original source
+    }, 2000); // 2000 milliseconds = 2 seconds
+  }
+
+  function SubmitThumbsDownResouces() {
+    SubmitThumbsDown(token, userkey)
+    const thumbsDownButton = document.querySelector('.td');
+    const thumbsDownImage = thumbsDownButton.querySelector('img');
+
+    // Change the image source
+    thumbsDownImage.src = './assets/clickedTD.svg';
+
+    // Reset the image source after 2 seconds
+    setTimeout(() => {
+      thumbsDownImage.src = 'thumblike.svg'; // Replace with original source
+    }, 2000); // 2000 milliseconds = 2 seconds
+  }
+
+
   function fuflilmentsendmail() {
     const formattedDate = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : null;
 
@@ -223,11 +252,7 @@ function Resources() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        <img
-          src={require("./assets/menu (2).png")}
-          alt="logo"
-          className="menu"
-        />
+
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         {role === 'host' && (
@@ -355,10 +380,10 @@ function Resources() {
                 </button>
               </div>
               <div className="d-flex justify-content-space-between like">
-                <btn className="tu" onClick={SubmitThumbsUp}>
+                <btn className="tu" onClick={SubmitThumbsUpResouces}>
                   <img src={thumbdislike} />
                 </btn>
-                <btn className="td" onClick={SubmitThumbsDown}>
+                <btn className="td" onClick={SubmitThumbsDownResouces}>
                   <img src={thumblike} />
                 </btn>
               </div>
@@ -552,6 +577,7 @@ function Resources() {
                 options={users}
                 placeholder="Search for name"
                 isSearchable={true}
+                isMulti={true}
                 styles={customStyles1}
                 classNamePrefix="custom-select"
                 value={searchPlaceholder}

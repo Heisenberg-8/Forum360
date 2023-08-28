@@ -1,6 +1,6 @@
 import "./CS-TS.css";
 import pin from '../assets/pin.svg';
-import { getmetricanalytics } from "../data";
+import { getmetricanalytics, gettotalquestions } from "../data";
 import { useEffect, useState } from "react";
 import { getToken } from "../token";
 import { ColorRing } from "react-loader-spinner";
@@ -15,11 +15,14 @@ function FFU() {
   useEffect(() => {
     getmetricanalytics(token)
       .then((analyticsdata) => {
-        setTotalquestions(analyticsdata.MeetingQuestionAsk);
         setRating(analyticsdata.MeetingRating)
         setLoading(false);
 
       });
+    gettotalquestions(token)
+      .then((totalquestions) => {
+        setTotalquestions(totalquestions.QuestionsAskedDuringTheMeetings)
+      })
   }, []);
 
   return (
@@ -45,7 +48,7 @@ function FFU() {
                 />
               </div>
             ) : (
-              <text style={{ marginTop: "10%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{totalquestions}</text>
+              <text style={{ marginTop: "10%", textAlign: "center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{totalquestions}</text>
 
             )}
           </div>
@@ -70,7 +73,7 @@ function FFU() {
                 />
               </div>
             ) : (
-              <text style={{ marginTop: "28%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{rating}</text>
+              <text style={{ marginTop: "28%", textAlign: "center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{rating}</text>
 
             )}
           </div>

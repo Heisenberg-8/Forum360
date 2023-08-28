@@ -7,7 +7,7 @@ import Answered from "./Answered.jsx";
 import { getRole, getToken, getUserkey } from "./token";
 import Resources from "./resources.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
-import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments, RoleComponent } from "./data.jsx";
+import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments, RoleComponent, changeOrder } from "./data.jsx";
 import { ColorRing } from "react-loader-spinner";
 
 
@@ -16,7 +16,6 @@ function Agenda() {
   const token = getToken();
   const userkey = getUserkey();
   const role = getRole()
-  console.log(role)
   const [loading, setLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -24,6 +23,8 @@ function Agenda() {
   const [answered, setAnswered] = useState([]);
   const [expandedItems, setExpandedItems] = useState([]);
   const [draggedQuestionIndex, setDraggedQuestionIndex] = useState(null);
+  const [questionOrder, setQuestionOrder] = useState([]);
+
   const agendaCount = agenda.length;
 
 
@@ -34,6 +35,7 @@ function Agenda() {
         setLoading(false);
       });
   }, []);
+
 
   useEffect(() => {
     fetchQuestions(token)
@@ -92,7 +94,22 @@ function Agenda() {
       setAgenda(updatedAgendaList);
       setDraggedQuestionIndex(null);
 
+      const newQuestionOrder = updatedAgendaList.map(item => ({
+        QuestionId: item.QuestionId,
+        Position: updatedAgendaList.indexOf(item) + 1,
+      }));
+      setQuestionOrder(newQuestionOrder);
+
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
+      const newQuestionOrderJSON = JSON.stringify(newQuestionOrder);
+
+      changeOrder(token, newQuestionOrderJSON)
+        .then(response => {
+          console.log("Order updated successfully:", response);
+        })
+        .catch(error => {
+          console.error("Error updating order:", error);
+        });
     }
   }
 
@@ -160,11 +177,7 @@ function Agenda() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        <img
-          src={require("./assets/menu (2).png")}
-          alt="logo"
-          className="menu"
-        />
+
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         {role === 'host' && (
@@ -309,7 +322,8 @@ function Agenda() {
                           className="dragicon"
                         />
                         <div className="agenda-text">
-                          <text className="question-username">{agendaItem.FullName}</text>
+                          <text className="question-username">{agendaItem.FullName}
+                            <span className="time">{agendaItem.QuestionTime}</span></text>
                           <div className="question-text">
                             {expandedItems[index] ? (
                               <text>{agendaItem.Question}</text>

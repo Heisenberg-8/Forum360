@@ -17,7 +17,6 @@ import MAV from "./MAV";
 
 
 
-
 function Analytics() {
 
     const [currentScreen, setCurrentScreen] = useState("");
@@ -53,11 +52,7 @@ function Analytics() {
                     <h1 className="h1">
                         Relate <span className="h2">Tools</span>
                     </h1>
-                    <img
-                        src={require("../assets/menu (2).png")}
-                        alt="logo"
-                        className="menu"
-                    />
+                    
                 </div>
                 <div className="mainbuttons"  style={{ display:"flex",marginTop: "25px",flexWrap:"wrap" }}>
                         <button
@@ -109,8 +104,10 @@ function Analytics() {
                     </div>
 
             </div>
+            <div>
+            <Sentiment/>
             <CSTS />
-            <div style={{ marginTop: "0" }}>
+            {/* <div style={{ marginTop: "0" }}> */}
                 <RR />
             </div>
             <FFU />
