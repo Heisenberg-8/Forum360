@@ -7,7 +7,7 @@ import Answered from "./Answered.jsx";
 import { getRole, getToken, getUserkey } from "./token";
 import Resources from "./resources.jsx";
 import Analytics from "./Analytics/Analytics.jsx"
-import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments, RoleComponent } from "./data.jsx";
+import { fetchAgenda, fetchQuestions, movetoAnswered, fetchAnswered, getcomments, RoleComponent, changeOrder } from "./data.jsx";
 import { ColorRing } from "react-loader-spinner";
 
 
@@ -16,7 +16,6 @@ function Agenda() {
   const token = getToken();
   const userkey = getUserkey();
   const role = getRole()
-  console.log(role)
   const [loading, setLoading] = useState(true);
   const [agenda, setAgenda] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -37,7 +36,7 @@ function Agenda() {
         setLoading(false);
       });
   }, []);
-  
+
 
   useEffect(() => {
     fetchQuestions(token)
@@ -85,34 +84,35 @@ function Agenda() {
 
   function handleDragEnd(result) {
     if (!result.destination) return;
-  
+
     const { source, destination } = result;
-  
+
     if (source.index !== destination.index) {
       const updatedAgendaList = [...agenda];
       const [draggedItem] = updatedAgendaList.splice(source.index, 1);
       updatedAgendaList.splice(destination.index, 0, draggedItem);
-  
+
       setAgenda(updatedAgendaList);
       setDraggedQuestionIndex(null);
-  
+
       const newQuestionOrder = updatedAgendaList.map(item => ({
         QuestionId: item.QuestionId,
-        Position: updatedAgendaList.indexOf(item)+1,
+        Position: updatedAgendaList.indexOf(item) + 1,
       }));
       setQuestionOrder(newQuestionOrder);
-  
+
       localStorage.setItem("agendaList", JSON.stringify(updatedAgendaList));
-      
+      const newQuestionOrderJSON = JSON.stringify(newQuestionOrder);
+
+      changeOrder(token, newQuestionOrderJSON)
+        .then(response => {
+          console.log("Order updated successfully:", response);
+        })
+        .catch(error => {
+          console.error("Error updating order:", error);
+        });
     }
   }
-
-  useEffect(() => {
-    console.log( questionOrder);
-  }, [questionOrder]);
-
-
-  
 
   function handleResourcesClick() {
     setCurrentScreen("resources");
@@ -178,7 +178,7 @@ function Agenda() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        
+
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         {role === 'host' && (
@@ -324,7 +324,7 @@ function Agenda() {
                         />
                         <div className="agenda-text">
                           <text className="question-username">{agendaItem.FullName}
-                          <span className="time">{agendaItem.QuestionTime}</span></text>
+                            <span className="time">{agendaItem.QuestionTime}</span></text>
                           <div className="question-text">
                             {expandedItems[index] ? (
                               <text>{agendaItem.Question}</text>

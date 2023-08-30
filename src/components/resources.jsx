@@ -133,6 +133,31 @@ function Resources() {
     handleLinkButtonClick(links[selectedMessage])
   }
 
+  function SubmitThumbsUpResouces() {
+    SubmitThumbsUp(token, userkey)
+    const thumbsUpButton = document.querySelector('.tu');
+    const thumbsUpImage = thumbsUpButton.querySelector('img');
+
+    thumbsUpImage.src = './assets/clickedTU.svg';
+
+    setTimeout(() => {
+      thumbsUpImage.src = 'thumbdislike.png'; 
+    }, 2000); 
+  }
+
+  function SubmitThumbsDownResouces() {
+    SubmitThumbsDown(token, userkey)
+    const thumbsDownButton = document.querySelector('.td');
+    const thumbsDownImage = thumbsDownButton.querySelector('img');
+
+    thumbsDownImage.src = './assets/clickedTD.svg';
+
+    setTimeout(() => {
+      thumbsDownImage.src = 'thumblike.svg'; 
+    }, 2000); 
+  }
+
+
   function fuflilmentsendmail() {
     const formattedDate = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : null;
 
@@ -223,7 +248,7 @@ function Resources() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        
+
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         {role === 'host' && (
@@ -351,10 +376,10 @@ function Resources() {
                 </button>
               </div>
               <div className="d-flex justify-content-space-between like">
-                <btn className="tu" onClick={SubmitThumbsUp}>
+                <btn className="tu" onClick={SubmitThumbsUpResouces}>
                   <img src={thumbdislike} />
                 </btn>
-                <btn className="td" onClick={SubmitThumbsDown}>
+                <btn className="td" onClick={SubmitThumbsDownResouces}>
                   <img src={thumblike} />
                 </btn>
               </div>
