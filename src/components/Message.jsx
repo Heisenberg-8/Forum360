@@ -10,8 +10,9 @@ import Analytics from "./Analytics/Analytics.jsx"
 function Message() {
   const token = getToken();
   const sessionid = getSessionId();
+  console.log(sessionid)
   const userkey = getUserkey()
-  let role = RoleComponent(token, userkey);
+  let role = RoleComponent(token, userkey, sessionid);
   const [userName, setUserName] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -217,7 +218,7 @@ Team [Org Name]`);
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-       
+
       </div>
       <div>
         <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>

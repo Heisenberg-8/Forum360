@@ -7,8 +7,9 @@
     "developer": {
         "name": "Forum Care Limited",
         "websiteUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/tab",
-        "privacyUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/privacy",
-        "termsOfUseUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/termsofuse"
+        "privacyUrl": "https://forum360.com.au/privacy-policy/",
+        "termsOfUseUrl": "https://forum360.com.au/acknowledge/",
+        "mpnId": "6703010"
     },
     "icons": {
         "color": "color.png",
@@ -16,7 +17,7 @@
     },
     "name": {
         "short": "Forum 360",
-        "full": "Forum 360"
+        "full": "Relate by Forum 360"
     },
     "description": {
         "short": "The systematic method to improve sales outcomes.",
@@ -28,7 +29,7 @@
     "configurableTabs": [
         {
             "configurationUrl": "https://azapp-relate-teams-dev-001.azurewebsites.net/#/config",
-            "canUpdateConfiguration": true,
+            "canUpdateConfiguration": false,
             "scopes": [
                 "team",
                 "groupchat"

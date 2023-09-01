@@ -1,8 +1,20 @@
 import "./CS-TS.css";
 import pin from '../assets/pin.svg';
+import { useState, useEffect } from "react";
+import { getmetricanalytics } from "../data";
+import { getToken } from "../token";
 
 
 function FMTAR() {
+  const token = getToken()
+  const [attentiverates, setAttentiverates] = useState()
+
+  useEffect(() => {
+    getmetricanalytics(token)
+      .then((analyticsdata) => {
+        setAttentiverates((analyticsdata.AttendUser / analyticsdata.RegUser) * 100)
+      });
+  }, []);
 
 
   return (
@@ -13,7 +25,7 @@ function FMTAR() {
           <img src={pin} style={{ marginLeft: "10%", marginRight: "3%", marginTop: "-34%" }} />
         </div>
         <div style={{ display: "grid" }}>
-          <text style={{ marginTop: "4%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>12:31</text>
+          <text style={{ marginTop: "4%", textAlign: "center", fontSize: "20px", fontWeight: 700, color: 'white' }}>12:31</text>
         </div>
       </div>
       <div className="smallCard" >
@@ -23,7 +35,7 @@ function FMTAR() {
         </div>
         <div style={{ display: "grid" }}>
           <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "10%" }}>Watching Now</text>
-          <text style={{ marginTop: "10%", textAlign:"center", fontSize: "20px", fontWeight: 700, color: 'white' }}>90%</text>
+          <text style={{ marginTop: "10%", textAlign: "center", fontSize: "20px", fontWeight: 700, color: 'white' }}>{attentiverates}%</text>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 let token = null;
 let userKey = null;
 let role = null;
-let sessionid = '2661';
-let eventkey = 'B9379841-13D9-4494-9A1D-E1A53AD794FE';
+let sessionid = null;
+let eventkey = null;
 
 export function setToken(newToken) {
     token = newToken;
@@ -34,4 +34,12 @@ export function getRole() {
 
 export function setRole(newrole) {
     role = newrole
+}
+
+export function setSessionId(sessionId) {
+    sessionid = sessionId
+}
+
+export function setEventKey(eventKey) {
+    eventkey = eventKey
 }

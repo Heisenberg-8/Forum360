@@ -509,8 +509,7 @@ export function getcomments(token) {
         });
 }
 
-export function sessiondetails(token) {
-    const sessionid = getSessionId();
+export async function sessiondetails(token, sessionid) {
     return fetch('https://mgmt-test.forum360.co/api/Session/Detail/' + sessionid, {
         method: 'get',
         headers: {
@@ -522,10 +521,8 @@ export function sessiondetails(token) {
 }
 
 
-export async function RoleComponent(token, userKey) {
-    let session = null;
-    const result = await sessiondetails(token);
-    session = result;
+export async function RoleComponent(token, userKey, sessionid) {
+    const session = await sessiondetails(token, sessionid);
 
     function getRole() {
         if (session.DProducer.UserKey === userKey) {
@@ -549,6 +546,7 @@ export async function RoleComponent(token, userKey) {
     const role = getRole();
     return role;
 }
+
 
 export function getsavings(token) {
     const eventkey = getEventKey();
@@ -623,5 +621,17 @@ export function changeOrder(token, questionOrder) {
         });
 }
 
+export function getsentiment(token) {
+    const sessionid = getSessionId();
+    return fetch('https://carboncal.azurewebsites.net/api/sentiments?SessionID=' + sessionid + "&Interval=1", {
+        method: 'get'
+    })
+        .then(response => response.json())
+        .then(json => json)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
 
 export default Data;
