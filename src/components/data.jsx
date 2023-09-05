@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import qs from 'qs';
-import { getSessionId, getEventKey } from "./token"
+import { getSessionId, getEventKey, getorgid } from "./token"
 
 const Data = () => {
     const [comments, setComments] = useState([
@@ -178,12 +178,13 @@ export function movetoirp(token, questionid) {
 export function movebacktoAgenda(token, questionid) {
     const eventkey = getEventKey()
     const sessionid = getSessionId()
+    const orgid = getorgid()
     return fetch('https://mgmt-test.forum360.co/api/Question/LiveAnswer', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            OrgId: '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            OrgId: `${orgid}`,
             AppId: '4'
         },
         body: JSON.stringify({
@@ -330,11 +331,11 @@ export function SubmitThumbsDown(token, userKey) {
         });
 }
 
-export function generatetoken(username, password) {
+export function generatetoken(username, password, orgid) {
     return fetch('https://mgmt-test.forum360.co/api/Token', {
         method: 'POST',
         headers: {
-            'OrgId': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'OrgId': `${orgid}`,
             'Appid': '4'
         },
         body: qs.stringify({
@@ -366,12 +367,13 @@ export function getproductlinks(token) {
 
 export function submitfulfilment(token, userKey, pathname) {
     const sessionid = getSessionId()
+    const orgid = getorgid()
     return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/HitVisitedFulfilment', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'OrgKey': `${orgid}`,
             'AppId': '6',
         },
         body: JSON.stringify({
@@ -390,8 +392,9 @@ export function submitfulfilment(token, userKey, pathname) {
 
 export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
     const sessionid = getSessionId()
+    const orgid = getorgid()
     var myHeaders = new Headers();
-    myHeaders.append("OrgKey", "795D68B3-49A8-4747-BEFD-17ADDCDE0844");
+    myHeaders.append("OrgKey", `${orgid}`);
     myHeaders.append("AppId", "5");
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -419,8 +422,9 @@ export function sharemeetingdetails(token, userKey, toall, ReqUserKey) {
 
 export function sendfollowupmail(token, userkey, purpose, date, requserkey) {
     const sessionid = getSessionId()
+    const orgid = getorgid()
     var myHeaders = new Headers();
-    myHeaders.append("OrgKey", "795D68B3-49A8-4747-BEFD-17ADDCDE0844");
+    myHeaders.append("OrgKey", `${orgid}`);
     myHeaders.append("UserKey", `${userkey}`);
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -489,12 +493,13 @@ export function getmetricanalytics(token) {
 export function getcomments(token) {
     const eventkey = getEventKey();
     const sessionid = getSessionId();
+    const orgid = getorgid()
     return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/GetCommentData', {
         method: 'post',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'OrgKey': `${orgid}`,
         },
         body: JSON.stringify({
             SessionId: sessionid,
@@ -551,12 +556,13 @@ export async function RoleComponent(token, userKey, sessionid) {
 export function getsavings(token) {
     const eventkey = getEventKey();
     const sessionid = getSessionId();
+    const orgid = getorgid()
     return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/metric', {
         method: 'post',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'OrgKey': `${orgid}`,
         },
         body: JSON.stringify({
             SessionId: sessionid,
@@ -574,12 +580,13 @@ export function getsavings(token) {
 export function gettotalquestions(token) {
     const eventkey = getEventKey();
     const sessionid = getSessionId();
+    const orgid = getorgid();
     return fetch('https://mgmt-test.forum360.co/api/EventAnalytic/metric', {
         method: 'post',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'OrgKey': '795D68B3-49A8-4747-BEFD-17ADDCDE0844',
+            'OrgKey': `${orgid}`,
         },
         body: JSON.stringify({
             SessionId: sessionid,
@@ -597,12 +604,13 @@ export function gettotalquestions(token) {
 export function changeOrder(token, questionOrder) {
     const eventkey = getEventKey();
     const sessionid = getSessionId();
+    const orgid = getorgid()
     return fetch('https://mgmt-test.forum360.co/api/IR_Event/MeetingSetting', {
         method: 'post',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'OrgId': '795D68B3-49A8-4747-BEFD-17ADDCDE0844'
+            'OrgId': `${orgid}`
         },
         body: JSON.stringify({
             EventKey: eventkey,

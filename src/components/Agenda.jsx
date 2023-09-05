@@ -180,7 +180,7 @@ function Agenda() {
 
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
-        {role === 'host' && (
+        {(role === 'host' || role === 'moderator') && (
           <button
             type="button"
             name="messaging"
@@ -213,7 +213,7 @@ function Agenda() {
           <span className="button-text">Feedback</span>
         </button>
 
-        {role === 'host' && (
+        {(role === 'host' || role === 'moderator') && (
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
@@ -236,7 +236,7 @@ function Agenda() {
         </button>
       </div>
 
-      {role === 'host' && (
+      {(role === 'host' || role === 'moderator') && (
         <div className="feedback-container">
           <button
             name="questions"

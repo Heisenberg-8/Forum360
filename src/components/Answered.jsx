@@ -141,7 +141,7 @@ function Answered() {
                 </h1>
             </div>
             <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
-                {role === 'host' && (
+                {(role === 'host' || role === 'moderator') && (
                     <button
                         type="button"
                         name="messaging"
@@ -174,7 +174,7 @@ function Answered() {
                     />
                     <span className="button-text">Feedback</span>
                 </button>
-                {role === 'host' && (
+                {(role === 'host' || role === 'moderator') && (
                     <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
                         <img
                             src={require("./assets/chart.png")}
@@ -195,7 +195,7 @@ function Answered() {
                     </span>
                 </button>
             </div>
-            {role === 'host' && (
+            {(role === 'host' || role === 'moderator') && (
                 <div className="feedback-container">
                     <button
                         name="questions"
@@ -258,33 +258,33 @@ function Answered() {
             ) : (
                 <div className="agenda-container" >
                     {answered.map((agendaItem, index) => (
-                        <div key={index} className="agenda-questions" style={{ width:'86 %' }}>
-                            <div className="agenda-text" style={{ marginLeft:"0%", width:'80%' }}>
+                        <div key={index} className="agenda-questions" style={{ width: '86 %' }}>
+                            <div className="agenda-text" style={{ marginLeft: "0%", width: '80%' }}>
                                 <div style={{ display: "flex" }}>
-                                <div style={{display: "flex",width:"fit-content",}}>
-                                    <text className="question-username" style={{whiteSpace:"nowrap"}}>{agendaItem.FullName}
-                                    <span className="time"style={{width:"fit-content"}}>{agendaItem.QuestionTime}</span>
-                                    </text>
+                                    <div style={{ display: "flex", width: "fit-content", }}>
+                                        <text className="question-username" style={{ whiteSpace: "nowrap" }}>{agendaItem.FullName}
+                                            <span className="time" style={{ width: "fit-content" }}>{agendaItem.QuestionTime}</span>
+                                        </text>
                                     </div>
-                                  <div style={{display:"flex"}}>
-                                  
-                                    {agendaItem.QuestionStatus === 909 && (
-                                        <div className="irp-text" style={{height:"fit-content",width:"fit-content",marginLeft:"30%"}} >
-                                            <text style={{whiteSpace: 'nowrap'}}>Sent To IRP</text>
-                                        </div>
-                                    )}
-                                    {agendaItem.QuestionStatus !== 909 && (
-                                <div className="control control-checkbox" style={{marginLeft:"370%"}}>
-                                    <input
-                                        type="checkbox"
-                                        id={`myCheckbox${index}`}
-                                        onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
-                                        defaultChecked={agendaItem.QuestionStatus !== 909} />
-                                    <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
-                                </div>
-                            )}
-                            </div>
-                                    
+                                    <div style={{ display: "flex" }}>
+
+                                        {agendaItem.QuestionStatus === 909 && (
+                                            <div className="irp-text" style={{ height: "fit-content", width: "fit-content", marginLeft: "30%" }} >
+                                                <text style={{ whiteSpace: 'nowrap' }}>Sent To IRP</text>
+                                            </div>
+                                        )}
+                                        {agendaItem.QuestionStatus !== 909 && (
+                                            <div className="control control-checkbox" style={{ marginLeft: "370%" }}>
+                                                <input
+                                                    type="checkbox"
+                                                    id={`myCheckbox${index}`}
+                                                    onClick={() => handlemovebacktoagendaclick(agendaItem.QuestionId)}
+                                                    defaultChecked={agendaItem.QuestionStatus !== 909} />
+                                                <label htmlFor={`myCheckbox${index}`} className="control_indicator"></label>
+                                            </div>
+                                        )}
+                                    </div>
+
                                 </div>
                                 <div className="question-text">
                                     {expandedItems[index] ? (
@@ -306,7 +306,7 @@ function Answered() {
                                     </button>
                                 )}
                             </div>
-                            
+
 
                         </div>
                     ))}

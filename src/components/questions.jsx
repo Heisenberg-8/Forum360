@@ -93,8 +93,6 @@ function Feedback() {
     return <Analytics />
   }
 
-
-
   if (currentScreen === "messaging") {
     return <Message />;
   }
@@ -135,7 +133,7 @@ function Feedback() {
         <h1 className="h1">
           Relate <span className="h2">Tools</span>
         </h1>
-        
+
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
         <button

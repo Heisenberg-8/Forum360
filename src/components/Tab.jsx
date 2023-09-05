@@ -3,13 +3,14 @@ import "./Login.css";
 import Message from "./Message.jsx";
 import Agenda from "./Agenda.jsx";
 import { generatetoken, RoleComponent } from "./data";
-import { setToken, setUserkey, setRole, setSessionId, setEventKey } from "./token";
+import { setToken, setUserkey, setRole, setSessionId, setEventKey, setorgid } from "./token";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [eventkey, _setEventkey] = useState("");
   const [sessionid, _setSessionid] = useState("");
+  const [orgid, _setOrgid] = useState("")
   const [currentScreen, setCurrentScreen] = useState("login");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -29,13 +30,18 @@ function Login() {
     _setSessionid(event.target.value);
   }
 
+  function handleorgidChange(event) {
+    _setOrgid(event.target.value);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     setErrorMessage("")
     // console.log(sessionid, eventkey)
     setSessionId(sessionid);
     setEventKey(eventkey);
-    generatetoken(username, password)
+    setorgid(orgid)
+    generatetoken(username, password, orgid)
       .then(async (tokendata) => {
         if (tokendata.access_token) {
           setToken(tokendata.access_token);
@@ -43,6 +49,7 @@ function Login() {
           console.log(tokendata.access_token, tokendata.userKey, sessionid)
           const role = await RoleComponent(tokendata.access_token, tokendata.userKey, sessionid);
           setRole(role)
+          console.log(role)
 
           if (role === 'cohost') {
             setCurrentScreen("agenda")
@@ -103,6 +110,13 @@ function Login() {
           value={sessionid}
           onChange={handleSessionidChange}
           placeholder="Session ID"
+          className="login-input"
+        />
+        <input
+          type="text"
+          value={orgid}
+          onChange={handleorgidChange}
+          placeholder="Org ID"
           className="login-input"
         />
 

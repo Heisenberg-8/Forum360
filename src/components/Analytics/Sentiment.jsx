@@ -21,9 +21,9 @@ const Sentiment = () => {
   const token = getToken();
   const [regUser, setregUser] = useState(0);
   const [attendUser, setattendUser] = useState(0);
-  const [labels, setLabels] = useState(['', '', '', '', '']);
-  const [dataset1Data, setDataset1Data] = useState([0, 0.2, -0.3, 0.2, -0.4]);
-  const [dataset2Data, setDataset2Data] = useState([0, -0.4, 0.2, -0.7, 0.3]);
+  const [labels, setLabels] = useState([]);
+  const [dataset1Data, setDataset1Data] = useState([]);
+  const [dataset2Data, setDataset2Data] = useState([]);
   const lastPointIndex = dataset1Data.length - 1;
 
   useEffect(() => {
@@ -149,12 +149,12 @@ const Sentiment = () => {
     <div className="bigContainer" style={{ marginTop: 12 }}>
       <div style={{ display: "flex" }}>
         <text className="headingSmallCard" style={{ marginLeft: "6%", marginTop: "3%", whiteSpace: 'nowrap' }}>Sentiment</text>
-        <text className="headingSmallCard" style={{ marginLeft: "27%", marginTop: "3%" }}>Neutral</text>
-        <img src={pin} style={{ marginLeft: "5%", marginRight: "3%", marginTop: "1%" }} />
+        {/* <text className="headingSmallCard" style={{ marginLeft: "27%", marginTop: "3%" }}>Neutral</text> */}
+        <img src={pin} style={{ marginLeft: "54%", marginRight: "3%", marginTop: "1%" }} />
       </div>
       <div>
         <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "6%" }}>Overall real-time analysis</text>
-        <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "19%" }}>0.45</text>
+        {/* <text style={{ fontFamily: "albert", fontSize: "12px", color: "#b1afaf", marginLeft: "19%" }}>0.45</text> */}
 
       </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", marginTop: "-20px" }}>

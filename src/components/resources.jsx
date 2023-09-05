@@ -26,7 +26,8 @@ import Agenda from "./Agenda.jsx";
 function Resources() {
   const token = getToken();
   const userkey = getUserkey();
-  const role = getRole()
+  const role = getRole();
+  console.log(role)
   const [currentScreen, setCurrentScreen] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [commentInput, setCommentInput] = useState("");
@@ -255,7 +256,7 @@ function Resources() {
 
       </div>
       <div className="mainbuttons" style={{ display: "flex", marginTop: "25px", flexWrap: "wrap" }}>
-        {role === 'host' && (
+        {(role === 'host' || role === 'moderator') && (
           <button
             type="button"
             name="messaging"
@@ -284,7 +285,7 @@ function Resources() {
           <span className="button-text">Feedback</span>
         </button>
 
-        {role === 'host' && (
+        {(role === 'host' || role === 'moderator') && (
           <button type="button" name="analytics" className="button" onClick={handleAnalyticsClick}>
             <img
               src={require("./assets/chart.png")}
