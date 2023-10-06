@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import "./Login.css";
+import React, { useEffect, useState } from "react";
+import "./login.css";
 import Message from "./Message.jsx";
 import Agenda from "./Agenda.jsx";
 import { generatetoken, RoleComponent } from "./data";
 import { setToken, setUserkey, setRole, setSessionId, setEventKey, setorgid } from "./token";
+import { app } from "@microsoft/teams-js";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -13,6 +14,16 @@ function Login() {
   const [orgid, _setOrgid] = useState("")
   const [currentScreen, setCurrentScreen] = useState("login");
   const [errorMessage, setErrorMessage] = useState("");
+  const [contextValue,setContextValue] = useState();
+
+  useEffect(()=>{
+    app.initialize().then(()=>{
+      app.getContext().then((context)=>{
+        console.log('imp1',context);
+        setContextValue(context);
+      })
+    })
+  },[])
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -119,7 +130,7 @@ function Login() {
           placeholder="Org ID"
           className="login-input"
         />
-
+        {/* <div className="login-meeting-id">{contextValue?.meeting?.id}</div> */}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit" className="login-button">
           Sign in
